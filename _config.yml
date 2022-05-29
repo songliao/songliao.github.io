@@ -2,6 +2,8 @@ remote_theme: just-the-docs/just-the-docs
 title: Quantopia
 
 
+heading_anchors: true
+
 # Define Jekyll collections
 collections:
   # Define a collection named "docs", its documents reside in the "_docs" directory
