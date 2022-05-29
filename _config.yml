@@ -13,11 +13,6 @@ collections:
     permalink: "/:collection/:path/"
     output: true
 
-  page:
-    permalink: "/:collection/:path/"
-    output: true
-
-
 just_the_docs:
   # Define which collections are used in just-the-docs
   collections:
@@ -31,5 +26,5 @@ just_the_docs:
       # Exclude the collection from the search
       # Supports true or false (default)
       search_exclude: false
-    page:
-      name: Page
+
+    Pages:

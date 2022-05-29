@@ -1,12 +1,3 @@
----
-layout: default
-title: Home
-nav_order: 1
-description: "Home page"
-nav_exclude: false
----
-
-
 ## Welcome to GitHub Pages
 
 You can use the [editor on GitHub](https://github.com/songliao/songliao.github.io/edit/master/index.md) to maintain and preview the content for your website in Markdown files.
