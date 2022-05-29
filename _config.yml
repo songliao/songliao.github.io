@@ -4,6 +4,8 @@ title: Quantopia
 
 heading_anchors: true
 
+nav_sort: case_sensitive
+
 # Define Jekyll collections
 collections:
   # Define a collection named "docs", its documents reside in the "_docs" directory

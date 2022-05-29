@@ -1,7 +1,7 @@
 ---
 layout: default
 title:  "Random Numbers"
-parent: Blogs
+parent: Blog
 nav_order: 2
 ---
 
