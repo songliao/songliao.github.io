@@ -5,8 +5,6 @@ parent: Blog
 nav_order: 2
 ---
 
-## Development Environment Settings
-
 In this tutorial, we will talk about how to setup a C++ environment for quantitative research and development. The covered topics are:
 
 - Visual Studio Code, a text editor powered by extensions
