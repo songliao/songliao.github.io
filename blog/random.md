@@ -5,7 +5,6 @@ parent: Blog
 nav_order: 2
 ---
 
-## Random numbers
 
 **Hello world**, this is my first Jekyll blog post.
 
