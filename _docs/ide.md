@@ -1,6 +1,8 @@
 ---
 layout: default
-title:  "Development Environment Settings"
+title: "Development Environment Settings"
+parent: Blogs
+nav_order: 2
 ---
 
 ## Development Environment Settings
