@@ -2,8 +2,6 @@ remote_theme: just-the-docs/just-the-docs
 title: Quantopia
 
 
-heading_anchors: true
-
 nav_sort: case_sensitive
 
 back_to_top: true
