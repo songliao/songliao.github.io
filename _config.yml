@@ -4,6 +4,9 @@ title: Quantopia
 
 nav_sort: case_sensitive
 
+ga_tracking: UA-36174860-1
+ga_tracking_anonymize_ip: true # Use GDPR compliant Google Analytics settings (true by default)
+
 back_to_top: true
 back_to_top_text: "Back to top"
 
