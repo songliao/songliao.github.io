@@ -7,9 +7,9 @@ nav_order: 2
 
 ## Random Number Generators' Performance
 
-I have done a speed test about how the random number generators perform on my MacBook Air(M1, 2020, 16GB memory). Below is the code snippet I used to count the time for different random number generators.
+I have done a set of speed test about how the random number generators perform on my MacBook Air(M1, 2020, 16GB memory) and my PC(Ubuntu 22.04 LTS, Intel(R) Core(TM) i7-8700K CPU @ 3.70GHz). Below is the code snippet I used to count the time for different random number generators.
 
-The random number generators are from [C++ standard library](https://en.cppreference.com/w/cpp/numeric/random), the [Boost Random library](https://www.boost.org/doc/libs/1_79_0/doc/html/boost_random/reference.html#boost_random.reference.concepts) and random number generator recommended by the [Numerical Recipes, 3rd edition](http://numerical.recipes).
+The random number generators are from [C++ standard library](https://en.cppreference.com/w/cpp/numeric/random), and the [Boost Random library](https://www.boost.org/doc/libs/1_79_0/doc/html/boost_random/reference.html#boost_random.reference.concepts).
 
 ```cpp
     #include <random>
@@ -20,23 +20,21 @@ The random number generators are from [C++ standard library](https://en.cpprefer
     for (size_t i = 0; i < num; ++i) eps = rng();
 ```
 
-|Random number generator | Time used (s)|
-|:------------------------|:---|
-|std::minstd_rand | 4.093|
-|std::mt19937 | 3.162|
-|std::mt19937_64 |3.150|
-|boost::random::minstd_rand|4.091|
-|boost::random::mt19937|0.528|
-|boost::random::mt19937_64|0.845|
-|boost::random::mt11213b|0.551|
-|boost::random::taus88|1.117|
-|NR3::Ran|2.233|
+|Random number generator | Time(s) used on Mac| Time(s) used on PC|
+|:------------------------|:---|:--|
+|std::minstd_rand | 4.093| 3.095
+|std::mt19937 | 3.162| 3.807
+|std::mt19937_64 |3.150| 4.172
+|boost::random::minstd_rand|4.091|3.366
+|boost::random::mt19937|0.528|0.816
+|boost::random::mt19937_64|0.845|1.113
+|boost::random::mt11213b|0.551|0.624
+|boost::random::taus88|1.117|1.389
 
-As in most pratical cases, the speed of generating normally distributed random numbers is of great importance. I have also done a speed test on that using boost::mt19937.
 
-According to the [official document](https://www.boost.org/doc/libs/1_79_0/doc/html/boost/random/normal_distribution.html), Boost.Random uses the [Ziggurat algorithm](https://en.wikipedia.org/wiki/Ziggurat_algorithm).
+As in most pratical cases, the speed of generating normally distributed random numbers is of great importance.
 
-The C++ standard library implements the [Box-Muller algorithm](https://en.wikipedia.org/wiki/Box–Muller_transform) in the Polar form.
+According to the [official document](https://www.boost.org/doc/libs/1_79_0/doc/html/boost/random/normal_distribution.html), Boost.Random uses the [Ziggurat algorithm](https://en.wikipedia.org/wiki/Ziggurat_algorithm). And The C++ standard library implements the [Box-Muller algorithm](https://en.wikipedia.org/wiki/Box–Muller_transform) in the Polar form.
 
 ```cpp
     #include <boost/random/normal_distribution.hpp>
@@ -49,13 +47,14 @@ The C++ standard library implements the [Box-Muller algorithm](https://en.wikipe
     for (size_t i = 0; i < num; ++i) eps = dist(rng);
 ```
 
-It costs about 6.311s (averaged from 5 experiments).
-
 Similarily, I did serveral test by combining the random number generator and the distribution transform algorithm. The results are shown below
 
-|random number generator | distribution| Time used (s)|
-|:------------------------|:---|--|
-|std::mt19937 | std::normal_distribution|17.683|
-|std::mt19937| boost::random::normal_distribution|10.767|
-|boost::random::mt19937|std::normal_distribution|10.483|
-|boost::random::mt19937|boost::random::normal_distribution|6.439|
+|random number generator | distribution| Time(s) used on Mac| Time(s) used on PC|
+|:------------------------|:---|:--|:--|
+|std::mt19937 | std::normal_distribution|17.683|21.652
+|std::mt19937| boost::random::normal_distribution|10.767|13.470
+|boost::random::mt19937|std::normal_distribution|10.483|14.405
+|boost::random::mt19937|boost::random::normal_distribution|6.439|6.780
+|boost::random::mt11213b|std::normal_distribution||14.109
+|boost::random::mt11213b|boost::random::normal_distribution||6.386
+
