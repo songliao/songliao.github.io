@@ -49,8 +49,7 @@ The ko dates are :
 
 **Test case A**
 
-Pricing parameters
-|||
+|Pricing parameters||
 |-|-|
 |valuation date| 2022-08-03|
 |risk free rate| 3.5%|
@@ -71,8 +70,7 @@ Pricing results
 
 **Test case B**
 
-Pricing parameters
-|||
+|Pricing parameters||
 |-|-|
 |valuation date| 2023-01-05|
 |risk free rate| 3.5%|
@@ -130,8 +128,7 @@ The ko dates are :
 
 **Test case C**
 
-Pricing parameters
-|||
+|Pricing parameters||
 |-|-|
 |valuation date| 2022-08-03|
 |risk free rate| 3.5%|
@@ -152,8 +149,8 @@ Pricing results
 
 **Test case D**
 
-Pricing parameters
-|||
+
+|Pricing parameters||
 |-|-|
 |valuation date| 2023-01-05|
 |risk free rate| 3.5%|
