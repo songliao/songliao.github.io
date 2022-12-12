@@ -1,5 +1,0 @@
-蒙特卡洛模拟结果MCResults
-==================================
-
-.. doxygenstruct:: MCResults
-    :members: Values, PVStandardError, ElapsedTime

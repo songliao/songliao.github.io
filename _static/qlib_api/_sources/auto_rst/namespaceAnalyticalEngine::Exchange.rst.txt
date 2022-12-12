@@ -1,4 +1,0 @@
-交换期权
-========
-
-.. doxygennamespace:: AnalyticalEngine::Exchange

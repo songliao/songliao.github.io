@@ -1,4 +1,0 @@
-期权
-====
-
-.. doxygenenum:: OptionType

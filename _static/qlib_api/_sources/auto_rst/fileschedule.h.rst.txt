@@ -1,4 +1,0 @@
-生成交易日
-==========
-
-.. doxygenfile:: schedule.h

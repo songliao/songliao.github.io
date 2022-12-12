@@ -1,4 +1,0 @@
-两资产障碍期权
-==============
-
-.. doxygennamespace:: AnalyticalEngine::TwoAssetBarrier

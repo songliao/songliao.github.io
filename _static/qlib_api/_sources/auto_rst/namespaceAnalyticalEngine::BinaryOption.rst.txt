@@ -1,4 +1,0 @@
-二元期权及二元障碍期权
-======================
-
-.. doxygennamespace:: AnalyticalEngine::BinaryOption

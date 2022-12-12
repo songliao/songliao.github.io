@@ -1,4 +1,0 @@
-美式交换期权
-============
-
-.. doxygennamespace:: AnalyticalEngine::AmericanExchange

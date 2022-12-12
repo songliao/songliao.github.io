@@ -1,4 +1,0 @@
-Option on Maximum
-==================================
-
-.. doxygennamespace:: AnalyticalEngine::OptionOnMaximum

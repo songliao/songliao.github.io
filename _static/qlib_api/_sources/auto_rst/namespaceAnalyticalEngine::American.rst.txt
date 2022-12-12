@@ -1,4 +1,0 @@
-美式期权
-========
-
-.. doxygennamespace:: AnalyticalEngine::American
