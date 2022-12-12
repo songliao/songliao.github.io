@@ -1,0 +1,380 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>日期</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/fonts.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/translations.js"></script>
+        <script src="../_static/design-tabs.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> 蒙卡定价引擎开发
+          
+
+          
+            
+            <img src="../_static/Qlib_logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="在文档中搜索" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../project_introduction.html">项目简介</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../project_documentation.html">项目知识库</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../paper_link.html">项目论文</a></li>
+<li class="toctree-l1"><a class="reference external" href="_static/qlib_api/index.html#file://">代码API references</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">蒙卡定价引擎开发</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+<div class="git-ribbon">
+  <a href="http://github.com/SwissDataScienceCenter" rel="me">Join us on GitHub</a>
+</div>
+
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>日期</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/qlib_doc/date.rst.txt" rel="nofollow"> 查看页面源码</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1>日期<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="date">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">date</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">const</span> <span class="pre">unsigned</span> <span class="pre">short</span> <span class="pre">yyyy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">const</span> <span class="pre">unsigned</span> <span class="pre">short</span> <span class="pre">mm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">const</span> <span class="pre">unsigned</span> <span class="pre">short</span> <span class="pre">dd</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#date" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<div class="custom docutils container">
+<dl>
+<dt><strong>Parameters:</strong></dt><dd><dl>
+<dt><strong>yyyy: unsigned short</strong></dt><dd><div class="line-block">
+<div class="line">代表年份的四位数字。</div>
+</div>
+</dd>
+<dt><strong>mm: unsigned short</strong></dt><dd><div class="line-block">
+<div class="line">代表1-12个月的数字。</div>
+</div>
+</dd>
+<dt><strong>dd: unsigned short</strong></dt><dd><div class="line-block">
+<div class="line">代表一个月中的某一日的数字。</div>
+</div>
+</dd>
+</dl>
+</dd>
+</dl>
+</div>
+<div class="section" id="id2">
+<h2><strong>Date</strong> 的属性<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id3">
+<h3>获取当前日期的年<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h3>
+<dl class="py method">
+<dt class="sig sig-object py" id="Date.year">
+<span class="sig-prename descclassname"><span class="pre">Date.</span></span><span class="sig-name descname"><span class="pre">year</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Date.year" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<div class="custom docutils container">
+<dl class="simple">
+<dt><strong>Returns: int</strong></dt><dd><p>代表年份的数字。</p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="section" id="id4">
+<h3>获取当前日期的月<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
+<dl class="py method">
+<dt class="sig sig-object py" id="Date.month">
+<span class="sig-prename descclassname"><span class="pre">Date.</span></span><span class="sig-name descname"><span class="pre">month</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Date.month" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<div class="custom docutils container">
+<dl class="simple">
+<dt><strong>Returns: int</strong></dt><dd><p>代表1-12个月的数字。</p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="section" id="id5">
+<h3>获取当前日期的日<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
+<dl class="py method">
+<dt class="sig sig-object py" id="Date.day">
+<span class="sig-prename descclassname"><span class="pre">Date.</span></span><span class="sig-name descname"><span class="pre">day</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Date.day" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<div class="custom docutils container">
+<dl class="simple">
+<dt><strong>Returns: int</strong></dt><dd><p>代表一个月中的某一日的数字。</p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="section" id="id6">
+<h3>判断当前日期是否是周末<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h3>
+<dl class="py method">
+<dt class="sig sig-object py" id="Date.is_weekend">
+<span class="sig-prename descclassname"><span class="pre">Date.</span></span><span class="sig-name descname"><span class="pre">is_weekend</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Date.is_weekend" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<div class="custom docutils container">
+<dl class="simple">
+<dt><strong>Returns: bool</strong></dt><dd><p><strong>True</strong> or <strong>False</strong>, 判断日期是否为周末。</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="section" id="id7">
+<h2>与 <strong>Date</strong> 相关的操作<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id8">
+<h3><strong>Date</strong> 支持与整数的+， -， +=， -=<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h3>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;qlib/date.h&quot;</span><span class="cp"></span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">d</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Date</span><span class="p">(</span><span class="mi">2022</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w"> </span><span class="mi">16</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">d</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">d</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">d</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">d</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">d</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">d</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">d</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="c1">//output:</span>
+<span class="w">    </span><span class="mi">2022</span><span class="mo">-06</span><span class="mi">-16</span><span class="w"></span>
+<span class="w">    </span><span class="mi">2022</span><span class="mo">-06</span><span class="mi">-17</span><span class="w"></span>
+<span class="w">    </span><span class="mi">2022</span><span class="mo">-06</span><span class="mi">-15</span><span class="w"></span>
+<span class="w">    </span><span class="mi">2022</span><span class="mo">-06</span><span class="mi">-21</span><span class="w"></span>
+<span class="w">    </span><span class="mi">2022</span><span class="mo">-06</span><span class="mi">-11</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id9">
+<h3><strong>Date</strong> 支持比较运算 &gt;, &gt;=, &lt;, &lt;=, ==, !=<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h3>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;qlib/date.h&quot;</span><span class="cp"></span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">d1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Date</span><span class="p">(</span><span class="mi">2022</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w"> </span><span class="mi">16</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">d2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Date</span><span class="p">(</span><span class="mi">2022</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w"> </span><span class="mi">17</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">flag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">d1</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">d2</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">flag</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// 1: True, 0: False</span>
+
+<span class="p">}</span><span class="w"></span>
+
+<span class="c1">//output:</span>
+<span class="w">    </span><span class="mi">1</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="date-period-days-weeks-months">
+<h3><strong>Date</strong> 支持与 <strong>Period</strong> 及其子类（ <strong>days</strong>, <strong>weeks</strong>, <strong>months</strong>）的+-运算<a class="headerlink" href="#date-period-days-weeks-months" title="永久链接至标题">¶</a></h3>
+<p>See <a class="reference internal" href="period.html#id5"><span class="std std-ref">Period 子类</span></a>.</p>
+<div class="admonition note">
+<p class="admonition-title">备注</p>
+<p>+-月份时， 遵循月末到月末保持日不变的原则</p>
+</div>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;qlib/date.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;qlib/period.h&quot;</span><span class="cp"></span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">d1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Date</span><span class="p">(</span><span class="mi">2022</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">28</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Months</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">d1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">d1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+
+<span class="p">}</span><span class="w"></span>
+
+<span class="c1">//output:</span>
+<span class="w">    </span><span class="mi">2022</span><span class="mo">-03</span><span class="mi">-31</span><span class="w"></span>
+<span class="w">    </span><span class="mi">2022</span><span class="mo">-01</span><span class="mi">-31</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2022, Essence Security.
+
+    </p>
+  </div>
+    
+    
+    
+    利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用了 
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    
+    由 <a href="https://readthedocs.org">Read the Docs</a>开发. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,328 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Period &mdash; Qlib Documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/fonts.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="生成交易日" href="fileschedule.h.html" />
+    <link rel="prev" title="DayCounter" href="classDayCounterclassAct365classBus244.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> qlib
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="在文档中搜索" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">蒙特卡洛定价引擎</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="classMCEngine.html">蒙特卡洛定价引擎MCEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="structMCResults.html">蒙特卡洛模拟结果MCResults</a></li>
+<li class="toctree-l1"><a class="reference internal" href="classBlackScholes.html">BlackScholes模型</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">产品结构</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="classPayoffclassVanillaclassCashclassAssetclassCashOrNothingclassAssetOrNothing.html">Payoff类</a></li>
+<li class="toctree-l1"><a class="reference internal" href="classKnockInBarrierOption.html">单障碍敲入型期权</a></li>
+<li class="toctree-l1"><a class="reference internal" href="classKnockOutBarrierOption.html">单障碍敲出型期权</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">枚举类型</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="enumOptionType.html">期权</a></li>
+<li class="toctree-l1"><a class="reference internal" href="enumGreekType.html">希腊值</a></li>
+<li class="toctree-l1"><a class="reference internal" href="enumBarrierType.html">障碍</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">日历工具</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="classCalendar.html">Calendar</a></li>
+<li class="toctree-l1"><a class="reference internal" href="classDate.html">Date</a></li>
+<li class="toctree-l1"><a class="reference internal" href="classDayCounterclassAct365classBus244.html">DayCounter</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Period</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fileschedule.h.html">生成交易日</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">解析解</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="namespaceAnalyticalEngine%3A%3AVanilla.html">香草期权</a></li>
+<li class="toctree-l1"><a class="reference internal" href="namespaceAnalyticalEngine%3A%3AAmerican.html">美式期权</a></li>
+<li class="toctree-l1"><a class="reference internal" href="namespaceAnalyticalEngine%3A%3AAmericanExchange.html">美式交换期权</a></li>
+<li class="toctree-l1"><a class="reference internal" href="namespaceAnalyticalEngine%3A%3AAsian.html">亚式期权</a></li>
+<li class="toctree-l1"><a class="reference internal" href="namespaceAnalyticalEngine%3A%3ABarrierOption.html">障碍期权</a></li>
+<li class="toctree-l1"><a class="reference internal" href="namespaceAnalyticalEngine%3A%3ABinaryOption.html">二元期权及二元障碍期权</a></li>
+<li class="toctree-l1"><a class="reference internal" href="namespaceAnalyticalEngine%3A%3ACorrelation.html">相关期权</a></li>
+<li class="toctree-l1"><a class="reference internal" href="namespaceAnalyticalEngine%3A%3AExchange.html">交换期权</a></li>
+<li class="toctree-l1"><a class="reference internal" href="namespaceAnalyticalEngine%3A%3ALookbackOption.html">回望期权</a></li>
+<li class="toctree-l1"><a class="reference internal" href="namespaceAnalyticalEngine%3A%3AOptionOnMaximum.html">Option on Maximum</a></li>
+<li class="toctree-l1"><a class="reference internal" href="namespaceAnalyticalEngine%3A%3AOptionOnMinimum.html">Option on Minimum</a></li>
+<li class="toctree-l1"><a class="reference internal" href="namespaceAnalyticalEngine%3A%3AProduct.html">乘积期权</a></li>
+<li class="toctree-l1"><a class="reference internal" href="namespaceAnalyticalEngine%3A%3AQuotient.html">比值期权</a></li>
+<li class="toctree-l1"><a class="reference internal" href="namespaceAnalyticalEngine%3A%3ASpread.html">价差</a></li>
+<li class="toctree-l1"><a class="reference internal" href="namespaceAnalyticalEngine%3A%3ATwoAssetBarrier.html">两资产障碍期权</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">qlib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+<div class="git-ribbon">
+  <a href="http://github.com/SwissDataScienceCenter" rel="me">Join us on GitHub</a>
+</div>
+
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Period</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/auto_rst/enumTimeUnitclassPeriodclassDaysclassWeeksclassMonthsclassYears.rst.txt" rel="nofollow"> 查看页面源码</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="period">
+<h1>Period<a class="headerlink" href="#period" title="永久链接至标题">¶</a></h1>
+<dl class="cpp enum-class">
+<dt class="sig sig-object cpp" id="_CPPv48TimeUnit">
+<span id="_CPPv38TimeUnit"></span><span id="_CPPv28TimeUnit"></span><span class="target" id="period_8h_1add9fe45e09605eee3e4a39c8a5c4476d"></span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">TimeUnit</span></span></span><a class="headerlink" href="#_CPPv48TimeUnit" title="永久链接至目标">¶</a><br /></dt>
+<dd><p>时间单位 </p>
+<p><em>Values:</em></p>
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N8TimeUnit3DAYE">
+<span id="_CPPv3N8TimeUnit3DAYE"></span><span id="_CPPv2N8TimeUnit3DAYE"></span><span class="target" id="period_8h_1add9fe45e09605eee3e4a39c8a5c4476da5b1d59b5451c06afb65ab1bc2713cfb4"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">DAY</span></span></span><a class="headerlink" href="#_CPPv4N8TimeUnit3DAYE" title="永久链接至目标">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N8TimeUnit4WEEKE">
+<span id="_CPPv3N8TimeUnit4WEEKE"></span><span id="_CPPv2N8TimeUnit4WEEKE"></span><span class="target" id="period_8h_1add9fe45e09605eee3e4a39c8a5c4476da02854858ab6190b2e40f3d9b1ee16982"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">WEEK</span></span></span><a class="headerlink" href="#_CPPv4N8TimeUnit4WEEKE" title="永久链接至目标">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N8TimeUnit5MONTHE">
+<span id="_CPPv3N8TimeUnit5MONTHE"></span><span id="_CPPv2N8TimeUnit5MONTHE"></span><span class="target" id="period_8h_1add9fe45e09605eee3e4a39c8a5c4476da383316922f2516abe5abe53370284a7f"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">MONTH</span></span></span><a class="headerlink" href="#_CPPv4N8TimeUnit5MONTHE" title="永久链接至目标">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N8TimeUnit4YEARE">
+<span id="_CPPv3N8TimeUnit4YEARE"></span><span id="_CPPv2N8TimeUnit4YEARE"></span><span class="target" id="period_8h_1add9fe45e09605eee3e4a39c8a5c4476dad18101729d290479023d5eceeb29c9cf"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">YEAR</span></span></span><a class="headerlink" href="#_CPPv4N8TimeUnit4YEARE" title="永久链接至目标">¶</a><br /></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv46Period">
+<span id="_CPPv36Period"></span><span id="_CPPv26Period"></span><span id="Period"></span><span class="target" id="classPeriod"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Period</span></span></span><a class="headerlink" href="#_CPPv46Period" title="永久链接至目标">¶</a><br /></dt>
+<dd><p><a class="reference internal" href="#classPeriod"><span class="std std-ref">Period</span></a> 对象作为<a class="reference internal" href="fileschedule.h.html#schedule_8h_1Schedule"><span class="std std-ref">Schedule</span></a>的参数，用于周期性地产生交易日。 <a class="reference internal" href="#classDays"><span class="std std-ref">Days</span></a> 、 <a class="reference internal" href="#classWeeks"><span class="std std-ref">Weeks</span></a> 、 <a class="reference internal" href="#classMonths"><span class="std std-ref">Months</span></a> 和 <a class="reference internal" href="#classYears"><span class="std std-ref">Years</span></a> 是规定了相应 unit 的子类。 </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6Period6PeriodEKtK8TimeUnit">
+<span id="_CPPv3N6Period6PeriodEKtK8TimeUnit"></span><span id="_CPPv2N6Period6PeriodEKtK8TimeUnit"></span><span id="Period::Period__unsigned-shortC.TimeUnitC"></span><span class="target" id="classPeriod_1acea3ca73dd4da6ef98f56eee707ee9b5"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Period</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">unsigned</span></span><span class="w"> </span><span class="kt"><span class="pre">short</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">dd</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv48TimeUnit" title="TimeUnit"><span class="n"><span class="pre">TimeUnit</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">unit</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6Period6PeriodEKtK8TimeUnit" title="永久链接至目标">¶</a><br /></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">参数</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dd</strong> – 一个周期包含单位时间的个数 </p></li>
+<li><p><strong>unit</strong> – 时间单位 </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv44Days">
+<span id="_CPPv34Days"></span><span id="_CPPv24Days"></span><span id="Days"></span><span class="target" id="classDays"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Days</span></span></span><a class="headerlink" href="#_CPPv44Days" title="永久链接至目标">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv45Weeks">
+<span id="_CPPv35Weeks"></span><span id="_CPPv25Weeks"></span><span id="Weeks"></span><span class="target" id="classWeeks"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Weeks</span></span></span><a class="headerlink" href="#_CPPv45Weeks" title="永久链接至目标">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv46Months">
+<span id="_CPPv36Months"></span><span id="_CPPv26Months"></span><span id="Months"></span><span class="target" id="classMonths"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Months</span></span></span><a class="headerlink" href="#_CPPv46Months" title="永久链接至目标">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv45Years">
+<span id="_CPPv35Years"></span><span id="_CPPv25Years"></span><span id="Years"></span><span class="target" id="classYears"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Years</span></span></span><a class="headerlink" href="#_CPPv45Years" title="永久链接至目标">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="fileschedule.h.html" class="btn btn-neutral float-right" title="生成交易日" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="classDayCounterclassAct365classBus244.html" class="btn btn-neutral float-left" title="DayCounter" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2022, YC.
+
+    </p>
+  </div>
+    
+    
+    
+    利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用了 
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    
+    由 <a href="https://readthedocs.org">Read the Docs</a>开发. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

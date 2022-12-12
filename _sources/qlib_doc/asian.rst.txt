@@ -1,0 +1,208 @@
+======================================
+亚式期权
+======================================
+
+:ref:`亚式期权<asian>` 根据平均方法的不同分为几何平均亚式期权与算数平均亚式期权，其中算数平均亚式期权更为常见；根据平均对象的不同，又可分为浮动行权价亚式期权与固定行权价亚式期权。
+
+固定行权价的亚式期权
+====================
+
+连续观察
+--------------------
+
+.. image:: ../qlib_doc/option_fig/continuous_asian_not_in.png
+   :width: 600
+   :align: center
+
+.. image:: ../qlib_doc/option_fig/continuous_asian_in_period.png
+   :width: 600
+   :align: center
+
+.. function:: Pv(double spot, double r, double b, double volatility, double ttm, OptionType type, double strike, double sa, double ta, Method approx_method);
+
+.. container:: custom
+
+    **Parameters:**
+        **spot: double**
+            | 标的价格。
+        **r: double**
+            | 无风险利率。 
+        **b: double**
+            | 持仓成本。
+        **volatility: double**
+            | 波动率。
+        **ttm: double**
+            | 到期时间。 
+        **type: OptionType**
+            | 期权类型, **CALL** 或 **PUT**。
+        **strike: double**
+            | 行权价格。
+        **sa: double**
+            | 目前平均价格。
+        **ta: double**
+            | 平均期限。
+        **approx_method: Method**
+            | 亚式估计类型，包括 **TURNBULL_WAKEMAN** [1]_， **LEVY** [2]_。
+        
+    **Returns: double**
+        | 返回连续观察固定行权价的亚式期权的现值。
+
+Example
+----------------------
+
+.. code-block:: c++
+
+    #include <gtest/gtest.h>
+    #include "qlib/analytical_engine/asian.h"
+
+    TEST(TestAnalytical, ContinuousFixedAsian)
+    {
+        double spot = 100;
+        double r = 0.1;
+        double b = 0.05;
+        double vol = 0.15;
+        double ttm = 0.75;
+        double strike = 95;
+        double sa = 100;
+        double ta = 0.75;
+        
+        auto pv = AnalyticalEngine::Asian::Arithmetic::Pv(spot, r, b, vol, ttm, OptionType::CALL, strike, sa, ta, 
+                                                AnalyticalEngine::Asian::Arithmetic::Method::TURNBULL_WAKEMAN);
+
+        EXPECT_NEAR(pv, 7.0544, 1e-5) << "Asian option Pv calculation error";
+    }
+   
+离散观察
+--------------
+
+.. image:: ../qlib_doc/option_fig/discrete_asian_fig.png
+   :width: 600
+   :align: center
+
+
+.. function:: Pv(double spot, double rf, double b, double volatility, double ttm, OptionType type, double strike, double sa, double tta, int m, int n);
+
+.. container:: custom
+
+    **Parameters:**
+        **spot: double**
+            | 标的价格。
+        **rf: double**
+            | 无风险利率。 
+        **b: double**
+            | 持仓成本。
+        **volatility: double**
+            | 波动率。
+        **ttm: double**
+            | 到期时间。 
+        **type: OptionType**
+            | 期权类型, **CALL** 或 **PUT**。
+        **strike: double**
+            | 行权价格。
+        **sa: double**
+            | 目前平均价格。
+        **tta: double**
+            | 当前时间到下一个均值采样点（average observation point）的时间。
+        **m: int**
+            | 已经过去的观察日数量。
+        **n: int**
+            | 观察日的总数。
+
+    **Returns: double**
+        | 返回离散观察固定行权价的亚式期权的现值。
+
+Example
+----------------------
+
+.. code-block:: c++
+
+    #include <gtest/gtest.h>
+    #include "qlib/analytical_engine/asian.h"
+
+    TEST(TestAnalytical, DiscreteFixedAsian)
+    {
+        double spot = 95;
+        double r = 0.08;
+        double b = 0.03;
+        double vol = 0.1;
+        double ttm = 0.5;
+        double strike = 100;
+        double sa = 100;
+        double tta = 0.00;
+        int m = 0;
+        int n = 27;
+        
+        auto pv = AnalyticalEngine::Asian::Arithmetic::Pv(spot, r, b, vol, ttm, OptionType::CALL, strike, sa, tta, m, n);
+
+        EXPECT_NEAR(pv, 0.2719, 1e-5) << "Asian option Pv calculation error";
+    }
+
+浮动行权价的亚式期权
+====================
+连续观察
+--------------------
+.. function:: Pv(double spot, double rf, double b, double volatility, double ttm, OptionType type, double sa, double ta, Method approx_method);
+
+.. container:: custom
+
+    **Parameters:**
+        **spot: double**
+            | 标的价格。
+        **rf: double**
+            | 无风险利率。 
+        **b: double**
+            | 持仓成本。
+        **volatility: double**
+            | 波动率。
+        **ttm: double**
+            | 到期时间。 
+        **type: OptionType**
+            | 期权类型, **CALL** 或 **PUT**。
+        **sa: double**
+            | 目前平均价格。
+        **ta: double**
+            | 平均期限。
+        **approx_method: Method**
+            | 亚式估计类型，包括 **TURNBULL_WAKEMAN** [1]_， **LEVY** [2]_。
+
+    **Returns: double**
+        | 返回连续观察浮动行权价的亚式期权的现值。
+
+离散观察
+--------------------
+.. function:: Pv(double spot, double rf, double b, double volatility, double ttm, OptionType type, double sa, double tta, int m, int n);
+
+.. container:: custom
+
+    **Parameters:**
+        **spot: double**
+            | 标的价格。
+        **rf: double**
+            | 无风险利率。 
+        **b: double**
+            | 持仓成本。
+        **volatility: double**
+            | 波动率。
+        **ttm: double**
+            | 到期时间。 
+        **type: OptionType**
+            | 期权类型, **CALL** 或 **PUT**。
+        **sa: double**
+            | 目前平均价格。
+        **tta: double**
+            | 当前时间到下一个均值采样点（average observation point）的时间。
+        **m: int**
+            | 已经过去的观察日数量。
+        **n: int**
+            | 观察日的总数。
+
+    **Returns: double**
+        | 返回离散观察浮动行权价的亚式期权的现值。
+
+
+参考资料
+===========
+
+.. [1] TURNBULL, S. M., AND L. M. WAKEMAN (1991): "A Quick Algorithm for Pricing European Average Options," Journal of Financial and Quantitative Analysis, 26,377-389.
+
+.. [2] LEVY, E. (1992): "Pricing European Average Rate Currency Options," Journal of International Money and Finance, 11,474- 491.

@@ -1,0 +1,51 @@
+======================================
+欧式期权
+======================================
+
+欧式期权一种将执行限制在到期日行权的期权合同。
+
+.. function:: Pv(OptionType type, double spot, double strike, double r, double b, double volatility, double ttm);
+
+.. container:: custom
+
+    **Parameters:**
+        **type: OptionType**
+            | 期权类型, **CALL** 或 **PUT**。
+        **spot: double**
+            | 标的价格。
+        **strike: double**
+            | 行权价格。
+        **r: double**
+            | 无风险利率。 
+        **b: double**
+            | 持仓成本。
+        **volatility: double**
+            | 波动率。
+        **ttm: double**
+            | 到期时间。 
+
+    **Returns: double**
+            | 返回欧式期权的现值。
+
+Example
+-----------------
+
+.. code-block:: c++
+
+    #include <gtest/gtest.h>
+    #include "qlib/analytical_engine/vanilla.h"
+    #include "qlib/math/derivative.h"
+
+    TEST(TestAnalytical, Vanilla)
+    {
+        double spot = 100.0;
+        double strike = 90.0;
+        double r = 0.01, b = 0, vol = 0.3;
+        double ttm = 1.0;
+
+        double pv = AnalyticalEngine::Vanilla::Pv(OptionType::CALL, spot, strike, r, b, vol, ttm);
+
+        EXPECT_EQ(pv, 16.843598918420852) << "vanilla call option calculation failed";
+    }
+   
+

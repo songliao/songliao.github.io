@@ -1,0 +1,81 @@
+===========================
+美式互换期权
+===========================
+
+美式互换期权时以一种资产换一个美式期权的一种衍生品，其赋予持有人将资产 :math:`S_2` 换成 :math:`S_1` 的权利。
+
+.. list-table::
+
+  * - 期权名称
+    - 收益描述
+  * - 美式互换期权
+    - | :math:`\text{C}(Q_1 * S_1, Q_2 * S_2, T, r - b_2, b_1 - b_2, vol)`
+      | 注：:math:`\text{C}(.)` 是一个普通美式看涨期权的价值
+
+.. function:: Pv(double spot1, double spot2, double rho, double r, double b1, double b2, double vol1, double vol2, double ttm, double quantity1, double quantity2, American::Method approx_method);
+.. container:: custom
+
+    **Parameters:**
+        **spot1: double**
+            | 资产1的价格。
+        **spot2: double**
+            | 资产2的价格。
+        **rho: double**
+            | 两个挂钩标的之间的相关性。 
+        **r: double**
+            | 无风险利率。
+        **b1: double**
+            | 资产1的持仓成本。
+        **b2: double**
+            | 资产2的持仓成本。
+        **vol1: double**
+            | 资产1的波动率。
+        **vol2: double**
+            | 资产2的波动率。
+        **ttm: double**
+            | 到期时间。 
+        **quantity1: OptionType**
+            | 资产1的数量。
+        **quantity2: double**
+            | 资产2的数量。
+        **approx_method: Method**
+            | 美式估计类型，包括 **BAW** [1]_， **BS_1993** [2]_ 和 **BS_2002** [3]_。
+
+    **Returns: double**
+            | 返回美式互换期权的现值。
+
+
+Example
+^^^^^^^^^^^^^^^^^
+.. code-block:: c++
+
+    #include <gtest/gtest.h>
+    #include "qlib/analytical_engine/american_exchange_option.h"
+
+
+    TEST(TestAnalytical, AmericanExchange){
+        double spot1 = 22;
+        double spot2 = 20;
+        double rho = -0.5;
+        double r = 0.1;
+        double b1 = 0.04;
+        double b2 = 0.06;
+        double vol1 = 0.2;
+        double vol2 = 0.15;
+        double t = 0.1;
+        double quantity1 = 1;
+        double quantity2 = 1;
+
+        auto pv = AnalyticalEngine::AmericanExchange::Pv(spot1, spot2, rho, r, b1, b2, vol1, vol2, t, quantity1, quantity2);
+		EXPECT_NEAR(2.1357, pv, 1e-4) << "Asian option Pv calculation error";
+    }
+
+
+参考资料
+===========
+
+.. [1] BARONE-ADESI, G., AND R. E. WHALEY (1987): "Efficient Analytic Approximation of American Option Values," Journal of Finance, 42(2), 301-320.
+
+.. [2] BJERKSUND, P., AND G. STENSLAND (1993b): "Closed-Form Approximation of American Options," Scandinavian Journal of Management, 9,87-99.
+
+.. [3] BJERKSUND, P., AND G. STENSLAND (2002): "Closed-Form Valuation of American Options," Working paper NHH.

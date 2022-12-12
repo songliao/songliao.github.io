@@ -1,0 +1,4 @@
+乘积期权
+========
+
+.. doxygennamespace:: AnalyticalEngine::Product

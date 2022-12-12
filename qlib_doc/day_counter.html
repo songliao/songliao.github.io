@@ -1,0 +1,344 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Day Counter</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/fonts.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/translations.js"></script>
+        <script src="../_static/design-tabs.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> 蒙卡定价引擎开发
+          
+
+          
+            
+            <img src="../_static/Qlib_logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="在文档中搜索" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../project_introduction.html">项目简介</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../project_documentation.html">项目知识库</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../paper_link.html">项目论文</a></li>
+<li class="toctree-l1"><a class="reference external" href="_static/qlib_api/index.html#file://">代码API references</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">蒙卡定价引擎开发</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+<div class="git-ribbon">
+  <a href="http://github.com/SwissDataScienceCenter" rel="me">Join us on GitHub</a>
+</div>
+
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Day Counter</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/qlib_doc/day_counter.rst.txt" rel="nofollow"> 查看页面源码</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="day-counter">
+<h1>Day Counter<a class="headerlink" href="#day-counter" title="永久链接至标题">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="DayCounter">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DayCounter</span></span><a class="headerlink" href="#DayCounter" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<p><strong>Day Counter</strong> 是用来计算给定两个日期之间距离的一个特定的市场惯例规则，包括按天或者年化计数。</p>
+<div class="section" id="daycounter">
+<h2><strong>DayCounter</strong> 的继类<a class="headerlink" href="#daycounter" title="永久链接至标题">¶</a></h2>
+<div class="section" id="act365">
+<h3>Act365<a class="headerlink" href="#act365" title="永久链接至标题">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="Act365">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Act365</span></span><a class="headerlink" href="#Act365" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<p>Act365 表示实际天数/365天的市场惯例规则。</p>
+</div>
+<div class="section" id="bus244">
+<h3>Bus244<a class="headerlink" href="#bus244" title="永久链接至标题">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="Bus244">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Bus244</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">calendar</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Bus244" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<p>Bus244 表示交易日/244天的市场惯例规则。</p>
+<div class="custom docutils container">
+<dl>
+<dt><strong>Parameters:</strong></dt><dd><dl>
+<dt><strong>calendar: Calendar</strong></dt><dd><div class="line-block">
+<div class="line">一个日历对象。</div>
+</div>
+</dd>
+</dl>
+</dd>
+</dl>
+</div>
+<div class="admonition note">
+<p class="admonition-title">备注</p>
+<p>当使用 <strong>Bus244</strong> 市场惯例规则时，日历应当指定一个给定的txt节假日列表或者一组节假日假期。</p>
+</div>
+</div>
+</div>
+<div class="section" id="id1">
+<h2><strong>DayCounter</strong> 的属性<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id2">
+<h3>根据当前计日规则返回两个日期间隔的天数<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h3>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">DayCounter.days_between(const</span> <span class="pre">Date&amp;</span> <span class="pre">from,</span> <span class="pre">const</span> <span class="pre">Date&amp;</span> <span class="pre">to,</span> <span class="pre">bool</span> <span class="pre">include_from,</span> <span class="pre">bool</span> <span class="pre">include_to);</span></span></dt>
+<dd></dd></dl>
+
+<div class="custom docutils container">
+<dl>
+<dt><strong>Parameters:</strong></dt><dd><dl>
+<dt><strong>from: Date</strong></dt><dd><div class="line-block">
+<div class="line">一个日期对象，表示初始日期。</div>
+</div>
+</dd>
+<dt><strong>to: Date</strong></dt><dd><div class="line-block">
+<div class="line">一个日期对象，表示结束日期。</div>
+</div>
+</dd>
+<dt><strong>include_first: bool</strong></dt><dd><div class="line-block">
+<div class="line"><strong>True</strong> or <strong>False</strong>, 是否包含初始日期。</div>
+</div>
+</dd>
+<dt><strong>include_last: bool</strong></dt><dd><div class="line-block">
+<div class="line"><strong>True</strong> or <strong>False</strong>, 是否包含结束日期。</div>
+</div>
+</dd>
+</dl>
+</dd>
+<dt><strong>Returns: int</strong></dt><dd><div class="line-block">
+<div class="line">返回给定两个日期之间的天数。</div>
+</div>
+</dd>
+</dl>
+</div>
+<div class="admonition note">
+<p class="admonition-title">备注</p>
+<p><strong>Act365</strong> 计日规则会返回负值如果 date1 &gt; date2。</p>
+</div>
+</div>
+<div class="section" id="id3">
+<h3>根据当前计日规则返回两个日期间隔的天数在一年中的占比<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h3>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">DayCounter.year_fraction(const</span> <span class="pre">Date&amp;</span> <span class="pre">from,</span> <span class="pre">const</span> <span class="pre">Date&amp;</span> <span class="pre">to,</span> <span class="pre">bool</span> <span class="pre">include_from,</span> <span class="pre">bool</span> <span class="pre">include_to);</span></span></dt>
+<dd></dd></dl>
+
+<div class="custom docutils container">
+<dl>
+<dt><strong>Parameters:</strong></dt><dd><dl>
+<dt><strong>from: Date</strong></dt><dd><div class="line-block">
+<div class="line">一个日期对象，表示初始日期。</div>
+</div>
+</dd>
+<dt><strong>to: Date</strong></dt><dd><div class="line-block">
+<div class="line">一个日期对象，表示结束日期。</div>
+</div>
+</dd>
+<dt><strong>include_first: bool</strong></dt><dd><div class="line-block">
+<div class="line"><strong>True</strong> or <strong>False</strong>，是否包含初始日期。</div>
+</div>
+</dd>
+<dt><strong>include_last: bool</strong></dt><dd><div class="line-block">
+<div class="line"><strong>True</strong> or <strong>False</strong>，是否包含结束日期。</div>
+</div>
+</dd>
+</dl>
+</dd>
+<dt><strong>Returns: double</strong></dt><dd><div class="line-block">
+<div class="line">返回两个日期间隔的天数在一年中的占比。</div>
+</div>
+</dd>
+</dl>
+</div>
+<div class="admonition note">
+<p class="admonition-title">备注</p>
+<p><strong>Act365</strong> 计日规则会返回负值如果 date1 &gt; date2。</p>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2022, Essence Security.
+
+    </p>
+  </div>
+    
+    
+    
+    利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用了 
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    
+    由 <a href="https://readthedocs.org">Read the Docs</a>开发. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,6 @@
+DayCounter
+====================
+
+.. doxygenclass:: DayCounter
+.. doxygenclass:: Act365
+.. doxygenclass:: Bus244

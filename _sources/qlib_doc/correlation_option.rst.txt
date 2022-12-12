@@ -1,0 +1,73 @@
+===========================
+相关性期权
+===========================
+相关性期权衡量两个资产作为标的价格的一种衍生品。
+
+.. list-table::
+
+  * - 期权名称
+    - 收益描述
+  * - 相关性期权
+    - | 看涨 :math:`\text{STEP}(S_1 - X_1) \times \text{Max}(S_2- X_2, 0)`
+      | 看跌 :math:`\text{STEP}(X_1 - S_1) \times \text{Max}(X_2- S_2, 0)` 
+
+.. function:: Pv(double spot1, double spot2, double rho, double r, double b1, double b2, double vol1, double vol2, double ttm, OptionType type, double strike1, double strike2);
+
+.. container:: custom
+
+    **Parameters:**
+        **spot1: double**
+            | 资产1的价格。
+        **spot2: double**
+            | 资产2的价格。
+        **rho: double**
+            | 两个挂钩标的之间的相关性。 
+        **r: double**
+            | 无风险利率。
+        **b1: double**
+            | 资产1的持仓成本。
+        **b2: double**
+            | 资产2的持仓成本。
+        **vol1: double**
+            | 资产1的波动率。
+        **vol2: double**
+            | 资产2的波动率。
+        **ttm: double**
+            | 到期时间。 
+        **type: OptionType**
+            | 期权类型, **CALL** 或 **PUT**。
+        **strike1: double**
+            | 资产1的行权价格。
+        **strike2: double**
+            | 资产2的行权价格。
+
+    **Returns: double**
+            | 返回相关性期权的现值。
+
+Example
+^^^^^^^^^^^^^^^^^^
+
+.. code-block:: c++
+
+    #include <gtest/gtest.h>
+    #include "qlib/analytical_engine/correlation_option.h"
+
+    TEST(TestAnalytical, CorrelationOption)
+    {
+        double spot1 = 52;
+        double spot2 = 65;
+        double ttm = 0.5;
+        double strike1 = 50;
+        double strike2 = 70;
+        double vol1 = 0.2;
+        double vol2 = 0.3;
+        double r = 0.1;
+        double b1 = 0.1;
+        double b2 = 0.1;
+        double rho = 0.75;
+
+        double pv = AnalyticalEngine::Correlation::Pv(spot1, spot2, rho, r, b1, b2, vol1, vol2, ttm, OptionType::CALL, strike1, strike2);
+
+        EXPECT_NEAR(4.7073, pv, 1e-4);
+
+    }

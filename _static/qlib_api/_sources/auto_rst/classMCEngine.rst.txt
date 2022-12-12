@@ -1,0 +1,5 @@
+蒙特卡洛定价引擎MCEngine
+================================
+
+.. doxygenclass:: MCEngine
+    :members: MCEngine, SetSeed, SetParallel

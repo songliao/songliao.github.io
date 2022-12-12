@@ -1,0 +1,72 @@
+===========================
+商期权
+===========================
+商期权衡量两个资产价格的相对表现（商）作为标的价格的一种衍生品。
+
+.. list-table::
+
+  * - 期权名称
+    - 收益描述
+  * - 商期权
+    - | 看涨 :math:`\text{Max}(S_1/S_2 - X, 0)`
+      | 看跌 :math:`\text{Max}(X - S_1/S_2, 0)`
+
+.. function:: Pv(double spot1, double spot2, double rho, double r, double b1, double b2, double vol1, double vol2, double ttm, OptionType type, double strike);
+.. container:: custom
+
+    **Parameters:**
+        **spot1: double**
+            | 资产1的价格。
+        **spot2: double**
+            | 资产2的价格。
+        **rho: double**
+            | 两个挂钩标的之间的相关性。 
+        **r: double**
+            | 无风险利率。
+        **b1: double**
+            | 资产1的持仓成本。
+        **b2: double**
+            | 资产2的持仓成本。
+        **vol1: double**
+            | 资产1的波动率。
+        **vol2: double**
+            | 资产2的波动率。
+        **ttm: double**
+            | 到期时间。 
+        **type: OptionType**
+            | 期权类型, **CALL** 或 **PUT**。
+        **strike: double**
+            | 行权价格。
+
+    **Returns: double**
+            | 返回商期权的现值。
+
+Example
+^^^^^^^^^^^^^^^^^^
+
+.. code-block:: c++
+
+    #include <gtest/gtest.h>
+    #include <iostream>
+
+    #include "qlib/analytical_engine/quotient_option.h"
+
+    TEST(TestAnalytical, QuotientOption)
+    {
+        // page 174
+        double spot1 = 130;
+        double spot2 = 100;
+        double rho = -0.5;
+        double r = 0.07;
+        double b1 = 0.05;
+        double b2 = 0.03;
+        double vol1 = 0.3;
+        double vol2 = 0.4;
+        double t = 0.25;
+        OptionType type = OptionType::CALL;
+        double strike = 0.1;
+
+        double pv =  AnalyticalEngine::Quotient::Pv(spot1, spot2, rho, r, b1, b2, vol1, vol2, t, type, strike);
+
+        EXPECT_NEAR(1.2582, pv, 1e-4);
+    }

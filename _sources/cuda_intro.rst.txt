@@ -1,0 +1,62 @@
+=====================
+CUDA Toolkit
+=====================
+为了更方便地使用GPU编程，采用一种通用计算的硬件和软件架构：NIVIDA® CUDA（Compute Unified Device Architecture）。CUDA是一种在GPU上实现通用计算的并行计算平台和编程模型，CUDA编程模型提供了一个连接软件应用程序与在GPU硬件上实现的一个抽象化GPU架构，并支持多种编程语言在GPU上进行编程，包括C，C++，Fortran和Python。
+
+CUDA的安装 :ref:`详见 <CUDAinstall>`。
+
+CUDA随机数生成
+=====================
+在CUDA中，cuRAND库提供了GPU加速的高性能随机数生成器，该库能够使用简单并且高效的方法生成高质量的伪随机数和准随机数。**host** 指的是CPU及其内存，而 **device** 指的是GPU及其内存。
+
+所有随机数都是由生成器RNG开发的，使用步骤如下：
+
+1. 创建所需类型的新生成器；
+2. 设置生成器选项(例如seed)
+3. 在device上分配内存 (cudaMalloc)
+4. 使用curandGenerate()或其他函数生成随机数
+5. 得到结果
+6. 使用curandDestroyGenerator()清除生成器
+
+
+具体实例
+------------------------
+生成10个正态分布随机数
+
+.. code-block:: c++
+
+    int main() {
+        int n = 10;
+        curandGenerator_t gen;
+        float *devData, *hostData;
+        
+        // 在host上分配n个数
+        hostData = (float *) calloc(n, sizeof(float));
+        
+        // 在device上分配n个数
+        cudaMalloc(&devData, n * sizeof(float));
+        
+        // 使用Mersenne Twister算法生成随机数
+        curandCreateGenerator(&gen,CURAND_RNG_PSEUDO_DEFAULT);
+        curandSetPseudoRandomGeneratorSeed(gen, 777);
+        
+        // 在device上生成n个数 
+        curandGenerateNormal(gen, devData, n, 0.0f, 1.0f);
+        
+        // device memory复制到 host memory中
+        cudaMemcpy(hostData, devData, n * sizeof(float), cudaMemcpyDeviceToHost);
+        
+        // 结果展示
+        for(int i = 0; i < n; i++)
+        { printf("%1.4f ", hostData[i]); }
+        printf("\n");
+        
+        // 清除
+        curandDestroyGenerator(gen);
+        cudaFree(devData);
+        free(hostData);
+
+        return 0;
+    }
+
+    -0.5762 -1.0450 2.0107 -0.9289 -1.0010 0.2535 1.4429 -0.2504 0.7553 0.7625 

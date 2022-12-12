@@ -1,0 +1,314 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Calendar &mdash; Qlib Documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/fonts.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="Date" href="classDate.html" />
+    <link rel="prev" title="障碍" href="enumBarrierType.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> qlib
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="在文档中搜索" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">蒙特卡洛定价引擎</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="classMCEngine.html">蒙特卡洛定价引擎MCEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="structMCResults.html">蒙特卡洛模拟结果MCResults</a></li>
+<li class="toctree-l1"><a class="reference internal" href="classBlackScholes.html">BlackScholes模型</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">产品结构</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="classPayoffclassVanillaclassCashclassAssetclassCashOrNothingclassAssetOrNothing.html">Payoff类</a></li>
+<li class="toctree-l1"><a class="reference internal" href="classKnockInBarrierOption.html">单障碍敲入型期权</a></li>
+<li class="toctree-l1"><a class="reference internal" href="classKnockOutBarrierOption.html">单障碍敲出型期权</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">枚举类型</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="enumOptionType.html">期权</a></li>
+<li class="toctree-l1"><a class="reference internal" href="enumGreekType.html">希腊值</a></li>
+<li class="toctree-l1"><a class="reference internal" href="enumBarrierType.html">障碍</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">日历工具</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Calendar</a></li>
+<li class="toctree-l1"><a class="reference internal" href="classDate.html">Date</a></li>
+<li class="toctree-l1"><a class="reference internal" href="classDayCounterclassAct365classBus244.html">DayCounter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="enumTimeUnitclassPeriodclassDaysclassWeeksclassMonthsclassYears.html">Period</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fileschedule.h.html">生成交易日</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">解析解</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="namespaceAnalyticalEngine%3A%3AVanilla.html">香草期权</a></li>
+<li class="toctree-l1"><a class="reference internal" href="namespaceAnalyticalEngine%3A%3AAmerican.html">美式期权</a></li>
+<li class="toctree-l1"><a class="reference internal" href="namespaceAnalyticalEngine%3A%3AAmericanExchange.html">美式交换期权</a></li>
+<li class="toctree-l1"><a class="reference internal" href="namespaceAnalyticalEngine%3A%3AAsian.html">亚式期权</a></li>
+<li class="toctree-l1"><a class="reference internal" href="namespaceAnalyticalEngine%3A%3ABarrierOption.html">障碍期权</a></li>
+<li class="toctree-l1"><a class="reference internal" href="namespaceAnalyticalEngine%3A%3ABinaryOption.html">二元期权及二元障碍期权</a></li>
+<li class="toctree-l1"><a class="reference internal" href="namespaceAnalyticalEngine%3A%3ACorrelation.html">相关期权</a></li>
+<li class="toctree-l1"><a class="reference internal" href="namespaceAnalyticalEngine%3A%3AExchange.html">交换期权</a></li>
+<li class="toctree-l1"><a class="reference internal" href="namespaceAnalyticalEngine%3A%3ALookbackOption.html">回望期权</a></li>
+<li class="toctree-l1"><a class="reference internal" href="namespaceAnalyticalEngine%3A%3AOptionOnMaximum.html">Option on Maximum</a></li>
+<li class="toctree-l1"><a class="reference internal" href="namespaceAnalyticalEngine%3A%3AOptionOnMinimum.html">Option on Minimum</a></li>
+<li class="toctree-l1"><a class="reference internal" href="namespaceAnalyticalEngine%3A%3AProduct.html">乘积期权</a></li>
+<li class="toctree-l1"><a class="reference internal" href="namespaceAnalyticalEngine%3A%3AQuotient.html">比值期权</a></li>
+<li class="toctree-l1"><a class="reference internal" href="namespaceAnalyticalEngine%3A%3ASpread.html">价差</a></li>
+<li class="toctree-l1"><a class="reference internal" href="namespaceAnalyticalEngine%3A%3ATwoAssetBarrier.html">两资产障碍期权</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">qlib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+<div class="git-ribbon">
+  <a href="http://github.com/SwissDataScienceCenter" rel="me">Join us on GitHub</a>
+</div>
+
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Calendar</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/auto_rst/classCalendar.rst.txt" rel="nofollow"> 查看页面源码</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="calendar">
+<h1>Calendar<a class="headerlink" href="#calendar" title="永久链接至标题">¶</a></h1>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv48Calendar">
+<span id="_CPPv38Calendar"></span><span id="_CPPv28Calendar"></span><span id="Calendar"></span><span class="target" id="classCalendar"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Calendar</span></span></span><a class="headerlink" href="#_CPPv48Calendar" title="永久链接至目标">¶</a><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8Calendar8CalendarERKNSt6stringE">
+<span id="_CPPv3N8Calendar8CalendarERKNSt6stringE"></span><span id="_CPPv2N8Calendar8CalendarERKNSt6stringE"></span><span id="Calendar::Calendar__ssCR"></span><span class="target" id="classCalendar_1ac3f75502b2764d77382040d826459dd9"></span><span class="k"><span class="pre">explicit</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Calendar</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">market_holiday_list</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8Calendar8CalendarERKNSt6stringE" title="永久链接至目标">¶</a><br /></dt>
+<dd><p>根据一个非交易日的文件来创建对象。 </p>
+<dl class="field-list simple">
+<dt class="field-odd">参数</dt>
+<dd class="field-odd"><p><strong>market_holiday_list</strong> – 一个包含非交易日的文件的路径。 </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8Calendar8CalendarERKNSt3setI4DateEE">
+<span id="_CPPv3N8Calendar8CalendarERKNSt3setI4DateEE"></span><span id="_CPPv2N8Calendar8CalendarERKNSt3setI4DateEE"></span><span id="Calendar::Calendar__std::set:Date:CR"></span><span class="target" id="classCalendar_1a6b6183b6aff9c1275d4d10d05e9adf39"></span><span class="k"><span class="pre">explicit</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Calendar</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">set</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="classDate.html#_CPPv44Date" title="Date"><span class="n"><span class="pre">Date</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">holidays</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8Calendar8CalendarERKNSt3setI4DateEE" title="永久链接至目标">¶</a><br /></dt>
+<dd><p>根据一个包含非交易日的vector创建。 </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK8Calendar9IsHolidayERK4Date">
+<span id="_CPPv3NK8Calendar9IsHolidayERK4Date"></span><span id="_CPPv2NK8Calendar9IsHolidayERK4Date"></span><span id="Calendar::IsHoliday__DateCRC"></span><span class="target" id="classCalendar_1a4c71dc9dafc5b97fa7a0ccea839f69e9"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">IsHoliday</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="classDate.html#_CPPv44Date" title="Date"><span class="n"><span class="pre">Date</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">d</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK8Calendar9IsHolidayERK4Date" title="永久链接至目标">¶</a><br /></dt>
+<dd><p>判断给定日期是否为非交易日 </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK8Calendar13IsBusinessDayERK4Date">
+<span id="_CPPv3NK8Calendar13IsBusinessDayERK4Date"></span><span id="_CPPv2NK8Calendar13IsBusinessDayERK4Date"></span><span id="Calendar::IsBusinessDay__DateCRC"></span><span class="target" id="classCalendar_1aea787defcb66591e59b8906159daa3f4"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">IsBusinessDay</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="classDate.html#_CPPv44Date" title="Date"><span class="n"><span class="pre">Date</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">d</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK8Calendar13IsBusinessDayERK4Date" title="永久链接至目标">¶</a><br /></dt>
+<dd><p>判断给定日期是否为交易日 </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK8Calendar15NextBusinessDayERK4Date">
+<span id="_CPPv3NK8Calendar15NextBusinessDayERK4Date"></span><span id="_CPPv2NK8Calendar15NextBusinessDayERK4Date"></span><span id="Calendar::NextBusinessDay__DateCRC"></span><span class="target" id="classCalendar_1ae3fcbc4ba829f2040548f81e81b5d3c1"></span><a class="reference internal" href="classDate.html#_CPPv44Date" title="Date"><span class="n"><span class="pre">Date</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">NextBusinessDay</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="classDate.html#_CPPv44Date" title="Date"><span class="n"><span class="pre">Date</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">d</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK8Calendar15NextBusinessDayERK4Date" title="永久链接至目标">¶</a><br /></dt>
+<dd><p>返回给定日期的下一个交易日 </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK8Calendar19PreviousBusinessDayERK4Date">
+<span id="_CPPv3NK8Calendar19PreviousBusinessDayERK4Date"></span><span id="_CPPv2NK8Calendar19PreviousBusinessDayERK4Date"></span><span id="Calendar::PreviousBusinessDay__DateCRC"></span><span class="target" id="classCalendar_1a1a599f2eb2b0f9a9ec5d5e0d5c721f3a"></span><a class="reference internal" href="classDate.html#_CPPv44Date" title="Date"><span class="n"><span class="pre">Date</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PreviousBusinessDay</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="classDate.html#_CPPv44Date" title="Date"><span class="n"><span class="pre">Date</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">d</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK8Calendar19PreviousBusinessDayERK4Date" title="永久链接至目标">¶</a><br /></dt>
+<dd><p>返回给定日期的上一个交易日 </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK8Calendar19BusinessDaysBetweenERK4DateRK4Datebb">
+<span id="_CPPv3NK8Calendar19BusinessDaysBetweenERK4DateRK4Datebb"></span><span id="_CPPv2NK8Calendar19BusinessDaysBetweenERK4DateRK4Datebb"></span><span id="Calendar::BusinessDaysBetween__DateCR.DateCR.b.bC"></span><span class="target" id="classCalendar_1a632a11b37cb571cb7ce8cfaafe1d595c"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">BusinessDaysBetween</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="classDate.html#_CPPv44Date" title="Date"><span class="n"><span class="pre">Date</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">from</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="classDate.html#_CPPv44Date" title="Date"><span class="n"><span class="pre">Date</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">to</span></span>, <span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">include_first</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">false</span></span>, <span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">include_last</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">true</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK8Calendar19BusinessDaysBetweenERK4DateRK4Datebb" title="永久链接至目标">¶</a><br /></dt>
+<dd><p>返回两日期间交易日的个数 </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="classDate.html" class="btn btn-neutral float-right" title="Date" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="enumBarrierType.html" class="btn btn-neutral float-left" title="障碍" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2022, YC.
+
+    </p>
+  </div>
+    
+    
+    
+    利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用了 
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    
+    由 <a href="https://readthedocs.org">Read the Docs</a>开发. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

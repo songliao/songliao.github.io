@@ -1,0 +1,341 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>差期权</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/fonts.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/translations.js"></script>
+        <script src="../_static/design-tabs.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="../_static/mathjax/tex-chtml.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> 蒙卡定价引擎开发
+          
+
+          
+            
+            <img src="../_static/Qlib_logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="在文档中搜索" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../project_introduction.html">项目简介</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../project_documentation.html">项目知识库</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../paper_link.html">项目论文</a></li>
+<li class="toctree-l1"><a class="reference external" href="_static/qlib_api/index.html#file://">代码API references</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">蒙卡定价引擎开发</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+<div class="git-ribbon">
+  <a href="http://github.com/SwissDataScienceCenter" rel="me">Join us on GitHub</a>
+</div>
+
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>差期权</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/qlib_doc/spread_option.rst.txt" rel="nofollow"> 查看页面源码</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1>差期权<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<p>差期权衡量两个资产价格之差作为标的价格的一种衍生品。</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>期权名称</p></td>
+<td><p>收益描述</p></td>
+</tr>
+<tr class="row-even"><td><p>差期权</p></td>
+<td><div class="line-block">
+<div class="line">看涨 <span class="math notranslate nohighlight">\(\text{Max}(S_1 - S_2 - X, 0)\)</span></div>
+<div class="line">看跌 <span class="math notranslate nohighlight">\(\text{Max}(X - S_1 + S_2, 0)\)</span></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">Pv(double</span> <span class="pre">spot1,</span> <span class="pre">double</span> <span class="pre">spot2,</span> <span class="pre">double</span> <span class="pre">rho,</span> <span class="pre">double</span> <span class="pre">r,</span> <span class="pre">double</span> <span class="pre">b1,</span> <span class="pre">double</span> <span class="pre">b2,</span> <span class="pre">double</span> <span class="pre">vol1,</span> <span class="pre">double</span> <span class="pre">vol2,</span> <span class="pre">double</span> <span class="pre">ttm,</span> <span class="pre">OptionType</span> <span class="pre">type,</span> <span class="pre">double</span> <span class="pre">strike，</span> <span class="pre">double</span> <span class="pre">quantity1,</span> <span class="pre">double</span> <span class="pre">quantity2);</span></span></dt>
+<dd></dd></dl>
+
+<div class="custom docutils container">
+<dl>
+<dt><strong>Parameters:</strong></dt><dd><dl>
+<dt><strong>spot1: double</strong></dt><dd><div class="line-block">
+<div class="line">资产1的价格。</div>
+</div>
+</dd>
+<dt><strong>spot2: double</strong></dt><dd><div class="line-block">
+<div class="line">资产2的价格。</div>
+</div>
+</dd>
+<dt><strong>rho: double</strong></dt><dd><div class="line-block">
+<div class="line">两个挂钩标的之间的相关性。</div>
+</div>
+</dd>
+<dt><strong>r: double</strong></dt><dd><div class="line-block">
+<div class="line">无风险利率。</div>
+</div>
+</dd>
+<dt><strong>b1: double</strong></dt><dd><div class="line-block">
+<div class="line">资产1的持仓成本。</div>
+</div>
+</dd>
+<dt><strong>b2: double</strong></dt><dd><div class="line-block">
+<div class="line">资产2的持仓成本。</div>
+</div>
+</dd>
+<dt><strong>vol1: double</strong></dt><dd><div class="line-block">
+<div class="line">资产1的波动率。</div>
+</div>
+</dd>
+<dt><strong>vol2: double</strong></dt><dd><div class="line-block">
+<div class="line">资产2的波动率。</div>
+</div>
+</dd>
+<dt><strong>ttm: double</strong></dt><dd><div class="line-block">
+<div class="line">到期时间。</div>
+</div>
+</dd>
+<dt><strong>type: OptionType</strong></dt><dd><div class="line-block">
+<div class="line">期权类型, <strong>CALL</strong> 或 <strong>PUT</strong>。</div>
+</div>
+</dd>
+<dt><strong>strike: double</strong></dt><dd><div class="line-block">
+<div class="line">行权价格。</div>
+</div>
+</dd>
+<dt><strong>quantity1: double</strong></dt><dd><div class="line-block">
+<div class="line">资产1的数量。</div>
+</div>
+</dd>
+<dt><strong>quantity2: double</strong></dt><dd><div class="line-block">
+<div class="line">资产2的数量。</div>
+</div>
+</dd>
+</dl>
+</dd>
+<dt><strong>Returns: double</strong></dt><dd><div class="line-block">
+<div class="line">返回差期权的现值。</div>
+</div>
+</dd>
+</dl>
+</div>
+<div class="section" id="example">
+<h2>Example<a class="headerlink" href="#example" title="永久链接至标题">¶</a></h2>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;gtest/gtest.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;qlib/analytical_engine/spread_option.h&quot;</span><span class="cp"></span>
+
+<span class="n">TEST</span><span class="p">(</span><span class="n">TestAnalytical</span><span class="p">,</span><span class="w"> </span><span class="n">SpreadOption</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// page 174</span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">spot1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">122</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">spot2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">120</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">rho</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">-0.5</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.1</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">b1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">b2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">vol1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.2</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">vol2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.2</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.1</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">OptionType</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">OptionType</span><span class="o">::</span><span class="n">CALL</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">strike</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">quantity1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">quantity2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">pv</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="n">AnalyticalEngine</span><span class="o">::</span><span class="n">Spread</span><span class="o">::</span><span class="n">Pv</span><span class="p">(</span><span class="n">spot1</span><span class="p">,</span><span class="w"> </span><span class="n">spot2</span><span class="p">,</span><span class="w"> </span><span class="n">rho</span><span class="p">,</span><span class="w"> </span><span class="n">r</span><span class="p">,</span><span class="w"> </span><span class="n">b1</span><span class="p">,</span><span class="w"> </span><span class="n">b2</span><span class="p">,</span><span class="w"> </span><span class="n">vol1</span><span class="p">,</span><span class="w"> </span><span class="n">vol2</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="p">,</span><span class="w"> </span><span class="n">strike</span><span class="p">,</span><span class="w"> </span><span class="n">quantity1</span><span class="p">,</span><span class="w"> </span><span class="n">quantity2</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">EXPECT_NEAR</span><span class="p">(</span><span class="mf">4.7530</span><span class="p">,</span><span class="w"> </span><span class="n">pv</span><span class="p">,</span><span class="w"> </span><span class="mf">1e-4</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2022, Essence Security.
+
+    </p>
+  </div>
+    
+    
+    
+    利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用了 
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    
+    由 <a href="https://readthedocs.org">Read the Docs</a>开发. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,4 @@
+障碍
+====
+
+.. doxygenenum:: BarrierType

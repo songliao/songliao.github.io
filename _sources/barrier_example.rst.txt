@@ -1,0 +1,1132 @@
+========================
+广义期权的实际案例
+========================
+
+
+单障碍敲入期权实际案例：气囊结构
+==================================
+
+.. list-table:: 
+
+    * - **气囊结构定义要素**
+      - **说明**
+    * - 敲入方向
+      - 向上敲入 **UP_IN** 或向下敲入 **DOWN_IN**
+    * - 敲入观察日
+      - 任意定义，一般根据观察频率、初始日期、期限等生成
+    * - 敲入障碍价格
+      - 对应的每个敲入观察日有对应的敲入障碍价格
+    * - 敲入赔付
+      - CALL-PUT，有对应的参与率
+    * - 未敲入赔付
+      - CALL，有对应的参与率
+    * - 日历
+      - 指定 :doc:`qlib_doc/calendar`
+
+
+Example
+-----------------
+.. list-table:: 
+
+    * - **气囊结构测试条款**
+      -    
+    * - 开始日期
+      - 2018年1月4日
+    * - 结束日期
+      - 2019年1月3日
+    * - 敲入方向
+      - 向下敲入 **DOWN_IN**
+    * - 敲入观察频率
+      - 按日观察
+    * - 敲入障碍价格
+      - 70.0
+    * - 敲入赔付
+      - CALL-PUT，参与率为100%，执行价为100
+    * - 未敲入赔付
+      - CALL，参与率为80%，执行价为100
+    * - 日历
+      - A股交易日历
+
+该期权在单障碍敲入期权接口中的实现如下： 
+
+.. code-block:: c++
+
+    #include "qlib/barrier_option.h"
+    #include "qlib/schedule.h"
+    #define A_STOCK "[path]/Calendars/China.txt"
+
+    int main()
+    {
+        auto cal = Calendar(A_STOCK);
+        auto start_date = Date(2018, 1, 4);
+        auto end_date = Date(2019, 1, 3);
+        auto observation_dates = Schedule(start_date, end_date, Period(1, TimeUnit::DAY),
+                                            BusinessDayConvention::FOLLOWING,
+                                            DateGenerationRule::FORWARD, cal, true, false);
+
+        std::vector<double> barriers(observation_dates.size(), 70.0);
+        auto ki_payoff = Vanilla(100, OptionType::CALL) - Vanilla(100, OptionType::PUT);
+        auto nki_payoff = Vanilla(100, OptionType::CALL, 0.8);
+        auto airbag = KnockInBarrierOption(BarrierType::DOWN_IN, observation_dates,
+                                            barriers, ki_payoff, nki_payoff, cal);
+            
+    }
+
+
+单障碍敲出期权实际案例：保本雪球
+===================================
+
+.. list-table:: 
+
+    * - **保本雪球定义要素**
+      - **说明**
+    * - 敲出方向
+      - 向上敲出 **UP_OUT** 或向下敲出 **DOWN_OUT**
+    * - 敲出观察日
+      - 任意定义，一般根据观察频率、初始日期、期限等生成
+    * - 敲出障碍价格
+      - 对应的每个敲出观察日有对应的敲出障碍价格
+    * - 敲出赔付
+      - 年化票息
+    * - 未敲入赔付
+      - 票息
+    * - 票息计息规则
+      - 通常情况下为Act365计息规则
+    * - 日历
+      - 指定 :doc:`qlib_doc/calendar`
+
+Example
+----------------------------
+.. list-table:: 
+
+    * - **保本雪球结构测试条款**
+      -    
+    * - 开始日期
+      - 2018年1月4日
+    * - 结束日期
+      - 2019年1月3日
+    * - 初始价格
+      - 100.0
+    * - 敲出方向
+      - 向上敲出，**UP_OUT**
+    * - 敲出观察频率
+      - 按月观察
+    * - 敲出障碍价格
+      - 102.0
+    * - 敲出赔付
+      - 年化8%的票息
+    * - 未敲出赔付
+      - 年化2%的票息
+    * - 票息计息规则
+      - Act365
+    * - 日历
+      - A股交易日历
+
+该期权在单障碍敲出期权接口中的实现如下： 
+
+.. code-block:: c++
+
+    #include "qlib/barrier_option.h"
+    #include "qlib/schedule.h"
+    #define A_STOCK "[path]/Calendars/China.txt"
+
+    int main()
+    {
+        auto cal = Calendar(A_STOCK);
+        auto start_date = Date(2018, 1, 4);
+        auto end_date = Date(2019, 1, 3);
+        auto observation_dates = Schedule(start_date, end_date, Period(1, TimeUnit::MONTH),
+                          BusinessDayConvention::FOLLOWING,
+                          DateGenerationRule::FORWARD, cal, true, false);
+
+        std::vector<double> barriers(observation_dates.size(), 102.0);
+
+        double initial_price = 100.0;
+        double ko_coupon_rate = 0.08;
+        std::vector<Payoff> ko_payoffs(observation_dates.size());
+        for (size_t i = 0; i < observation_dates.size(); ++i)
+        {
+          auto d = observation_dates[i];
+          double rebate = initial_price * (d - start_date) / 365.0 * ko_coupon_rate;
+          ko_payoffs[i] = Cash(rebate);
+        }
+
+        double nko_coupon_rate = 0.02;
+        double maturity_rebate = initial_price * (observation_dates.back() - start_date) / 365.0 * nko_coupon_rate;
+        auto maturity_payoff = Cash(maturity_rebate);
+        
+        auto ko_opt = KnockOutBarrierOption(BarrierType::UP_OUT, observation_dates, barriers,
+                                            ko_payoffs, maturity_payoff, cal);
+
+    }
+
+
+敲入敲出型期权实际案例：雪球结构
+==================================
+
+.. _snowball def:
+
+.. list-table:: 
+
+    * - **雪球种类**
+      - **说明**
+    * - :ref:`经典雪球 <classic snowball>` 
+      - 向上敲出支付敲出年化票息，向下敲入跌多少赔多少，即一笔行权价为100%的负PUT，不敲出不敲入在期权到期时获得一笔红利票息
+    * - :ref:`不追保雪球 <no margin call snowball>`  
+      - 在标准雪球的基础上，将敲入后的障碍期权设定为熊市价差
+    * - :ref:`OTM雪球 <OTM snowball>`  
+      - 在标准雪球的基础上，敲入后的看跌期权行权价小于100%
+    * - :ref:`降敲型雪球 <step down snowball>`  
+      - 在标准雪球的基础上，敲出障碍价格随着敲出观察日递减
+    * - :ref:`锁定期雪球 <locked period snowball>`
+      - 在标准雪球的基础上，锁定一段时间不进行敲出观察
+    * - :ref:`降落伞雪球 <parachute snowball>`   
+      - 在标准雪球的基础上，在最后一个敲出观察日时，敲出障碍价格骤降。
+    * - :ref:`收益增强型雪球 <enhanced snowball>`  
+      - 在标准雪球的基础上，敲出不仅赔付一笔敲出年化票息，还支付一定参与率的看涨期权
+
+以上所有的雪球种类都能做 :ref:`反向雪球 <reverse snowball>`，即障碍类型为向下敲出向上敲入，在本文末尾将定义一个反向经典雪球，展示该接口的灵活性。
+
+
+.. _classic snowball:
+
+经典雪球
+------------------
+
+.. list-table:: 
+
+    * - **经典雪球定义要素**
+      - **说明**
+    * - 障碍类型
+      - 向上敲出向下敲入 **UP_OUT_DOWN_IN**
+    * - 敲出日期
+      - 任意定义，一般根据观察频率、初始日期、期限等生成
+    * - 敲出障碍价格
+      - 对应的每个敲出观察日有对应的敲出障碍价格
+    * - 敲出赔付
+      - 年化票息
+    * - 敲入日期
+      - 任意定义，一般根据观察频率、初始日期、期限等生成
+    * - 敲入障碍价格
+      - 对应的每个敲入观察日有对应的敲入障碍价格
+    * - 敲入赔付
+      - -PUT，行权价为100%
+    * - 未敲出未敲入赔付
+      - 一般同敲出票息
+    * - 票息计息规则
+      - 通常情况下为Act365计息规则
+    * - 日历
+      - 指定 :doc:`qlib_doc/calendar`
+
+
+Example
+^^^^^^^^^^^^^^^^^^^^^^^
+
+.. list-table:: 
+
+    * - **80-100雪球结构测试条款**
+      -  
+    * - 开始日期
+      - 2018年1月4日
+    * - 结束日期
+      - 2019年1月3日
+    * - 初始价格
+      - 100.0
+    * - 敲出方向
+      - 向上敲出向下敲入, **UP_OUT_DOWN_IN**
+    * - 敲出观察频率
+      - 按月观察
+    * - 敲出障碍价格
+      - 100.0
+    * - 敲出票息
+      - 年化8%
+    * - 红利票息
+      - 年化8%
+    * - 敲入观察频率
+      - 按日观察
+    * - 敲入障碍价格
+      - 80.0
+    * - 敲入赔付
+      - -PUT，行权价为100%
+    * - 票息计息规则
+      - Act365
+    * - 日历
+      - A股交易日历
+
+
+该期权在敲入敲出型期权接口中的实现如下： 
+
+.. code-block:: c++
+
+    #include "qlib/double_barrier_option.h"
+    #include "qlib/schedule.h"
+    #define A_STOCK "[path]/Calendars/China.txt"
+
+    int main()
+    {
+    	auto cal = Calendar(A_STOCK);
+      auto start_date = Date(2018, 1, 4);
+      auto end_date = Date(2019, 1, 4);
+
+      // 敲出事件
+      auto ko_dates = Schedule(start_date, end_date, Period(1, TimeUnit::MONTH),
+                                BusinessDayConvention::FOLLOWING,
+                                DateGenerationRule::FORWARD, cal, true, false);
+      std::vector<double> ko_barriers(ko_dates.size(), 100.0);
+
+      double initial_price = 100.0;
+      double ko_coupon_rate = 0.08;
+      std::vector<Payoff> ko_payoffs(ko_dates.size());
+      for (size_t i = 0; i < ko_dates.size(); ++i)
+      {
+        auto d = ko_dates[i];
+        double rebate = initial_price * (d - start_date) / 365.0 * ko_coupon_rate;
+        ko_payoffs[i] = Cash(rebate);
+      }
+
+      // 到期赔付
+      auto nki_nko_payoff = ko_payoffs[ko_dates.size() - 1];	
+
+      // 敲入事件
+      auto ki_dates = Schedule(start_date, end_date, Period(1, TimeUnit::DAY),
+                                BusinessDayConvention::FOLLOWING,
+                                DateGenerationRule::FORWARD, cal, true, false);
+      std::vector<double> ki_barriers(ki_dates.size(), 80.0);
+      auto ki_payoff = -Vanilla(100, OptionType::PUT);
+
+
+      auto my_snowball = InOutBarrierOption(BarrierType::UP_OUT_DOWN_IN, ko_dates, 
+                                            ko_barriers, ko_payoffs, ki_dates, ki_barriers,
+                                            ki_payoff, nki_nko_payoff, cal);
+
+    }
+
+.. _no margin call snowball:
+
+不追保雪球
+------------------
+不追保雪球的定义为：在标准雪球的基础上，将敲入后的障碍期权设定为熊市价差，较高的行权价一般与期初价格相同，较低的行权价决定了合约持有者相对名义本金的亏损上限。
+
+.. list-table:: 
+
+    * - **不追保雪球定义要素**
+      - **说明**
+    * - 障碍类型
+      - 向上敲出向下敲入 **UP_OUT_DOWN_IN**
+    * - 敲出日期
+      - 任意定义，一般根据观察频率、初始日期、期限等生成
+    * - 敲出障碍价格
+      - 对应的每个敲出观察日有对应的敲出障碍价格
+    * - 敲出赔付
+      - 年化票息
+    * - 敲入日期
+      - 任意定义，一般根据观察频率、初始日期、期限等生成
+    * - 敲入障碍价格
+      - 对应的每个敲入观察日有对应的敲入障碍价格
+    * - 低行权价
+      - 决定合约持有者相对名义本金的亏损上限
+    * - 敲入赔付
+      - -PUT Spread，高行权价为100%
+    * - 未敲出未敲入赔付
+      - 一般同敲出票息
+    * - 票息计息规则
+      - 通常情况下为Act365计息规则
+    * - 日历
+      - 指定 :doc:`qlib_doc/calendar`
+
+
+Example
+^^^^^^^^^^^^^^^^^^^^^^^
+
+.. list-table:: 
+
+    * - **不追保雪球结构测试条款**
+      -  
+    * - 开始日期
+      - 2018年1月4日
+    * - 结束日期
+      - 2019年1月3日
+    * - 初始价格
+      - 100.0
+    * - 敲出方向
+      - 向上敲出向下敲入, **UP_OUT_DOWN_IN**
+    * - 敲出观察频率
+      - 按月观察
+    * - 敲出障碍价格
+      - 100.0
+    * - 敲出票息
+      - 年化8%
+    * - 红利票息
+      - 年化8%
+    * - 敲入观察频率
+      - 按日观察
+    * - 敲入障碍价格
+      - 80.0
+    * - 低行权价
+      - 80.0
+    * - 敲入赔付
+      - -PUT Spread，高行权价为100%
+    * - 票息计息规则
+      - Act365
+    * - 日历
+      - A股交易日历
+
+
+该期权在敲入敲出型期权接口中的实现如下： 
+
+.. code-block:: c++
+
+    #include "qlib/barrier_option.h"
+    #include "qlib/schedule.h"
+    #define A_STOCK "[path]/Calendars/China.txt"
+
+    int main()
+    {
+      auto cal = Calendar(A_STOCK);
+      auto start_date = Date(2018, 1, 4);
+      auto end_date = Date(2019, 1, 4);
+
+      // 敲出事件
+      auto ko_dates = Schedule(start_date, end_date, Period(1, TimeUnit::MONTH),
+                                BusinessDayConvention::FOLLOWING,
+                                DateGenerationRule::FORWARD, cal, true, false);
+      std::vector<double> ko_barriers(ko_dates.size(), 100.0);
+
+      double initial_price = 100.0;
+      double ko_coupon_rate = 0.08;
+      std::vector<Payoff> ko_payoffs(ko_dates.size());
+      for (size_t i = 0; i < ko_dates.size(); ++i)
+      {
+        auto d = ko_dates[i];
+        double rebate = initial_price * (d - start_date) / 365.0 * ko_coupon_rate;
+        ko_payoffs[i] = Cash(rebate);
+      }
+
+      // 到期赔付
+      auto nki_nko_payoff = ko_payoffs[ko_dates.size() - 1];	
+
+      // 敲入事件
+      auto ki_dates = Schedule(start_date, end_date, Period(1, TimeUnit::DAY),
+                                BusinessDayConvention::FOLLOWING,
+                                DateGenerationRule::FORWARD, cal, true, false);
+      std::vector<double> ki_barriers(ki_dates.size(), 80.0);
+      auto ki_payoff = Vanilla(80, OptionType::PUT)-Vanilla(100, OptionType::PUT);
+
+
+      auto no_margin_call_snowball = InOutBarrierOption(BarrierType::UP_OUT_DOWN_IN, 
+                                                        ko_dates, ko_barriers, ko_payoffs, 
+                                                        ki_dates, ki_barriers, ki_payoff, 
+                                                        nki_nko_payoff, cal);
+
+
+    }
+
+.. _OTM snowball:
+
+OTM雪球
+------------------
+在标准雪球的基础上，降低敲入后的障碍看跌期权行权价
+
+.. list-table:: 
+
+    * - **OTM雪球定义要素**
+      - **说明**
+    * - 障碍类型
+      - 向上敲出向下敲入 **UP_OUT_DOWN_IN**
+    * - 敲出日期
+      - 任意定义，一般根据观察频率、初始日期、期限等生成
+    * - 敲出障碍价格
+      - 对应的每个敲出观察日有对应的敲出障碍价格
+    * - 敲出赔付
+      - 年化票息
+    * - 敲入日期
+      - 任意定义，一般根据观察频率、初始日期、期限等生成
+    * - 敲入障碍价格
+      - 对应的每个敲入观察日有对应的敲入障碍价格
+    * - 敲入赔付
+      - -PUT，行权价低于100%
+    * - 未敲出未敲入赔付
+      - 一般同敲出票息
+    * - 票息计息规则
+      - 通常情况下为Act365计息规则
+    * - 日历
+      - 指定 :doc:`qlib_doc/calendar`
+
+
+Example
+^^^^^^^^^^^^^^^^^^^^^^^
+
+.. list-table:: 
+
+    * - **OTM雪球结构测试条款**
+      -  
+    * - 开始日期
+      - 2018年1月4日
+    * - 结束日期
+      - 2019年1月3日
+    * - 初始价格
+      - 100.0
+    * - 敲出方向
+      - 向上敲出向下敲入, **UP_OUT_DOWN_IN**
+    * - 敲出观察频率
+      - 按月观察
+    * - 敲出障碍价格
+      - 100.0
+    * - 敲出票息
+      - 年化8%
+    * - 红利票息
+      - 年化8%
+    * - 敲入观察频率
+      - 按日观察
+    * - 敲入障碍价格
+      - 80.0
+    * - 行权价
+      - 90.0
+    * - 敲入赔付
+      - -PUT
+    * - 票息计息规则
+      - Act365
+    * - 日历
+      - A股交易日历
+
+
+该期权在敲入敲出型期权接口中的实现如下： 
+
+.. code-block:: c++
+
+    #include "qlib/barrier_option.h"
+    #include "qlib/schedule.h"
+    #define A_STOCK "[path]/Calendars/China.txt"
+
+    int main()
+    {
+      auto cal = Calendar(A_STOCK);
+      auto start_date = Date(2018, 1, 4);
+      auto end_date = Date(2019, 1, 4);
+
+      // 敲出事件
+      auto ko_dates = Schedule(start_date, end_date, Period(1, TimeUnit::MONTH),
+                                BusinessDayConvention::FOLLOWING,
+                                DateGenerationRule::FORWARD, cal, true, false);
+      std::vector<double> ko_barriers(ko_dates.size(), 100.0);
+
+      double initial_price = 100.0;
+      double ko_coupon_rate = 0.08;
+      std::vector<Payoff> ko_payoffs(ko_dates.size());
+      for (size_t i = 0; i < ko_dates.size(); ++i)
+      {
+        auto d = ko_dates[i];
+        double rebate = initial_price * (d - start_date) / 365.0 * ko_coupon_rate;
+        ko_payoffs[i] = Cash(rebate);
+      }
+
+      // 到期赔付
+      auto nki_nko_payoff = ko_payoffs[ko_dates.size() - 1];	
+
+      // 敲入事件
+      auto ki_dates = Schedule(start_date, end_date, Period(1, TimeUnit::DAY),
+                                BusinessDayConvention::FOLLOWING,
+                                DateGenerationRule::FORWARD, cal, true, false);
+      std::vector<double> ki_barriers(ki_dates.size(), 80.0);
+      auto ki_payoff = -Vanilla(90.0, OptionType::PUT);
+
+
+      auto OTM_snowball = InOutBarrierOption(BarrierType::UP_OUT_DOWN_IN, 
+                                                        ko_dates, ko_barriers, ko_payoffs, 
+                                                        ki_dates, ki_barriers, ki_payoff, 
+                                                        nki_nko_payoff, cal);
+
+
+    }
+
+.. _step down snowball:
+
+降敲型雪球
+------------------
+在标准雪球的基础上，敲出障碍价格随着敲出观察日递减。
+
+.. list-table:: 
+
+    * - **降敲型雪球定义要素**
+      - **说明**
+    * - 障碍类型
+      - 向上敲出向下敲入 **UP_OUT_DOWN_IN**
+    * - 敲出日期
+      - 任意定义，一般根据观察频率、初始日期、期限等生成
+    * - 敲出障碍价格
+      - 对应的每个敲出观察日有对应的敲出障碍价格，敲出障碍价格随着敲出观察日递减
+    * - 敲出赔付
+      - 年化票息
+    * - 敲入日期
+      - 任意定义，一般根据观察频率、初始日期、期限等生成
+    * - 敲入障碍价格
+      - 对应的每个敲入观察日有对应的敲入障碍价格
+    * - 敲入赔付
+      - -PUT，行权价为100%
+    * - 未敲出未敲入赔付
+      - 一般同敲出票息
+    * - 票息计息规则
+      - 通常情况下为Act365计息规则
+    * - 日历
+      - 指定 :doc:`qlib_doc/calendar`
+
+
+Example
+^^^^^^^^^^^^^^^^^^^^^^^
+
+.. list-table:: 
+
+    * - **降敲型雪球结构测试条款**
+      -  
+    * - 开始日期
+      - 2018年1月4日
+    * - 结束日期
+      - 2019年1月3日
+    * - 初始价格
+      - 100.0
+    * - 敲出方向
+      - 向上敲出向下敲入, **UP_OUT_DOWN_IN**
+    * - 敲出观察频率
+      - 按月观察
+    * - 敲出障碍价格
+      - 100.0，逐月递减0.5至94.5
+    * - 敲出票息
+      - 年化8%
+    * - 红利票息
+      - 年化8%
+    * - 敲入观察频率
+      - 按日观察
+    * - 敲入障碍价格
+      - 80.0
+    * - 敲入赔付
+      - -PUT，行权价为100%
+    * - 票息计息规则
+      - Act365
+    * - 日历
+      - A股交易日历
+
+
+该期权在敲入敲出型期权接口中的实现如下： 
+
+.. code-block:: c++
+
+    #include "qlib/barrier_option.h"
+    #include "qlib/schedule.h"
+    #define A_STOCK "[path]/Calendars/China.txt"
+
+    int main()
+    {
+      auto cal = Calendar(A_STOCK);
+      auto start_date = Date(2018, 1, 4);
+      auto end_date = Date(2019, 1, 4);
+
+      // 敲出事件
+      auto ko_dates = Schedule(start_date, end_date, Period(1, TimeUnit::MONTH),
+                                BusinessDayConvention::FOLLOWING,
+                                DateGenerationRule::FORWARD, cal, true, false);
+
+      double initial_price = 100.0;
+      double ko_coupon_rate = 0.08;
+      std::vector<double> ko_barriers(ko_dates.size());
+      std::vector<Payoff> ko_payoffs(ko_dates.size());
+      for (size_t i = 0; i < ko_dates.size(); ++i)
+      {
+        ko_barriers[i] = 100.0 - 0.5 * static_cast<double>(i);
+        auto d = ko_dates[i];
+        double rebate = initial_price * (d - start_date) / 365.0 * ko_coupon_rate;
+        ko_payoffs[i] = Cash(rebate);
+      }
+
+      // 到期赔付
+      auto nki_nko_payoff = ko_payoffs[ko_dates.size() - 1];	
+
+      // 敲入事件
+      auto ki_dates = Schedule(start_date, end_date, Period(1, TimeUnit::DAY),
+                                BusinessDayConvention::FOLLOWING,
+                                DateGenerationRule::FORWARD, cal, true, false);
+      std::vector<double> ki_barriers(ki_dates.size(), 80.0);
+      auto ki_payoff = -Vanilla(90.0, OptionType::PUT);
+
+
+      auto step_down_snowball = InOutBarrierOption(BarrierType::UP_OUT_DOWN_IN, 
+                                                        ko_dates, ko_barriers, ko_payoffs, 
+                                                        ki_dates, ki_barriers, ki_payoff, 
+                                                        nki_nko_payoff, cal);
+
+
+    }
+
+.. _locked period snowball:
+
+锁定期雪球
+------------------
+在标准雪球的基础上，锁定一段时间不进行敲出观察
+
+.. list-table:: 
+
+    * - **锁定期雪球定义要素**
+      - **说明**
+    * - 障碍类型
+      - 向上敲出向下敲入 **UP_OUT_DOWN_IN**
+    * - 敲出日期
+      - 任意定义，一般根据观察频率、初始日期、期限等生成
+    * - 敲出锁定期
+      - 锁定一段时间不进行敲出观察
+    * - 敲出障碍价格
+      - 对应的每个敲出观察日有对应的敲出障碍价格
+    * - 敲出赔付
+      - 年化票息
+    * - 敲入日期
+      - 任意定义，一般根据观察频率、初始日期、期限等生成
+    * - 敲入障碍价格
+      - 对应的每个敲入观察日有对应的敲入障碍价格
+    * - 敲入赔付
+      - -PUT，行权价为100%
+    * - 未敲出未敲入赔付
+      - 一般同敲出票息
+    * - 票息计息规则
+      - 通常情况下为Act365计息规则
+    * - 日历
+      - 指定 :doc:`qlib_doc/calendar`
+
+
+Example
+^^^^^^^^^^^^^^^^^^^^^^^
+
+.. list-table:: 
+
+    * - **锁定期雪球结构测试条款**
+      -  
+    * - 开始日期
+      - 2018年1月4日
+    * - 结束日期
+      - 2019年1月3日
+    * - 初始价格
+      - 100.0
+    * - 敲出方向
+      - 向上敲出向下敲入, **UP_OUT_DOWN_IN**
+    * - 敲出观察频率
+      - 按月观察
+    * - 敲出锁定期
+      - 3个月
+    * - 敲出障碍价格
+      - 100.0
+    * - 敲出票息
+      - 年化8%
+    * - 红利票息
+      - 年化8%
+    * - 敲入观察频率
+      - 按日观察
+    * - 敲入障碍价格
+      - 80.0
+    * - 敲入赔付
+      - -PUT，行权价为100%
+    * - 票息计息规则
+      - Act365
+    * - 日历
+      - A股交易日历
+
+
+该期权在敲入敲出型期权接口中的实现如下： 
+
+.. code-block:: c++
+
+    #include "qlib/barrier_option.h"
+    #include "qlib/schedule.h"
+    #define A_STOCK "[path]/Calendars/China.txt"
+
+    int main()
+    {
+      auto cal = Calendar(A_STOCK);
+      auto start_date = Date(2018, 1, 4);
+      auto end_date = Date(2019, 1, 4);
+
+      // 敲出事件
+      auto original_ko_dates = Schedule(start_date, end_date, Period(1, TimeUnit::MONTH),
+                                BusinessDayConvention::FOLLOWING,
+                                DateGenerationRule::FORWARD, cal, true, false);
+      auto ko_dates = std::vector<Date>(original_ko_dates.begin() + 3, original_ko_dates.end());
+      std::vector<double> ko_barriers(ko_dates.size(), 100.0);
+
+      double initial_price = 100.0;
+      double ko_coupon_rate = 0.08;
+      std::vector<Payoff> ko_payoffs(ko_dates.size());
+      for (size_t i = 0; i < ko_dates.size(); ++i)
+      {
+        auto d = ko_dates[i];
+        double rebate = initial_price * (d - start_date) / 365.0 * ko_coupon_rate;
+        ko_payoffs[i] = Cash(rebate);
+      }
+
+      // 到期赔付
+      auto nki_nko_payoff = ko_payoffs[ko_dates.size() - 1];	
+
+      // 敲入事件
+      auto ki_dates = Schedule(start_date, end_date, Period(1, TimeUnit::DAY),
+                                BusinessDayConvention::FOLLOWING,
+                                DateGenerationRule::FORWARD, cal, true, false);
+      std::vector<double> ki_barriers(ki_dates.size(), 80.0);
+      auto ki_payoff = -Vanilla(90.0, OptionType::PUT);
+
+
+      auto locked_snowball = InOutBarrierOption(BarrierType::UP_OUT_DOWN_IN, 
+                                                        ko_dates, ko_barriers, ko_payoffs, 
+                                                        ki_dates, ki_barriers, ki_payoff, 
+                                                        nki_nko_payoff, cal);
+
+
+    }
+
+.. _parachute snowball:
+
+降落伞雪球
+------------------
+在标准雪球的基础上，在最后一个敲出观察日时，敲出障碍价格骤降。
+
+.. list-table:: 
+
+    * - **锁定期雪球定义要素**
+      - **说明**
+    * - 障碍类型
+      - 向上敲出向下敲入 **UP_OUT_DOWN_IN**
+    * - 敲出日期
+      - 任意定义，一般根据观察频率、初始日期、期限等生成
+    * - 敲出障碍价格
+      - 对应的每个敲出观察日有对应的敲出障碍价格
+    * - 最后敲出障碍价格
+      - 小于之前的敲出障碍价格
+    * - 敲出赔付
+      - 年化票息
+    * - 敲入日期
+      - 任意定义，一般根据观察频率、初始日期、期限等生成
+    * - 敲入障碍价格
+      - 对应的每个敲入观察日有对应的敲入障碍价格
+    * - 敲入赔付
+      - -PUT，行权价为100%
+    * - 未敲出未敲入赔付
+      - 一般同敲出票息
+    * - 票息计息规则
+      - 通常情况下为Act365计息规则
+    * - 日历
+      - 指定 :doc:`qlib_doc/calendar`
+
+
+Example
+^^^^^^^^^^^^^^^^^^^^^^^
+
+.. list-table:: 
+
+    * - **锁定期雪球结构测试条款**
+      -  
+    * - 开始日期
+      - 2018年1月4日
+    * - 结束日期
+      - 2019年1月3日
+    * - 初始价格
+      - 100.0
+    * - 敲出方向
+      - 向上敲出向下敲入, **UP_OUT_DOWN_IN**
+    * - 敲出观察频率
+      - 按月观察
+    * - 敲出障碍价格
+      - 100.0
+    * - 最后敲出障碍价格
+      - 90.0
+    * - 敲出票息
+      - 年化8%
+    * - 红利票息
+      - 年化8%
+    * - 敲入观察频率
+      - 按日观察
+    * - 敲入障碍价格
+      - 80.0
+    * - 敲入赔付
+      - -PUT，行权价为100%
+    * - 票息计息规则
+      - Act365
+    * - 日历
+      - A股交易日历
+
+
+该期权在敲入敲出型期权接口中的实现如下： 
+
+.. code-block:: c++
+
+    #include "qlib/barrier_option.h"
+    #include "qlib/schedule.h"
+    #define A_STOCK "[path]/Calendars/China.txt"
+
+    int main()
+    {
+      auto cal = Calendar(A_STOCK);
+      auto start_date = Date(2018, 1, 4);
+      auto end_date = Date(2019, 1, 4);
+
+      // 敲出事件
+      auto ko_dates = Schedule(start_date, end_date, Period(1, TimeUnit::MONTH),
+                                BusinessDayConvention::FOLLOWING,
+                                DateGenerationRule::FORWARD, cal, true, false);
+      std::vector<double> ko_barriers(ko_dates.size(), 100.0);
+      ko_barriers.back() = 90.0;
+
+      double initial_price = 100.0;
+      double ko_coupon_rate = 0.08;
+      std::vector<Payoff> ko_payoffs(ko_dates.size());
+      for (size_t i = 0; i < ko_dates.size(); ++i)
+      {
+        auto d = ko_dates[i];
+        double rebate = initial_price * (d - start_date) / 365.0 * ko_coupon_rate;
+        ko_payoffs[i] = Cash(rebate);
+      }
+
+      // 到期赔付
+      auto nki_nko_payoff = ko_payoffs[ko_dates.size() - 1];	
+
+      // 敲入事件
+      auto ki_dates = Schedule(start_date, end_date, Period(1, TimeUnit::DAY),
+                                BusinessDayConvention::FOLLOWING,
+                                DateGenerationRule::FORWARD, cal, true, false);
+      std::vector<double> ki_barriers(ki_dates.size(), 80.0);
+      auto ki_payoff = -Vanilla(90.0, OptionType::PUT);
+
+
+      auto parachute_snowball = InOutBarrierOption(BarrierType::UP_OUT_DOWN_IN, 
+                                                    ko_dates, ko_barriers, ko_payoffs, 
+                                                    ki_dates, ki_barriers, ki_payoff, 
+                                                    nki_nko_payoff, cal);
+
+
+    }
+
+
+.. _enhanced snowball:
+
+收益增强型雪球
+------------------
+在标准雪球的基础上，敲出不仅赔付一笔敲出年化票息，还支付一定参与率的看涨期权
+
+.. list-table:: 
+
+    * - **收益增强型雪球定义要素**
+      - **说明**
+    * - 障碍类型
+      - 向上敲出向下敲入 **UP_OUT_DOWN_IN**
+    * - 敲出日期
+      - 任意定义，一般根据观察频率、初始日期、期限等生成
+    * - 敲出障碍价格
+      - 对应的每个敲出观察日有对应的敲出障碍价格
+    * - 敲出赔付
+      - 年化票息 + 一定参与率的看涨期权
+    * - 敲入日期
+      - 任意定义，一般根据观察频率、初始日期、期限等生成
+    * - 敲入障碍价格
+      - 对应的每个敲入观察日有对应的敲入障碍价格
+    * - 敲入赔付
+      - -PUT，行权价为100%
+    * - 未敲出未敲入赔付
+      - 一般同敲出票息
+    * - 票息计息规则
+      - 通常情况下为Act365计息规则
+    * - 日历
+      - 指定 :doc:`qlib_doc/calendar`
+
+
+Example
+^^^^^^^^^^^^^^^^^^^^^^^
+
+.. list-table:: 
+
+    * - **收益增强型雪球结构测试条款**
+      -  
+    * - 开始日期
+      - 2018年1月4日
+    * - 结束日期
+      - 2019年1月3日
+    * - 初始价格
+      - 100.0
+    * - 敲出方向
+      - 向上敲出向下敲入, **UP_OUT_DOWN_IN**
+    * - 敲出观察频率
+      - 按月观察
+    * - 敲出障碍价格
+      - 100.0
+    * - 敲出票息
+      - 年化7%
+    * - 敲出参与率
+      - 50%
+    * - 红利票息
+      - 年化7%
+    * - 敲入观察频率
+      - 按日观察
+    * - 敲入障碍价格
+      - 80.0
+    * - 敲入赔付
+      - -PUT，行权价为100%
+    * - 票息计息规则
+      - Act365
+    * - 日历
+      - A股交易日历
+
+
+该期权在敲入敲出型期权接口中的实现如下： 
+
+.. code-block:: c++
+
+    #include "qlib/double_barrier_option.h"
+    #include "qlib/schedule.h"
+    #define A_STOCK "[path]/Calendars/China.txt"
+
+    int main()
+    {
+    	auto cal = Calendar(A_STOCK);
+      auto start_date = Date(2018, 1, 4);
+      auto end_date = Date(2019, 1, 4);
+
+      // 敲出事件
+      auto ko_dates = Schedule(start_date, end_date, Period(1, TimeUnit::MONTH),
+                                BusinessDayConvention::FOLLOWING,
+                                DateGenerationRule::FORWARD, cal, true, false);
+      std::vector<double> ko_barriers(ko_dates.size(), 100.0);
+
+      double initial_price = 100.0;
+      double ko_coupon_rate = 0.07;
+      std::vector<Payoff> ko_payoffs(ko_dates.size());
+      for (size_t i = 0; i < ko_dates.size(); ++i)
+      {
+        auto d = ko_dates[i];
+        double rebate = initial_price * (d - start_date) / 365.0 * ko_coupon_rate;
+        ko_payoffs[i] = Cash(rebate) + Vanilla(100, OptionType::CALL);
+      }
+
+      // 到期赔付
+      auto nki_nko_payoff = ko_payoffs[ko_dates.size() - 1];	
+
+      // 敲入事件
+      auto ki_dates = Schedule(start_date, end_date, Period(1, TimeUnit::DAY),
+                                BusinessDayConvention::FOLLOWING,
+                                DateGenerationRule::FORWARD, cal, true, false);
+      std::vector<double> ki_barriers(ki_dates.size(), 80.0);
+      auto ki_payoff = -Vanilla(100, OptionType::PUT);
+
+
+      auto enhanced_snowball = InOutBarrierOption(BarrierType::UP_OUT_DOWN_IN, ko_dates, 
+                                            ko_barriers, ko_payoffs, ki_dates, ki_barriers,
+                                            ki_payoff, nki_nko_payoff, cal);
+
+    }
+
+
+.. _reverse snowball:
+
+反向雪球
+------------------
+在标准雪球的基础上，障碍方向为向下敲出向上敲入雪球。
+
+.. list-table:: 
+
+    * - **反向雪球定义要素**
+      - **说明**
+    * - 障碍类型
+      - 向下敲出向上敲入 **UP_IN_DOWN_OUT**
+    * - 敲出日期
+      - 任意定义，一般根据观察频率、初始日期、期限等生成
+    * - 敲出障碍价格
+      - 对应的每个敲出观察日有对应的敲出障碍价格
+    * - 敲出赔付
+      - 年化票息
+    * - 敲入日期
+      - 任意定义，一般根据观察频率、初始日期、期限等生成
+    * - 敲入障碍价格
+      - 对应的每个敲入观察日有对应的敲入障碍价格
+    * - 敲入赔付
+      - -PUT，行权价为100%
+    * - 未敲出未敲入赔付
+      - 一般同敲出票息
+    * - 票息计息规则
+      - 通常情况下为Act365计息规则
+    * - 日历
+      - 指定 :doc:`qlib_doc/calendar`
+
+
+Example
+^^^^^^^^^^^^^^^^^^^^^^^
+
+.. list-table:: 
+
+    * - **反向雪球结构测试条款**
+      -  
+    * - 开始日期
+      - 2018年1月4日
+    * - 结束日期
+      - 2019年1月3日
+    * - 初始价格
+      - 100.0
+    * - 敲出方向
+      - 向下敲出向上敲入, **UP_IN_DOWN_OUT**
+    * - 敲出观察频率
+      - 按月观察
+    * - 敲出障碍价格
+      - 100.0
+    * - 敲出票息
+      - 年化5%
+    * - 红利票息
+      - 年化5%
+    * - 敲入观察频率
+      - 按日观察
+    * - 敲入障碍价格
+      - 120.0
+    * - 敲入赔付
+      - -CALL，行权价为100%
+    * - 票息计息规则
+      - Act365
+    * - 日历
+      - A股交易日历
+
+
+该期权在敲入敲出型期权接口中的实现如下： 
+
+.. code-block:: c++
+
+    #include "qlib/double_barrier_option.h"
+    #include "qlib/schedule.h"
+    #define A_STOCK "[path]/Calendars/China.txt"
+
+    int main()
+    {
+    	auto cal = Calendar(A_STOCK);
+      auto start_date = Date(2018, 1, 4);
+      auto end_date = Date(2019, 1, 4);
+
+      // 敲出事件
+      auto ko_dates = Schedule(start_date, end_date, Period(1, TimeUnit::MONTH),
+                                BusinessDayConvention::FOLLOWING,
+                                DateGenerationRule::FORWARD, cal, true, false);
+      std::vector<double> ko_barriers(ko_dates.size(), 100.0);
+
+      double initial_price = 100.0;
+      double ko_coupon_rate = 0.05;
+      std::vector<Payoff> ko_payoffs(ko_dates.size());
+      for (size_t i = 0; i < ko_dates.size(); ++i)
+      {
+        auto d = ko_dates[i];
+        double rebate = initial_price * (d - start_date) / 365.0 * ko_coupon_rate;
+        ko_payoffs[i] = Cash(rebate);
+      }
+
+      // 到期赔付
+      auto nki_nko_payoff = ko_payoffs[ko_dates.size() - 1];	
+
+      // 敲入事件
+      auto ki_dates = Schedule(start_date, end_date, Period(1, TimeUnit::DAY),
+                                BusinessDayConvention::FOLLOWING,
+                                DateGenerationRule::FORWARD, cal, true, false);
+      std::vector<double> ki_barriers(ki_dates.size(), 120.0);
+      auto ki_payoff = -Vanilla(100, OptionType::CALL);
+
+
+      auto reversed_snowball = InOutBarrierOption(BarrierType::UP_IN_DOWN_OUT, ko_dates, 
+                                            ko_barriers, ko_payoffs, ki_dates, ki_barriers,
+                                            ki_payoff, nki_nko_payoff, cal);
+
+    }
+

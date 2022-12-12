@@ -1,0 +1,54 @@
+======================================
+部分挂钩双标的奇异衍生品及其定价
+======================================
+
+商期权
+===========================
+
+商期权（quotient options, 也称之为相对超额收益期权relative outperformance options)。其看涨期权的收益为 :math:`\text{Max}(\frac{S_1}{S_2} - X, 0)`； 而其看跌期权的收益为
+:math:`\text{Max}(X- \frac{S_1}{S_2}, 0)` .
+
+
+乘积期权
+===========
+乘积期权（product options)。乘积看涨期权的收益为 :math:`\text{Max}(S_1 S_2 - X, 0)`； 乘积看跌期权的收益为 :math:`\text{Max}(X- S_1 S_2, 0)`。
+
+
+价差期权
+=========
+双标的价差期权（spread options)与牛熊价差不同。价差看涨期权的收益为 :math:`\text{Max}(S_1-  S_2 - X, 0)`； 价差看跌期权的收益为 :math:`\text{Max}(X- ( S_1-  S_2), 0)` 。
+
+
+相关性期权
+============
+对双标的相关性期权（two asset correlation options）而言， 其看涨期权的收益为 :math:`\text{Max}(S_2 - X_2, 0)` 如果 :math:`S_1 > X_1`, 否则为0；
+相关性看跌期权的收益为 :math:`\text{Max}(X_2 - S_2, 0)` 如果 :math:`S_1 < X_1`, 否则为0.
+
+最劣资产期权
+=============
+最劣资产看涨期权（call on the minimum of two assets）的到期收益为 :math:`\text{Max}(\text{Min}(S_1,S_2) - X, 0)`; 
+最劣资产看跌期权 (put on the minimum of two assets) 的到期收益为 :math:`\text{Max}(X- \text{Min}(S_1,S_2), 0)`。
+
+最优资产期权
+=============
+最优资产看涨期权（call on the maximum of two assets）的到期收益为 :math:`\text{Max}(\text{Max}(S_1,S_2) - X, 0)`; 
+最优资产看跌期权 (put on the maximum of two assets) 的到期收益为 :math:`\text{Max}(X- \text{Max}(S_1,S_2), 0)`。
+
+
+互换期权
+============
+互换期权（exchange-one-asset-for-another option）是一种赋予持有者在到期时将标的S1与S2按约定数量交换的权力的期权。其到期收益为
+:math:`\text{Max}(Q_1S_1-Q_2S_2, 0)`。
+
+美式互换期权
+=============
+美式互换期权（American exchange-one-asset-for-another options） 则允许持有者在到期前的任意时间点进行资产的交换。
+
+
+双标的障碍期权
+===============
+此处列举的双标的障碍期权（two asset barrier options）同单标的标准障碍期权的区别在于，在双标的障碍期权中，一个标的负责决定是否发生敲出敲入，另一个标的负责计算到期收益。
+
+例如双资产向下敲出看涨期权的收益结构为：如果到期前从未向下敲出，即 :math:`S_2 > H`， 那么到期收益为 :math:`\text{Max}(S_1 - X, 0)`， 否则收益为0。
+
+与此类似，一共有8种双标的障碍期权，此处不再一一列举。

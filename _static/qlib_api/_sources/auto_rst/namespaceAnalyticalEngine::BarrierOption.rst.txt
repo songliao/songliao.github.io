@@ -1,0 +1,4 @@
+障碍期权
+========
+
+.. doxygennamespace:: AnalyticalEngine::BarrierOption

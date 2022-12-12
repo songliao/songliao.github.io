@@ -1,0 +1,4 @@
+Option on Minimum
+==================================
+
+.. doxygennamespace:: AnalyticalEngine::OptionOnMinimum

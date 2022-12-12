@@ -1,0 +1,222 @@
+======================================
+回望式期权
+======================================
+:ref:`回望式期权<lookback>` 允许期权持有者在期权存续期内以标的资产最有利的价格执行期权。
+
+浮动行权价回望期权
+----------------------
+
+.. function:: Pv(double spot, double r, double b, double volatility, double ttm, OptionType type, double extremum);
+
+.. container:: custom
+
+    **Parameters:**
+        **spot: double**
+            | 标的价格。
+        **r: double**
+            | 无风险利率。 
+        **b: double**
+            | 持仓成本。
+        **volatility: double**
+            | 波动率。
+        **ttm: double**
+            | 到期时间。 
+        **type: OptionType**
+            | 期权类型, **CALL** 或 **PUT**。
+        **extremum: double**
+            | 回望式看涨期权的最低观察价格，回望式看跌期权的最高观察价格。
+
+    **Returns: double**
+            | 返回浮动行权价回望期权的现值。
+
+Example
+----------------------
+
+.. code-block:: c++
+
+    #include <gtest/gtest.h>
+    #include <iostream>
+    #include "qlib/analytical_engine/lookback_option.h"
+
+    TEST(TestAnalytical, FloatingStrikeLookback)
+    {
+        double spot = 120;
+        double spot_m = 100;
+        double t = 0.5;
+        double r = 0.1;
+        double b = 0.04;
+        double vol = 0.3;
+
+        double pv =  AnalyticalEngine::LookbackOption::FloatingStrike::Pv(spot, r, b, vol, t, OptionType::CALL, spot_m);
+
+        EXPECT_NEAR(25.3533, pv, 1e-4);
+    }
+
+
+固定行权价回望期权
+----------------------
+
+.. function:: Pv(double spot, double r, double b, double volatility, double ttm, OptionType type, double strike, double extremum);
+
+.. container:: custom
+
+    **Parameters:**
+        **spot: double**
+            | 标的价格。
+        **r: double**
+            | 无风险利率。 
+        **b: double**
+            | 持仓成本。
+        **volatility: double**
+            | 波动率。
+        **ttm: double**
+            | 到期时间。 
+        **type: OptionType**
+            | 期权类型, **CALL** 或 **PUT**。
+        **strike: double**
+            | 行权价格。
+        **extremum: double**
+            | 回望式看涨期权的最低观察价格，回望式看跌期权的最高观察价格。
+
+    **Returns: double**
+            | 返回固定行权价回望期权的现值。
+
+Example
+^^^^^^^^^^^^^^^^^^
+
+.. code-block:: c++
+
+    #include <gtest/gtest.h>
+    #include <iostream>
+    #include "qlib/analytical_engine/lookback_option.h"
+
+    TEST(TestAnalytical, FixedStrikeLookback)
+    {
+        double spot = 100;
+        double spot_m = 100;
+        double t = 0.5;
+        double r = 0.1;
+        double b = 0.1;
+        double vol = 0.1;
+        double strike = 95;
+
+        double pv =  AnalyticalEngine::LookbackOption::FixedStrike::Pv(spot, r, b, vol, t, OptionType::CALL, strike, spot_m);
+
+        EXPECT_NEAR(13.2687, pv, 1e-4);
+    }
+
+
+
+部分回望式期权
+=======================
+
+.. image:: ../qlib_doc/option_fig/lookback_fig.png
+   :width: 600
+   :align: center
+
+
+部分浮动行权价回望期权
+--------------------------
+
+.. function:: Pv(double spot, double r, double b, double volatility, double ttm, OptionType type, double extremum, double t1, double lambda);
+
+.. container:: custom
+
+    **Parameters:**
+        **spot: double**
+            | 标的价格。
+        **r: double**
+            | 无风险利率。 
+        **b: double**
+            | 持仓成本。
+        **volatility: double**
+            | 波动率。
+        **ttm: double**
+            | 到期时间。 
+        **type: OptionType**
+            | 期权类型, **CALL** 或 **PUT**。
+        **extremum: double**
+            | 回望式看涨期权的最低观察价格，回望式看跌期权的最高观察价格。
+        **t1: double**
+            | 距离回望期限结束的时间（time to the end of the lookback period）。
+        **lambda: double**
+            | 'lambda'因子能够创建‘部分’回望式期权，其中执行价格固定在实际极值以上或以下的某百分比，看涨的lamda大于1，看跌的lambda范围为0～1之间。
+    
+    **Returns: double**
+            | 返回部分浮动行权价回望期权的现值。
+
+Example
+^^^^^^^^^^^^^^^^^^
+
+.. code-block:: c++
+
+    #include <gtest/gtest.h>
+    #include <iostream>
+    #include "qlib/analytical_engine/lookback_option.h"
+
+    TEST(TestAnalytical, PartialFloatingStrikeLookback)
+    {
+        double spot = 90;
+        double r = 0.06;
+        double b = 0.06;
+        double volatility = 0.1;
+        double ttm = 1.0;
+        double spot_m = 90.0;
+        double t1 = 0.25;
+        double lambda = 1;
+        auto pv = AnalyticalEngine::LookbackOption::PartialFloatingStrike::Pv(spot, r, b, volatility, ttm, OptionType::CALL, spot_m, t1, lambda);
+
+        EXPECT_NEAR(8.6524 , pv, 1e-4);
+    }
+
+
+部分固定行权价回望期权
+--------------------------
+
+.. function:: Pv(double spot, double r, double b, double volatility, double ttm, OptionType type, double strike, double t1);
+
+.. container:: custom
+
+    **Parameters:**
+        **spot: double**
+            | 标的价格。
+        **r: double**
+            | 无风险利率。 
+        **b: double**
+            | 持仓成本。
+        **volatility: double**
+            | 波动率。
+        **ttm: double**
+            | 到期时间。 
+        **type: OptionType**
+            | 期权类型, **CALL** 或 **PUT**。   
+        **strike: double**
+            | 行权价格。     
+        **t1: double**
+            | 距离回望期限结束的时间（time to the end of the lookback period）。
+   
+    **Returns: double**
+            | 返回部分固定行权价回望期权的现值。
+
+Example
+^^^^^^^^^^^^^^^^^
+
+.. code-block:: c++
+
+    #include <gtest/gtest.h>
+    #include <iostream>
+    #include "qlib/analytical_engine/lookback_option.h"
+
+    TEST(TestAnalytical, PartialFixedStrikeLookback)
+    {
+        double spot = 100;
+        double r = 0.06;
+        double b = 0.06;
+        double volatility = 0.1;
+        double ttm = 1.0;
+        double strike = 90.0;
+        double t1 = 0.25;
+
+        auto pv = AnalyticalEngine::LookbackOption::PartialFixedStrike::Pv(spot, r, b, volatility, ttm, OptionType::CALL, strike, t1);
+        EXPECT_NEAR(20.2845 , pv, 1e-4);
+    }

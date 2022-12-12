@@ -1,0 +1,359 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Schedule</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/fonts.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/translations.js"></script>
+        <script src="../_static/design-tabs.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> 蒙卡定价引擎开发
+          
+
+          
+            
+            <img src="../_static/Qlib_logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="在文档中搜索" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../project_introduction.html">项目简介</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../project_documentation.html">项目知识库</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../paper_link.html">项目论文</a></li>
+<li class="toctree-l1"><a class="reference external" href="_static/qlib_api/index.html#file://">代码API references</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">蒙卡定价引擎开发</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+<div class="git-ribbon">
+  <a href="http://github.com/SwissDataScienceCenter" rel="me">Join us on GitHub</a>
+</div>
+
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li><strong>Schedule</strong></li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/qlib_doc/schedule.rst.txt" rel="nofollow"> 查看页面源码</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="schedule">
+<h1><strong>Schedule</strong><a class="headerlink" href="#schedule" title="永久链接至标题">¶</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">schedule(const</span> <span class="pre">Date&amp;</span> <span class="pre">from,</span> <span class="pre">const</span> <span class="pre">Date&amp;</span> <span class="pre">to,</span> <span class="pre">const</span> <span class="pre">Period&amp;</span> <span class="pre">freq,</span> <span class="pre">BusinessDayConvention</span> <span class="pre">convention,</span> <span class="pre">DateGenerationRule</span> <span class="pre">rule,</span> <span class="pre">const</span> <span class="pre">Calendar&amp;</span> <span class="pre">cal,</span> <span class="pre">bool</span> <span class="pre">include_from,</span> <span class="pre">bool</span> <span class="pre">include_to);</span></span></dt>
+<dd></dd></dl>
+
+<div class="custom docutils container">
+<dl>
+<dt><strong>Parameters:</strong></dt><dd><dl>
+<dt><strong>from: Date</strong></dt><dd><div class="line-block">
+<div class="line">一个日期对象，表示开始日期。</div>
+</div>
+</dd>
+<dt><strong>to: Date</strong></dt><dd><div class="line-block">
+<div class="line">一个日期对象，表示结束日期。</div>
+</div>
+</dd>
+<dt><strong>freq: Period</strong></dt><dd><div class="line-block">
+<div class="line">观察频率。</div>
+</div>
+</dd>
+<dt><strong>convention: BusinessDayConvention</strong></dt><dd><div class="line-block">
+<div class="line">描述交易日调整规则的分类，详见  <a class="reference internal" href="../calendar.html#business-day-convention"><span class="std std-ref">交易日调整规则</span></a> 。</div>
+</div>
+</dd>
+<dt><strong>rule: DateGenerationRule</strong></dt><dd><div class="line-block">
+<div class="line">描述日期生成规则的分类。</div>
+</div>
+</dd>
+<dt><strong>cal: Calendar</strong></dt><dd><div class="line-block">
+<div class="line">一个日历对象。</div>
+</div>
+</dd>
+<dt><strong>include_from: bool</strong></dt><dd><div class="line-block">
+<div class="line"><strong>True</strong> or <strong>False</strong>, 是否包含初始日期。</div>
+</div>
+</dd>
+<dt><strong>include_to: bool</strong></dt><dd><div class="line-block">
+<div class="line"><strong>True</strong> or <strong>False</strong>, 是否包含结束日期。</div>
+</div>
+</dd>
+</dl>
+</dd>
+<dt><strong>Returns: std::vector&lt;Date&gt;</strong></dt><dd><p>返回给定规则下生成的一组日期。</p>
+</dd>
+</dl>
+</div>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>日期生成规则</strong></p></td>
+<td><p><strong>定义</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>FORWARD</p></td>
+<td><p>向前生成，从有效日期到终止日期。</p></td>
+</tr>
+<tr class="row-odd"><td><p>BACKWARD</p></td>
+<td><p>向后生成，从终止日期到有效日期。</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">备注</p>
+<p><strong>初始日期</strong> or <strong>结束日期</strong> 必须时交易日期，不能被设置为日历中的节假日。</p>
+</div>
+<div class="section" id="id1">
+<h2>调整交易日<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">ModifiedBusinessDay(const</span> <span class="pre">Date&amp;</span> <span class="pre">today,</span> <span class="pre">BusinessDayConvention</span> <span class="pre">convention,</span> <span class="pre">const</span> <span class="pre">Calendar&amp;</span> <span class="pre">cal);</span></span></dt>
+<dd></dd></dl>
+
+<div class="custom docutils container">
+<dl>
+<dt><strong>Parameters:</strong></dt><dd><dl>
+<dt><strong>today: Date</strong></dt><dd><div class="line-block">
+<div class="line">一个日期对象，表示当前日期。</div>
+</div>
+</dd>
+<dt><strong>convention: BusinessDayConvention</strong></dt><dd><div class="line-block">
+<div class="line">描述交易日约定规则的分类。</div>
+</div>
+</dd>
+<dt><strong>cal: Calendar</strong></dt><dd><div class="line-block">
+<div class="line">一个日历对象。</div>
+</div>
+</dd>
+</dl>
+</dd>
+<dt><strong>Returns: std::vector&lt;Date&gt;</strong></dt><dd><p>返回调整后的交易日。</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="example">
+<h3>Example<a class="headerlink" href="#example" title="永久链接至标题">¶</a></h3>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;qlib/schedule.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;qlib/enum.h&quot;</span><span class="cp"></span>
+
+<span class="cp">#define A_STOCK &quot;[path]/Calendars/China.txt&quot;</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">begin_date</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Date</span><span class="p">(</span><span class="mi">2021</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">end_date</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Date</span><span class="p">(</span><span class="mi">2022</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">cal</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Calendar</span><span class="p">(</span><span class="n">A_STOCK</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Period</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">TimeUnit</span><span class="o">::</span><span class="n">MONTH</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">schedule_dates</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Schedule</span><span class="p">(</span><span class="n">begin_date</span><span class="p">,</span><span class="w"> </span><span class="n">end_date</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="n">BusinessDayConvention</span><span class="o">::</span><span class="n">FOLLOWING</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                    </span><span class="n">DateGenerationRule</span><span class="o">::</span><span class="n">FORWARD</span><span class="p">,</span><span class="w"> </span><span class="n">cal</span><span class="p">,</span><span class="w"> </span><span class="nb">true</span><span class="p">,</span><span class="w"> </span><span class="nb">false</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="k">auto</span><span class="w"> </span><span class="n">schedule_date</span><span class="o">:</span><span class="w"> </span><span class="n">schedule_dates</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">schedule_date</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="p">}</span><span class="w"></span>
+
+<span class="c1">//输出结果</span>
+<span class="w">    </span><span class="mi">2021</span><span class="mo">-03-01</span><span class="w"></span>
+<span class="w">    </span><span class="mi">2021</span><span class="mo">-04-01</span><span class="w"></span>
+<span class="w">    </span><span class="mi">2021</span><span class="mo">-05-06</span><span class="w"></span>
+<span class="w">    </span><span class="mi">2021</span><span class="mo">-06-01</span><span class="w"></span>
+<span class="w">    </span><span class="mi">2021</span><span class="mo">-07-01</span><span class="w"></span>
+<span class="w">    </span><span class="mi">2021-08</span><span class="mo">-02</span><span class="w"></span>
+<span class="w">    </span><span class="mi">2021-09</span><span class="mo">-01</span><span class="w"></span>
+<span class="w">    </span><span class="mi">2021-10-08</span><span class="w"></span>
+<span class="w">    </span><span class="mi">2021-11</span><span class="mo">-01</span><span class="w"></span>
+<span class="w">    </span><span class="mi">2021-12</span><span class="mo">-01</span><span class="w"></span>
+<span class="w">    </span><span class="mi">2022</span><span class="mo">-01-04</span><span class="w"></span>
+<span class="w">    </span><span class="mi">2022</span><span class="mo">-02-07</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2022, Essence Security.
+
+    </p>
+  </div>
+    
+    
+    
+    利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用了 
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    
+    由 <a href="https://readthedocs.org">Read the Docs</a>开发. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,339 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>随机数采样的fastnorm算法及其在蒙特卡洛定价上的应用</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  <link rel="stylesheet" href="_static/fonts.css" type="text/css" />
+  <link rel="stylesheet" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/translations.js"></script>
+        <script src="_static/design-tabs.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="_static/mathjax/tex-chtml.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="搜索" href="search.html" />
+    <link rel="next" title="OneMKL随机数生成器" href="onemkl.html" />
+    <link rel="prev" title="OpenMP Crash Course" href="openMP.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> 蒙卡定价引擎开发
+          
+
+          
+            
+            <img src="_static/Qlib_logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="在文档中搜索" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="project_introduction.html">项目简介</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="project_documentation.html">项目知识库</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="project_introduction.html">项目简介</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fin_basic.html">金融工程基础知识</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fin_engineering.html">金融工程开发技术基础</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="fin_engineer_upgrade.html">金融工程开发技术进阶</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="openMP.html">OpenMP Crash Course</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">随机数采样的<em>fastnorm</em>算法及其在蒙特卡洛定价上的应用</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">优化蒙特卡洛算法的性能</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">使用 <em>fastnorm</em> 提高随机数生成速度</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5">比较不同方法的性能</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id6">附录</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="onemkl.html">OneMKL随机数生成器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cuda_intro.html">CUDA Toolkit</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="option_definition.html">广义期权的一般创建方式</a></li>
+<li class="toctree-l2"><a class="reference internal" href="barrier_example.html">广义期权的实际案例</a></li>
+<li class="toctree-l2"><a class="reference internal" href="closed_formulas.html">常见奇异期权释义及其（近似）解析解实现</a></li>
+<li class="toctree-l2"><a class="reference internal" href="greeks.html">希腊字母</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exotic_options_on_two_asset.html">部分挂钩双标的奇异衍生品及其定价</a></li>
+<li class="toctree-l2"><a class="reference internal" href="auto_callables.html">定价引擎应用案例：自动赎回结构</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="paper_link.html">项目论文</a></li>
+<li class="toctree-l1"><a class="reference external" href="_static/qlib_api/index.html#file://">代码API references</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">蒙卡定价引擎开发</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+<div class="git-ribbon">
+  <a href="http://github.com/SwissDataScienceCenter" rel="me">Join us on GitHub</a>
+</div>
+
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="project_documentation.html">项目知识库</a> &raquo;</li>
+        
+          <li><a href="fin_engineer_upgrade.html">金融工程开发技术进阶</a> &raquo;</li>
+        
+      <li>随机数采样的<em>fastnorm</em>算法及其在蒙特卡洛定价上的应用</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/fastnorm.md.txt" rel="nofollow"> 查看页面源码</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="tex2jax_ignore mathjax_ignore section" id="fastnorm">
+<h1>随机数采样的<em>fastnorm</em>算法及其在蒙特卡洛定价上的应用<a class="headerlink" href="#fastnorm" title="永久链接至标题">¶</a></h1>
+<p><em>参见附录，以了解本节使用的测试方法</em></p>
+<div class="section" id="id1">
+<h2>优化蒙特卡洛算法的性能<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<p>下图比较了使用蒙特卡洛模拟为某衍生品定价时，总时间和随机数生成时间。</p>
+<p><img alt="" src="_images/time_components.png" /></p>
+<p>可以看到，运行一次蒙特卡洛模拟所需时间为1398毫秒，其中超过1100毫秒用在了生成随机数上。因此，除了使用并行计算之外，如果能够成倍地减少随机数生成所花时间，那么蒙特卡洛算法的性能能得到非常大的提升。</p>
+</div>
+<div class="section" id="id2">
+<h2>使用 <em>fastnorm</em> 提高随机数生成速度<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id3">
+<h3>基本原理<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h3>
+<p>若<span class="math notranslate nohighlight">\(\varepsilon_1, \varepsilon_2, \varepsilon_3, \varepsilon_4\)</span>是4个独立的标准正态变量，那么可由以下方式获得的另外4个随机变量：</p>
+<p><span class="math notranslate nohighlight">\((1)\)</span></p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{bmatrix}
+    \varepsilon_5 \\ \varepsilon_6 \\ \varepsilon_7 \\ \varepsilon_8 \\
+\end{bmatrix}
+ =
+\begin{bmatrix}
+    1/2 &amp; 1/2 &amp; -1/2 &amp; 1/2 \\ 1/2 &amp; -1/2 &amp; 1/2 &amp; 1/2 \\ 1/2 &amp; -1/2 &amp; -1/2 &amp; -1/2 \\ -1/2 &amp; -1/2 &amp; -1/2 &amp; 1/2
+\end{bmatrix}
+\begin{bmatrix}
+    \varepsilon_1 \\ \varepsilon_2 \\ \varepsilon_3 \\ \varepsilon_4 \\
+\end{bmatrix}.
+\end{split}\]</div>
+<p>右边矩阵的行向量是规范正交的，因此 <span class="math notranslate nohighlight">\(\varepsilon_5, \varepsilon_6, \varepsilon_7, \varepsilon_8\)</span> 也是4个独立的标准正态变量。另外，<span class="math notranslate nohighlight">\(-\varepsilon_j\;(j=1,...,8)\)</span>也是8个标准正态变量。期望的线性保证了这种方法的可行性。<br/>
+和直接生成随机数相比，矩阵乘法用时要短很多，这是<em>fastnorm</em>能够显著提升蒙特卡洛算法速度的原因。</p>
+</div>
+<div class="section" id="id4">
+<h3>实现方式<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
+<p>首先，根据待定价产品的结构，生成4条蒙特卡洛模拟所的随机数序列，称为<code class="docutils literal notranslate"><span class="pre">eps1,</span> <span class="pre">eps2,</span> <span class="pre">eps3,</span> <span class="pre">eps4</span></code>。对每个指标<code class="docutils literal notranslate"><span class="pre">t</span></code>，对<code class="docutils literal notranslate"><span class="pre">eps1[t],</span> <span class="pre">eps2[t],</span> <span class="pre">eps3[t],</span> <span class="pre">eps4[t]</span></code>应用<span class="math notranslate nohighlight">\((1)\)</span>式，得到<code class="docutils literal notranslate"><span class="pre">eps5[t],</span> <span class="pre">eps6[t],</span> <span class="pre">eps7[t],</span> <span class="pre">eps8[t]</span></code>。对这8条随机数序列取相反数，就可再得到8条随机数序列。<br/>
+因此在每次循环中，产生了16条随机数序列。其中4条序列使用伪随机数生成器产生，而另外12条则是由线性变换得到。循环次数为模拟次数 <span class="math notranslate nohighlight">\(\div\)</span> 16。<br/>
+伪代码如下，其中<code class="docutils literal notranslate"><span class="pre">A</span></code>是 <span class="math notranslate nohighlight">\((1)\)</span> 中的矩阵。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">initialize</span> <span class="n">eps1</span><span class="p">,</span> <span class="n">eps2</span><span class="p">,</span> <span class="o">...</span><span class="p">,</span> <span class="n">eps16</span>
+<span class="k">for</span> <span class="n">t</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">...</span><span class="p">,</span> <span class="mi">243</span><span class="p">:</span>
+    <span class="n">generate</span> <span class="n">pseudo</span> <span class="n">random</span> <span class="n">numbers</span> <span class="n">e1</span><span class="p">,</span> <span class="n">e2</span><span class="p">,</span> <span class="n">e3</span><span class="p">,</span> <span class="n">e4</span>
+    <span class="n">e5</span><span class="p">,</span> <span class="n">e6</span><span class="p">,</span> <span class="n">e7</span><span class="p">,</span> <span class="n">e8</span> <span class="o">=</span> <span class="n">matrix_mul</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="p">[</span><span class="n">e1</span><span class="p">,</span> <span class="n">e2</span><span class="p">,</span> <span class="n">e3</span><span class="p">,</span> <span class="n">e4</span><span class="p">])</span>
+    <span class="n">eps1</span><span class="p">[</span><span class="n">t</span><span class="p">],</span> <span class="o">...</span><span class="p">,</span> <span class="n">eps8</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">=</span> <span class="n">e1</span><span class="p">,</span> <span class="o">...</span><span class="p">,</span> <span class="n">e8</span>
+    <span class="n">eps9</span><span class="p">[</span><span class="n">t</span><span class="p">],</span> <span class="o">...</span><span class="p">,</span> <span class="n">eps16</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">e1</span><span class="p">,</span> <span class="o">...</span><span class="p">,</span> <span class="o">-</span><span class="n">e8</span> 
+<span class="n">end</span> <span class="k">for</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id5">
+<h2>比较不同方法的性能<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
+<p>下图展示了不同版本蒙特卡洛算法的效率。右图比较了普通算法了<em>fastnorm</em>的算法定价的标准差，以及结果的差异。</p>
+<p><img alt="image info" src="_images/comparing_performance.png" /></p>
+<p>左图比较了不同算法对同一产品定价所需的时间。在测试机器（见附录）上使用并行计算可以时间缩短至不到原来的1/8，在此基础上使用<em>fastnorm</em>快速生成随机数可以将时间进一步缩短约45%。<br/>
+右图比较了不同算法的精度。使用<em>fastnorm</em>算法会少量增加运算结果的标准差，这是因为使用<span class="math notranslate nohighlight">\((1)\)</span>式及相反数产生的随机数和原本的4个随机数不是独立的。两种算法给出的结果之差远小于普通算法的标准差，这表明<em>fastnorm</em>造成的随机数的相关性对定价结果产生的影响是相对小的。</p>
+</div>
+<div class="section" id="id6">
+<h2>附录<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id7">
+<h3>测试参数<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>结构：向上敲出看涨期权，行权价格100，障碍价格120，期限244交易日，每日观察敲出；</p></li>
+<li><p>BS模型参数：无风险利率2%，股息率1%，波动率25%；</p></li>
+<li><p>每次模拟产生的路径总数：100万条。</p></li>
+</ul>
+</div>
+<div class="section" id="id8">
+<h3>测试方法<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>时间：所有时间均通过统计100次模拟的时间并取均值得到；</p></li>
+<li><p>随机数生成时间：只产生所需随机数，而不进行其他任何计算所需的时间；</p></li>
+<li><p>模拟的均值和标准差：统计100次模拟返回的结果，取均值和标准差。</p></li>
+</ul>
+</div>
+<div class="section" id="id9">
+<h3>测试机器参数<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h3>
+<p>操作系统: Ubuntu 22.04.1 LTS, 64-bit <br/>
+处理器: 12th Gen Intel(R) Core i7-12700 <br/>
+内存: 16 GB 3200 MHz DDR4 <br/>
+图形处理器: Mesa Intel(R) Graphics (ADL-S GT1) <br/></p>
+</div>
+<div class="section" id="id10">
+<h3>参考文献<a class="headerlink" href="#id10" title="永久链接至标题">¶</a></h3>
+<p>[1] Brent, Richard P. “Some comments on CS Wallace’s random number generators.” <em>The Computer Journal</em> 51, no. 5 (2008): 579-584.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="onemkl.html" class="btn btn-neutral float-right" title="OneMKL随机数生成器" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="openMP.html" class="btn btn-neutral float-left" title="OpenMP Crash Course" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2022, Essence Security.
+
+    </p>
+  </div>
+    
+    
+    
+    利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用了 
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    
+    由 <a href="https://readthedocs.org">Read the Docs</a>开发. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

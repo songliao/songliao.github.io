@@ -1,0 +1,68 @@
+======================================
+Period
+======================================
+.. class:: Period(arg1, arg2)
+
+.. container:: custom
+
+    **Parameters:**
+        **arg1: unsigned short**
+            | 整数，表示单位时间段的个数。
+        **arg2: TimeUnit**
+            | 描述单位时间的分类。
+
+
+**TimeUnit** 分类
+===========================
+
+.. list-table::
+    :widths: 50
+    :header-rows: 1
+
+    * - Enumerator
+    * - DAY
+    * - WEEK
+    * - MONTH
+    * - YEAR
+
+**Period** 的属性
+=======================
+返回期间长度
+--------------------
+.. method:: Period.Tenor()
+
+.. container:: custom
+
+    **Returns: unsigned short**
+            表示一个包含单位时间段数量的整数。
+
+
+**period** 的属性
+=======================
+返回当前选择的时间单位
+------------------------
+.. method:: Period.Unit()
+
+.. container:: custom
+
+    **Returns: TimeUnit**
+            当前选择的时间单位分类。
+
+
+.. _period:
+
+**Period** 子类
+=======================
+Days, Weeks, Months, Years.
+
+.. class:: 
+    Days(arg)
+    Weeks(arg)
+    Months(arg)
+    Years(arg)
+
+.. container:: custom
+
+    **Parameters:**
+        **arg: int**
+            | 整数。

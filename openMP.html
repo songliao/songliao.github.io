@@ -1,0 +1,451 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>OpenMP Crash Course</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  <link rel="stylesheet" href="_static/fonts.css" type="text/css" />
+  <link rel="stylesheet" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/translations.js"></script>
+        <script src="_static/design-tabs.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="搜索" href="search.html" />
+    <link rel="next" title="随机数采样的fastnorm算法及其在蒙特卡洛定价上的应用" href="fastnorm.html" />
+    <link rel="prev" title="金融工程开发技术进阶" href="fin_engineer_upgrade.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> 蒙卡定价引擎开发
+          
+
+          
+            
+            <img src="_static/Qlib_logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="在文档中搜索" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="project_introduction.html">项目简介</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="project_documentation.html">项目知识库</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="project_introduction.html">项目简介</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fin_basic.html">金融工程基础知识</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fin_engineering.html">金融工程开发技术基础</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="fin_engineer_upgrade.html">金融工程开发技术进阶</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">OpenMP Crash Course</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">发展历程</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">基本概念</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">并行计算的基本逻辑</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5">共享和私有参数</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id6">具体示例</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="fastnorm.html">随机数采样的<em>fastnorm</em>算法及其在蒙特卡洛定价上的应用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="onemkl.html">OneMKL随机数生成器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cuda_intro.html">CUDA Toolkit</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="option_definition.html">广义期权的一般创建方式</a></li>
+<li class="toctree-l2"><a class="reference internal" href="barrier_example.html">广义期权的实际案例</a></li>
+<li class="toctree-l2"><a class="reference internal" href="closed_formulas.html">常见奇异期权释义及其（近似）解析解实现</a></li>
+<li class="toctree-l2"><a class="reference internal" href="greeks.html">希腊字母</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exotic_options_on_two_asset.html">部分挂钩双标的奇异衍生品及其定价</a></li>
+<li class="toctree-l2"><a class="reference internal" href="auto_callables.html">定价引擎应用案例：自动赎回结构</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="paper_link.html">项目论文</a></li>
+<li class="toctree-l1"><a class="reference external" href="_static/qlib_api/index.html#file://">代码API references</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">蒙卡定价引擎开发</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+<div class="git-ribbon">
+  <a href="http://github.com/SwissDataScienceCenter" rel="me">Join us on GitHub</a>
+</div>
+
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="project_documentation.html">项目知识库</a> &raquo;</li>
+        
+          <li><a href="fin_engineer_upgrade.html">金融工程开发技术进阶</a> &raquo;</li>
+        
+      <li>OpenMP Crash Course</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/openMP.rst.txt" rel="nofollow"> 查看页面源码</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="openmp-crash-course">
+<h1>OpenMP Crash Course<a class="headerlink" href="#openmp-crash-course" title="永久链接至标题">¶</a></h1>
+<p>OpenMP(Open Multi-Processing) 是一个应用程序编程接口（API），OpenMP使用 <strong>线程（threads）</strong> 和 <strong>任务（tasks）</strong> 的概念，它支持在各不同的平台、指令集架构和操作系统（包括Solaris、
+AIX、FreeBSD、HP-UX、Linux、macOS和Windows）上针对C，C++和Fortran的一组拓展，进行多平台共享内存的多进程编程。</p>
+<p>它由一组编译器指令 （compiler directives）、库存程序（Runtime library routines）和影响运行时间的环境变量（environment variables）组成。</p>
+<div class="section" id="id1">
+<h2>发展历程<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<p>一直以来，共享内存指令（shared memory directives）在计算机历史上缺乏标准化。每个硬件供应商提供不同的API，并且主要是基于指令的
+（directive-based）、为Fortran语言设计开发的API，这对于写可移植代码而言十分困难。</p>
+<p>因此，Digital, IBM, Intel, KAI和SGI成立了 <a class="reference external" href="https://www.openmp.org/">OpenMP论坛</a> ，现在该论坛包括大多数主要的供应商。</p>
+<div class="section" id="history">
+<h3>History<a class="headerlink" href="#history" title="永久链接至标题">¶</a></h3>
+<ul>
+<li><p>1997年10月，OpenMP体系结构审查委员会（OpenMP Archtiecture Review Board, ARB）发布了其第一个API规范，即Fortran 1.0版本的OpenMP，并于1999年11月进行了轻微修订（1.1版本），在2000年11月进行主要修订（2.0版本）。</p></li>
+<li><p>1998年10月，C/C++标准发布，并于2002年3月发布了2.0版本。</p></li>
+<li><p>2005年，发布了C/C++/Fortran的组合规范。</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>没有新的功能，但是有大量的重写和申明（clarification）。</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>2008年5月，3.0版本发布</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>新功能发布，包括任务（tasks），更好的支持循环并行和嵌套并行。</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>2011年6月，3.1版本发布</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>修正及一些小的新功能</p></li>
+<li><p>大多数目前的编译器都支持该版本</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>2013年7月，4.0版本发布</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>加速器卸载，线程分区，更多任务的支持</p></li>
+<li><p>在大多数实施中使用</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>2015年，4.5版本发布</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>修正以及一些新功能</p></li>
+<li><p>还没有完整的实现？</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="id2">
+<h2>基本概念<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<div class="section" id="shared-memory-systems">
+<h3>Shared Memory systems<a class="headerlink" href="#shared-memory-systems" title="永久链接至标题">¶</a></h3>
+<p>线程编程(Threaded programming)最常用于共享内存并行(shared memory parallel)计算机。共享内存计算机由若干处理器(CPUs)和
+一些内存组成，其关键特性是在整个内存系统中使用一个单独的地址空间:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>每一个CPU可以读写系统中的所有内存位置</p></li>
+<li><p>一个逻辑内存空间</p></li>
+<li><p>所有的CPU都是使用相同地址的内存位置</p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="thread-programming">
+<h3>Thread Programming<a class="headerlink" href="#thread-programming" title="永久链接至标题">¶</a></h3>
+<p>共享内存的编程模型是基于线程（thread）这一基本概念，线程与进程（processes）类似，不同之处在于线程可以彼此共享内存(以及拥有私有内存)。</p>
+<p>所有的线程都可以访问共享数据，但是私有数据只能被所属的线程访问。通过同一个程序，不同的线程可以遵循不同的控制流（flows），并且每个线程都有自己的程序计数器（program counter）。通常情况下一个CPU/核运行一个线程，但是有的情况下可能运行多个线程，比如一些硬件能够支持单核多线程，即 simultaneous multi-threading 或 hyper-threading(Intel专属)。</p>
+<div class="section" id="id3">
+<h4>线程的应用<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h4>
+<p>线程之间必须能够交换数据以便能够进行有用的并行程序，线程之间也可以通过读写共享数据进行通讯。
+例如，线程1向共享变量a写入一个值，线程2可以从共享变量a中读取这个值。注意：在线程编程模型中没有消息（message）这一概念。</p>
+</div>
+</div>
+<div class="section" id="tasks">
+<h3>Tasks<a class="headerlink" href="#tasks" title="永久链接至标题">¶</a></h3>
+<p>一项任务(<em>task</em>)是可以独立于其他任务而执行的计算。原则上，可以创建一个新的线程来执行每个任务。然而，在实践中这一操作成本高昂，尤其是有大量的小任务时。</p>
+<p>相反，任务可以通过预先存在的线程池（pool）所执行：</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>向池中提交任务</p></li>
+<li><p>池中的某个线程执行该任务</p></li>
+<li><p>确保该任务在未来的某个时刻能够完成</p></li>
+</ul>
+</div></blockquote>
+<p>通过任务，可以将我们的计算与正在执行的实际线程分离和分解。</p>
+</div>
+</div>
+<div class="section" id="id4">
+<h2>并行计算的基本逻辑<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<div class="section" id="directives-and-sentinels">
+<h3>Directives and Sentinels<a class="headerlink" href="#directives-and-sentinels" title="永久链接至标题">¶</a></h3>
+<p>一个指令（directive）是指一行特殊的，只针对某些编译器有意义的源代码，通常在行首由标记（sentinel）来区分。</p>
+<p>对于OpenMP而言，其特殊标记为：</p>
+<ul class="simple">
+<li><p>Fortran: <code class="docutils literal notranslate"><span class="pre">!$OMP</span></code></p></li>
+<li><p>C/C++: <code class="docutils literal notranslate"><span class="pre">#pragma</span> <span class="pre">omp</span></code></p></li>
+</ul>
+</div>
+<div class="section" id="parallel-regions">
+<h3>Parallel regions<a class="headerlink" href="#parallel-regions" title="永久链接至标题">¶</a></h3>
+<p>并行区域（parallel region）是OpenMP中的基本并行结构，定义了程序的一部分。</p>
+<p>程序开始时，在一个单独的线程（主线程，即master thread）上开始执行。当遇到第一个并行区域时，主线程创建一个线程组（ <strong>fork-join</strong> 模型）。每个线程执行并行区域内的命令，在并行区域结束后，主线程等待其他线程结束后，继续执行下一个命令。</p>
+</div>
+<div class="section" id="fork-join">
+<h3>Fork-join模型图示<a class="headerlink" href="#fork-join" title="永久链接至标题">¶</a></h3>
+<img alt="_images/fork_join.png" src="_images/fork_join.png" />
+</div>
+</div>
+<div class="section" id="id5">
+<h2>共享和私有参数<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
+<p>在并行区域内，变量是可以共享（shared）的，也可以是私有（private）的。所有线程都能看到共享变量的相同副本，并可以读写共享变量。</p>
+<p>每个线程都有自己的私有变量副本，但是这些副本对于其他线程而言是不可见的。私有变量只能被自己的线程读写。</p>
+<p>在并行区域内，变量可以被共享（所有线程有相同的副本）或者私有（每个线程有自己的副本）：</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="c1">//共有条款</span>
+<span class="n">shared</span><span class="p">(</span><span class="n">list</span><span class="p">)</span><span class="w"></span>
+
+<span class="c1">//私有条款</span>
+<span class="k">private</span><span class="p">(</span><span class="n">list</span><span class="p">)</span><span class="w"></span>
+
+<span class="c1">//默认条款</span>
+<span class="k">default</span><span class="p">(</span><span class="n">shared</span><span class="o">|</span><span class="n">none</span><span class="p">)</span><span class="w"></span>
+</pre></div>
+</div>
+<p>进入并行区域时，私有变量并未初始化，在并行区域内声明的变量自动成为私有变量。在并行区域结束后，私有副本的任何更改都不会影响到原始变量。</p>
+<div class="admonition caution">
+<p class="admonition-title">小心</p>
+<p>不使用 <code class="docutils literal notranslate"><span class="pre">DEFAULT</span></code> 与指定 <code class="docutils literal notranslate"><span class="pre">DEFAULT(SHARED)</span></code> 相同, 总是使用 <code class="docutils literal notranslate"><span class="pre">DEFAULT(NONE)</span></code></p>
+</div>
+</div>
+<div class="section" id="id6">
+<h2>具体示例<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h2>
+<div class="section" id="parallel-loops">
+<h3>Parallel loops<a class="headerlink" href="#parallel-loops" title="永久链接至标题">¶</a></h3>
+<p>循环是许多应用程序中进行并行的主要来源，OpenMP对并行循环提供了广泛的支持。如果一个循环的迭代是独立的（可以以任何顺序完成），那么可以在不同的线程中共享迭代，可以将一个迭代或一组迭代看成一个任务。</p>
+<div class="section" id="example">
+<h4>Example<a class="headerlink" href="#example" title="永久链接至标题">¶</a></h4>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;numeric&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;vector&gt;</span><span class="cp"></span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">a</span><span class="p">(</span><span class="mi">100</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">b</span><span class="p">(</span><span class="mi">100</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// create vector a, b ranging from 1 to 100</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">iota</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">iota</span><span class="p">(</span><span class="n">b</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="w"> </span><span class="n">b</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// add together the elements of two vectors</span>
+
+<span class="w">    </span><span class="cp">#pragma omp parallel for default(none)\</span>
+<span class="cp">    shared(a, b)</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">&lt;</span><span class="mi">100</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">++</span><span class="p">){</span><span class="w"></span>
+<span class="w">        </span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">];</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="reductions">
+<h3>Reductions<a class="headerlink" href="#reductions" title="永久链接至标题">¶</a></h3>
+<p>降维（reduction）从加、乘、最大值、最小值、和、或等关联操作中产生一个值。在降维中，每个线程可以积累自己的私有副本，然后这些副本被降维以得到最终结果。如果操作的数量远远大于线程的数量，那么大多数操作可以在并行中进行。</p>
+<div class="section" id="id7">
+<h4>Example<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h4>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;numeric&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;vector&gt;</span><span class="cp"></span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// create vector a ranging from 1 to 100</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">a</span><span class="p">(</span><span class="mi">100</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">iota</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="cp">#pragma omp parallel for default(none)\</span>
+<span class="cp">    shared(a)\</span>
+<span class="cp">    reduction(+: b)</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">&lt;</span><span class="mi">100</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">++</span><span class="p">){</span><span class="w"></span>
+<span class="w">        </span><span class="n">b</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">];</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="fastnorm.html" class="btn btn-neutral float-right" title="随机数采样的fastnorm算法及其在蒙特卡洛定价上的应用" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="fin_engineer_upgrade.html" class="btn btn-neutral float-left" title="金融工程开发技术进阶" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2022, Essence Security.
+
+    </p>
+  </div>
+    
+    
+    
+    利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用了 
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    
+    由 <a href="https://readthedocs.org">Read the Docs</a>开发. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

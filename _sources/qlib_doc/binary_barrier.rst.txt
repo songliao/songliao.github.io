@@ -1,0 +1,317 @@
+===========================
+二元障碍期权
+===========================
+
+:ref:`二元障碍期权<binary_barrier>` (binary barrier options) 在期权公式大全一书(p170-177) [1]_ 上共列出了28种。我们将这28种有序的归为4大类型：:ref:`cash or nothing barrier<cash or nothing barrier>`、:ref:`asset or nothing barrier<asset or nothing barrier>`、 
+:ref:`cash or nothing barrier option<cash or nothing barrier option>` 和 :ref:`asset or nothing barrier option<asset or nothing barrier option>`。
+
+
+.. _cash or nothing barrier:
+
+Cash or nothing barrier
+==========================
+
+.. function:: Pv(double spot, double r, double b, double vol, double ttm, BarrierType b_type, double barrier, double cash, PaymentTriggerType p_type, double dt);
+
+.. container:: custom
+
+    **Parameters:**
+        **spot: double**
+            | 标的价格。
+        **r: double**
+            | 无风险利率。 
+        **b: double**
+            | 持仓成本。
+        **vol: double**
+            | 波动率。
+        **ttm: double**
+            | 到期时间。 
+        **b_type: BarrierType**
+            | 障碍类型，分为 **UP_IN**, **UP_OUT**, **DOWN_IN** 和 **DOWN_OUT**。
+        **barrier: double**
+            | 障碍价格。
+        **cash: double**
+            | 现金赔付如果敲入或从未敲出。
+        **p_type: PaymentTriggerType**
+            | 敲入支付类型， **AT_HIT** 和 **AT_EXPIRY** 。
+        **dt: double**
+            | 对于离散障碍期权，dt以年为单位的观察日之间的间隔。如果是连续观察，则 **dt = 0** 。
+
+    **Returns: double**
+        | 返回cash or nothing barrier的现值。
+
+
+Example
+----------------------
+
+.. code-block:: c++
+
+    #include <gtest/gtest.h>
+    #include <iostream>
+    #include <numeric>
+
+    #include "qlib/analytical_engine/binary_barrier_option.h"
+
+    TEST(TestAnalytical, CashOrNothingBarrier)
+    {
+        double barrier =100;
+        double ttm = 0.5;
+        double r = 0.1;
+        double b = 0.1;
+        double volatility =0.2;
+        double cash = 15;
+        double dt =0;
+        double spot = 105;
+
+        auto di_hit_pv = AnalyticalEngine::BinaryOption::CashOrNothingBarrier::Pv(spot, r, b, volatility, ttm, 
+                        BarrierType::DOWN_IN, barrier, cash, AnalyticalEngine::BinaryOption::PaymentTriggerType::AT_HIT,dt);
+
+        auto ui_hit_pv = AnalyticalEngine::BinaryOption::CashOrNothingBarrier::Pv(95, r, b, volatility, ttm, 
+                        BarrierType::UP_IN, barrier, cash, AnalyticalEngine::BinaryOption::PaymentTriggerType::AT_HIT,dt);
+
+        auto do_pv = AnalyticalEngine::BinaryOption::CashOrNothingBarrier::Pv(spot, r, b, volatility, ttm, 
+                    BarrierType::DOWN_OUT, barrier, cash, AnalyticalEngine::BinaryOption::PaymentTriggerType::AT_EXPIRY,dt);
+
+        auto uo_pv = AnalyticalEngine::BinaryOption::CashOrNothingBarrier::Pv(95, r, b, volatility, ttm, 
+                    BarrierType::UP_OUT, barrier, cash, AnalyticalEngine::BinaryOption::PaymentTriggerType::AT_EXPIRY,dt);
+
+        EXPECT_NEAR(di_hit_pv, 9.7264, 1e-4) << "Down in cash (at hit) or nothing Pv calculation error";
+        EXPECT_NEAR(ui_hit_pv, 11.6553, 1e-4) << "Up in cash (at hit) or nothing Pv calculation error";
+        EXPECT_NEAR(do_pv, 4.9081, 1e-4) << "Down out (cash or nothing) Pv calculation error";
+        EXPECT_NEAR(uo_pv, 3.0461, 1e-4) << "Down in (cash or nothing) Pv calculation error";
+
+    }
+
+
+.. _asset or nothing barrier:
+
+Asset or nothing barrier
+==========================
+
+.. function:: Pv(double spot, double r, double b, double volatility, double ttm, BarrierType b_type, double barrier, PaymentTriggerType p_type, double dt);
+
+.. container:: custom
+
+    **Parameters:**
+        **spot: double**
+            | 标的价格。
+        **r: double**
+            | 无风险利率。 
+        **b: double**
+            | 持仓成本。
+        **volatility: double**
+            | 波动率。
+        **ttm: double**
+            | 到期时间。 
+        **b_type: BarrierType**
+            | 障碍类型，分为 **UP_IN**, **UP_OUT**, **DOWN_IN** 和 **DOWN_OUT**。
+        **barrier: double**
+            | 障碍价格。
+        **p_type: PaymentTriggerType**
+            | 敲入支付类型， **AT_HIT** 和 **AT_EXPIRY** 。
+        **dt: double**
+            | 对于离散障碍期权，dt以年为单位的观察日之间的间隔。如果是连续观察，则 **dt = 0** 。
+
+    **Returns: double**
+        | 返回asset or nothing barrier的现值。
+
+
+Example
+----------------------
+
+.. code-block:: c++
+
+    #include <gtest/gtest.h>
+    #include <iostream>
+    #include <numeric>
+
+    #include "qlib/analytical_engine/binary_barrier_option.h"
+
+    TEST(TestAnalytical, AssetOrNothingBarrier)
+    {
+        double barrier =100;
+        double ttm = 0.5;
+        double r = 0.1;
+        double b = 0.1;
+        double volatility =0.2;
+        double dt =0;
+        double spot = 105;
+
+        auto di_hit_pv = AnalyticalEngine::BinaryOption::AssetOrNothingBarrier::Pv(spot, r, b, volatility, ttm, 
+                        BarrierType::DOWN_IN, barrier, AnalyticalEngine::BinaryOption::PaymentTriggerType::AT_HIT,dt);
+
+        auto ui_hit_pv = AnalyticalEngine::BinaryOption::AssetOrNothingBarrier::Pv(95, r, b, volatility, ttm, 
+                        BarrierType::UP_IN, barrier, AnalyticalEngine::BinaryOption::PaymentTriggerType::AT_HIT,dt);
+
+        auto do_pv = AnalyticalEngine::BinaryOption::AssetOrNothingBarrier::Pv(spot, r, b, volatility, ttm, 
+                    BarrierType::DOWN_OUT, barrier, AnalyticalEngine::BinaryOption::PaymentTriggerType::AT_EXPIRY,dt);
+
+        auto uo_pv = AnalyticalEngine::BinaryOption::AssetOrNothingBarrier::Pv(95, r, b, volatility, ttm, 
+                    BarrierType::UP_OUT, barrier, AnalyticalEngine::BinaryOption::PaymentTriggerType::AT_EXPIRY,dt);
+
+        EXPECT_NEAR(di_hit_pv, 64.8426, 1e-4) << "Down in asset (at hit) or nothing Pv calculation error";
+        EXPECT_NEAR(ui_hit_pv, 77.7017, 1e-4) << "Up in asset (at hit) or nothing Pv calculation error";
+        EXPECT_NEAR(do_pv, 40.1574, 1e-4) << "Down out (asset or nothing) Pv calculation error";
+        EXPECT_NEAR(uo_pv, 17.2983, 1e-4) << "Down in (asset or nothing) Pv calculation error";
+
+    }
+
+.. _cash or nothing barrier option:
+
+Cash or nothing barrier Option
+====================================
+
+.. function:: Pv(double spot, double r, double b, double volatility, double ttm, BarrierType b_type, OptionType o_type, double barrier, double cash, double strike, double dt);
+.. container:: custom
+
+    **Parameters:**
+        **spot: double**
+            | 标的价格。
+        **r: double**
+            | 无风险利率。 
+        **b: double**
+            | 持仓成本。
+        **volatility: double**
+            | 波动率。
+        **ttm: double**
+            | 到期时间。 
+        **b_type: BarrierType**
+            | 障碍类型，分为 **UP_IN**, **UP_OUT**, **DOWN_IN** 和 **DOWN_OUT**。
+        **o_type: PaymentTriggerType**
+            | 期权类型， **CALL** 和 **PUT**。
+        **barrier: double**
+            | 障碍价格。
+        **cash: double**
+            | :ref:`现金二元期权<cash or nothing ref>` 的现金。
+        **strike: double**
+            | :ref:`现金二元期权<cash or nothing ref>` 的行权价。
+        **dt: double**
+            | 对于离散障碍期权，dt以年为单位的观察日之间的间隔。如果是连续观察，则 **dt = 0** 。
+
+    **Returns: double**
+        | 返回cash or nothing barrier option的现值。
+
+
+Example
+----------------------
+
+.. code-block:: c++
+
+    #include <gtest/gtest.h>
+    #include <iostream>
+    #include <numeric>
+
+    #include "qlib/analytical_engine/binary_barrier_option.h"
+
+    TEST(TestAnalytical, CashOrNothingOptionBarrier)
+    {
+        double barrier =100;
+        double ttm = 0.5;
+        double r = 0.1;
+        double b = 0.1;
+        double volatility =0.2;
+        double dt =0;
+        double spot = 105;
+        double cash = 15;
+	    double strike = 102;
+
+        auto dip_pv = AnalyticalEngine::BinaryOption::CashOrNothingBarrierOption::Pv(spot, r, b, volatility, ttm,
+                        BarrierType::DOWN_IN, OptionType::PUT, barrier, cash, strike,dt);
+        
+        auto uip_pv = AnalyticalEngine::BinaryOption::CashOrNothingBarrierOption::Pv(95, r, b, volatility, ttm,
+                        BarrierType::UP_IN, OptionType::PUT, barrier, cash, strike,dt);
+
+        auto dop_pv = AnalyticalEngine::BinaryOption::CashOrNothingBarrierOption::Pv(spot, r, b, volatility, ttm,
+                        BarrierType::DOWN_OUT, OptionType::PUT, barrier, cash, strike,dt);
+
+        auto uop_pv = AnalyticalEngine::BinaryOption::CashOrNothingBarrierOption::Pv(95, r, b, volatility, ttm,
+                        BarrierType::UP_OUT, OptionType::PUT, barrier, cash, strike,dt);
+
+        EXPECT_NEAR(dip_pv, 4.4314, 1e-4) << "Down in cash or nothing put Pv calculation error";
+        EXPECT_NEAR(uip_pv, 5.3297, 1e-4) << "Up in cash or nothing put Pv calculation error";
+        EXPECT_NEAR(dop_pv, 0.0323, 1e-4) << "Down out cash or nothing put Pv calculation error";
+        EXPECT_NEAR(uop_pv, 3.0461, 1e-4) << "Down in cash or nothing put Pv calculation error";
+
+    }
+
+.. _asset or nothing barrier option:
+
+Asset or nothing barrier Option
+====================================
+
+.. function:: Pv(double spot, double r, double b, double volatility, double ttm, BarrierType b_type, OptionType o_type, double barrier, double strike, double dt);
+
+.. container:: custom
+
+    **Parameters:**
+        **spot: double**
+            | 标的价格。
+        **r: double**
+            | 无风险利率。 
+        **b: double**
+            | 持仓成本。
+        **vol: double**
+            | 波动率。
+        **ttm: double**
+            | 到期时间。 
+        **b_type: BarrierType**
+            | 障碍类型，分为 **UP_IN**, **UP_OUT**, **DOWN_IN** 和 **DOWN_OUT**。
+        **o_type: PaymentTriggerType**
+            | 期权类型， **CALL** 和 **PUT**。
+        **barrier: double**
+            | 障碍价格。
+        **strike: double**
+            | :ref:`资产二元期权<asset or nothing ref>` 的行权价。
+        **dt: double**
+            | 对于离散障碍期权，dt以年为单位的观察日之间的间隔。如果是连续观察，则 **dt = 0** 。
+
+    **Returns: double**
+        | 返回asset or nothing barrier option的现值。
+
+
+Example
+----------------------
+
+.. code-block:: c++
+
+    #include <gtest/gtest.h>
+    #include <iostream>
+    #include <numeric>
+
+    #include "qlib/analytical_engine/binary_barrier_option.h"
+
+    TEST(TestAnalytical, AssetOrNothingOptionBarrier)
+    {
+        double barrier =100;
+        double ttm = 0.5;
+        double r = 0.1;
+        double b = 0.1;
+        double volatility =0.2;
+        double dt =0;
+        double spot = 105;
+	    double strike = 102;
+
+        auto dip_pv = AnalyticalEngine::BinaryOption::AssetOrNothingBarrierOption::Pv(spot, r, b, volatility, ttm,
+                        BarrierType::DOWN_IN, OptionType::PUT, barrier, strike,dt);
+        
+        auto uip_pv = AnalyticalEngine::BinaryOption::AssetOrNothingBarrierOption::Pv(95, r, b, volatility, ttm,
+                        BarrierType::UP_IN, OptionType::PUT, barrier, strike,dt);
+
+        auto dop_pv = AnalyticalEngine::BinaryOption::AssetOrNothingBarrierOption::Pv(spot, r, b, volatility, ttm,
+                        BarrierType::DOWN_OUT, OptionType::PUT, barrier, strike,dt);
+
+        auto uop_pv = AnalyticalEngine::BinaryOption::AssetOrNothingBarrierOption::Pv(95, r, b, volatility, ttm,
+                        BarrierType::UP_OUT, OptionType::PUT, barrier, strike,dt);
+
+        EXPECT_NEAR(dip_pv, 27.5644, 1e-4) << "Down in asset or nothing put Pv calculation error";
+        EXPECT_NEAR(uip_pv, 38.7533, 1e-4) << "Up in asset or nothing put Pv calculation error";
+        EXPECT_NEAR(dop_pv, 0.2183, 1e-4) << "Down out asset or nothing put Pv calculation error";
+        EXPECT_NEAR(uop_pv, 17.2983, 1e-4) << "Down in asset or nothing put Pv calculation error";
+
+    }
+
+
+参考资料
+============
+
+.. [1] Espen Gaarder Haug, The Complete Guide for Option Pricing Formulas, 2nd ed., McGraw-Hill.

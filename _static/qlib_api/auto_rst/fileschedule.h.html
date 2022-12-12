@@ -1,0 +1,345 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>生成交易日 &mdash; Qlib Documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/fonts.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="香草期权" href="namespaceAnalyticalEngine%3A%3AVanilla.html" />
+    <link rel="prev" title="Period" href="enumTimeUnitclassPeriodclassDaysclassWeeksclassMonthsclassYears.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> qlib
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="在文档中搜索" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">蒙特卡洛定价引擎</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="classMCEngine.html">蒙特卡洛定价引擎MCEngine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="structMCResults.html">蒙特卡洛模拟结果MCResults</a></li>
+<li class="toctree-l1"><a class="reference internal" href="classBlackScholes.html">BlackScholes模型</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">产品结构</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="classPayoffclassVanillaclassCashclassAssetclassCashOrNothingclassAssetOrNothing.html">Payoff类</a></li>
+<li class="toctree-l1"><a class="reference internal" href="classKnockInBarrierOption.html">单障碍敲入型期权</a></li>
+<li class="toctree-l1"><a class="reference internal" href="classKnockOutBarrierOption.html">单障碍敲出型期权</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">枚举类型</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="enumOptionType.html">期权</a></li>
+<li class="toctree-l1"><a class="reference internal" href="enumGreekType.html">希腊值</a></li>
+<li class="toctree-l1"><a class="reference internal" href="enumBarrierType.html">障碍</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">日历工具</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="classCalendar.html">Calendar</a></li>
+<li class="toctree-l1"><a class="reference internal" href="classDate.html">Date</a></li>
+<li class="toctree-l1"><a class="reference internal" href="classDayCounterclassAct365classBus244.html">DayCounter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="enumTimeUnitclassPeriodclassDaysclassWeeksclassMonthsclassYears.html">Period</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">生成交易日</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">解析解</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="namespaceAnalyticalEngine%3A%3AVanilla.html">香草期权</a></li>
+<li class="toctree-l1"><a class="reference internal" href="namespaceAnalyticalEngine%3A%3AAmerican.html">美式期权</a></li>
+<li class="toctree-l1"><a class="reference internal" href="namespaceAnalyticalEngine%3A%3AAmericanExchange.html">美式交换期权</a></li>
+<li class="toctree-l1"><a class="reference internal" href="namespaceAnalyticalEngine%3A%3AAsian.html">亚式期权</a></li>
+<li class="toctree-l1"><a class="reference internal" href="namespaceAnalyticalEngine%3A%3ABarrierOption.html">障碍期权</a></li>
+<li class="toctree-l1"><a class="reference internal" href="namespaceAnalyticalEngine%3A%3ABinaryOption.html">二元期权及二元障碍期权</a></li>
+<li class="toctree-l1"><a class="reference internal" href="namespaceAnalyticalEngine%3A%3ACorrelation.html">相关期权</a></li>
+<li class="toctree-l1"><a class="reference internal" href="namespaceAnalyticalEngine%3A%3AExchange.html">交换期权</a></li>
+<li class="toctree-l1"><a class="reference internal" href="namespaceAnalyticalEngine%3A%3ALookbackOption.html">回望期权</a></li>
+<li class="toctree-l1"><a class="reference internal" href="namespaceAnalyticalEngine%3A%3AOptionOnMaximum.html">Option on Maximum</a></li>
+<li class="toctree-l1"><a class="reference internal" href="namespaceAnalyticalEngine%3A%3AOptionOnMinimum.html">Option on Minimum</a></li>
+<li class="toctree-l1"><a class="reference internal" href="namespaceAnalyticalEngine%3A%3AProduct.html">乘积期权</a></li>
+<li class="toctree-l1"><a class="reference internal" href="namespaceAnalyticalEngine%3A%3AQuotient.html">比值期权</a></li>
+<li class="toctree-l1"><a class="reference internal" href="namespaceAnalyticalEngine%3A%3ASpread.html">价差</a></li>
+<li class="toctree-l1"><a class="reference internal" href="namespaceAnalyticalEngine%3A%3ATwoAssetBarrier.html">两资产障碍期权</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">qlib</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+<div class="git-ribbon">
+  <a href="http://github.com/SwissDataScienceCenter" rel="me">Join us on GitHub</a>
+</div>
+
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>生成交易日</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/auto_rst/fileschedule.h.rst.txt" rel="nofollow"> 查看页面源码</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1>生成交易日<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-enums">Enums</p>
+<dl class="cpp enum-class">
+<dt class="sig sig-object cpp" id="_CPPv421BusinessDayConvention">
+<span id="_CPPv321BusinessDayConvention"></span><span id="_CPPv221BusinessDayConvention"></span><span class="target" id="schedule_8h_1aff46c5ae9385d20709bedade86edd368"></span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">BusinessDayConvention</span></span></span><a class="headerlink" href="#_CPPv421BusinessDayConvention" title="永久链接至目标">¶</a><br /></dt>
+<dd><p><span class="target" id="schedule_8h_1BusinessDayConvention"></span>函数在生成交易日时，如遇非交易日的调整规则。 </p>
+<p><em>Values:</em></p>
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N21BusinessDayConvention9FOLLOWINGE">
+<span id="_CPPv3N21BusinessDayConvention9FOLLOWINGE"></span><span id="_CPPv2N21BusinessDayConvention9FOLLOWINGE"></span><span class="target" id="schedule_8h_1aff46c5ae9385d20709bedade86edd368ac172d52647d4fd6f81a2c3110d150c6a"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">FOLLOWING</span></span></span><a class="headerlink" href="#_CPPv4N21BusinessDayConvention9FOLLOWINGE" title="永久链接至目标">¶</a><br /></dt>
+<dd><p>调整为下一交易日。 </p>
+</dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N21BusinessDayConvention18MODIFIED_FOLLOWINGE">
+<span id="_CPPv3N21BusinessDayConvention18MODIFIED_FOLLOWINGE"></span><span id="_CPPv2N21BusinessDayConvention18MODIFIED_FOLLOWINGE"></span><span class="target" id="schedule_8h_1aff46c5ae9385d20709bedade86edd368a6f9081b73d12a6797b086622518c02db"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">MODIFIED_FOLLOWING</span></span></span><a class="headerlink" href="#_CPPv4N21BusinessDayConvention18MODIFIED_FOLLOWINGE" title="永久链接至目标">¶</a><br /></dt>
+<dd><p>若下一交易日和非交易日同月，则调整为下一交易日，否则调整为上一交易日。 </p>
+</dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N21BusinessDayConvention9PRECEDINGE">
+<span id="_CPPv3N21BusinessDayConvention9PRECEDINGE"></span><span id="_CPPv2N21BusinessDayConvention9PRECEDINGE"></span><span class="target" id="schedule_8h_1aff46c5ae9385d20709bedade86edd368ab807500d0d02793339457f52b1914b90"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PRECEDING</span></span></span><a class="headerlink" href="#_CPPv4N21BusinessDayConvention9PRECEDINGE" title="永久链接至目标">¶</a><br /></dt>
+<dd><p>调整为上一交易日。 </p>
+</dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N21BusinessDayConvention18MODIFIED_PRECEDINGE">
+<span id="_CPPv3N21BusinessDayConvention18MODIFIED_PRECEDINGE"></span><span id="_CPPv2N21BusinessDayConvention18MODIFIED_PRECEDINGE"></span><span class="target" id="schedule_8h_1aff46c5ae9385d20709bedade86edd368ab3b7b47b09b7577d992ac60574596386"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">MODIFIED_PRECEDING</span></span></span><a class="headerlink" href="#_CPPv4N21BusinessDayConvention18MODIFIED_PRECEDINGE" title="永久链接至目标">¶</a><br /></dt>
+<dd><p>若上一交易日和非交易日同月，则调整为上一交易日，否则调整为下一交易日。 </p>
+</dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N21BusinessDayConvention29HALF_MONTH_MODIFIED_FOLLOWINGE">
+<span id="_CPPv3N21BusinessDayConvention29HALF_MONTH_MODIFIED_FOLLOWINGE"></span><span id="_CPPv2N21BusinessDayConvention29HALF_MONTH_MODIFIED_FOLLOWINGE"></span><span class="target" id="schedule_8h_1aff46c5ae9385d20709bedade86edd368ae2c0f62609e73564c1ad73cae19f95c8"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">HALF_MONTH_MODIFIED_FOLLOWING</span></span></span><a class="headerlink" href="#_CPPv4N21BusinessDayConvention29HALF_MONTH_MODIFIED_FOLLOWINGE" title="永久链接至目标">¶</a><br /></dt>
+<dd><p>若下一交易日和非交易日在同半月（按每月15号划分），则调整为下一交易日，否则调整为上一交易日。 </p>
+</dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N21BusinessDayConvention7NEARESTE">
+<span id="_CPPv3N21BusinessDayConvention7NEARESTE"></span><span id="_CPPv2N21BusinessDayConvention7NEARESTE"></span><span class="target" id="schedule_8h_1aff46c5ae9385d20709bedade86edd368aad135772d7cf93dd0ccf9d2474b34e6a"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">NEAREST</span></span></span><a class="headerlink" href="#_CPPv4N21BusinessDayConvention7NEARESTE" title="永久链接至目标">¶</a><br /></dt>
+<dd><p>调整为最近的交易日。 </p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="cpp enum-class">
+<dt class="sig sig-object cpp" id="_CPPv418DateGenerationRule">
+<span id="_CPPv318DateGenerationRule"></span><span id="_CPPv218DateGenerationRule"></span><span class="target" id="schedule_8h_1aaa22bc8ab87aa5ef5823ca4c600882ff"></span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">DateGenerationRule</span></span></span><a class="headerlink" href="#_CPPv418DateGenerationRule" title="永久链接至目标">¶</a><br /></dt>
+<dd><p>date generation rules </p>
+<p><em>Values:</em></p>
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N18DateGenerationRule7FORWARDE">
+<span id="_CPPv3N18DateGenerationRule7FORWARDE"></span><span id="_CPPv2N18DateGenerationRule7FORWARDE"></span><span class="target" id="schedule_8h_1aaa22bc8ab87aa5ef5823ca4c600882ffabfec72bb37910c61f36b6c29a1f7ec31"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">FORWARD</span></span></span><a class="headerlink" href="#_CPPv4N18DateGenerationRule7FORWARDE" title="永久链接至目标">¶</a><br /></dt>
+<dd><p>从给定的交易日向前生成。 </p>
+</dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N18DateGenerationRule8BACKWARDE">
+<span id="_CPPv3N18DateGenerationRule8BACKWARDE"></span><span id="_CPPv2N18DateGenerationRule8BACKWARDE"></span><span class="target" id="schedule_8h_1aaa22bc8ab87aa5ef5823ca4c600882ffa6377b4908ae38f9a57fe9120cf179eb1"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">BACKWARD</span></span></span><a class="headerlink" href="#_CPPv4N18DateGenerationRule8BACKWARDE" title="永久链接至目标">¶</a><br /></dt>
+<dd><p>从给定的交易日向后生成。 </p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-functions">Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv419ModifiedBusinessDayRK4Date21BusinessDayConventionRK8Calendar">
+<span id="_CPPv319ModifiedBusinessDayRK4Date21BusinessDayConventionRK8Calendar"></span><span id="_CPPv219ModifiedBusinessDayRK4Date21BusinessDayConventionRK8Calendar"></span><span id="ModifiedBusinessDay__DateCR.BusinessDayConvention.CalendarCR"></span><span class="target" id="schedule_8h_1a93b3041f1071f7889bf5c2dc16b9c730"></span><a class="reference internal" href="classDate.html#_CPPv44Date" title="Date"><span class="n"><span class="pre">Date</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ModifiedBusinessDay</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="classDate.html#_CPPv44Date" title="Date"><span class="n"><span class="pre">Date</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">today</span></span>, <a class="reference internal" href="#_CPPv421BusinessDayConvention" title="BusinessDayConvention"><span class="n"><span class="pre">BusinessDayConvention</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">convention</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="classCalendar.html#_CPPv48Calendar" title="Calendar"><span class="n"><span class="pre">Calendar</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">cal</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv419ModifiedBusinessDayRK4Date21BusinessDayConventionRK8Calendar" title="永久链接至目标">¶</a><br /></dt>
+<dd><p>给定日期，调整为交易日。 </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv48ScheduleRK4DateRK4DateRK6Period21BusinessDayConvention18DateGenerationRuleRK8Calendarbb">
+<span id="_CPPv38ScheduleRK4DateRK4DateRK6Period21BusinessDayConvention18DateGenerationRuleRK8Calendarbb"></span><span id="_CPPv28ScheduleRK4DateRK4DateRK6Period21BusinessDayConvention18DateGenerationRuleRK8Calendarbb"></span><span id="Schedule__DateCR.DateCR.PeriodCR.BusinessDayConvention.DateGenerationRule.CalendarCR.b.b"></span><span class="target" id="schedule_8h_1a6ecd369ad28ad9580fd534ae692f5d55"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="classDate.html#_CPPv44Date" title="Date"><span class="n"><span class="pre">Date</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Schedule</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="classDate.html#_CPPv44Date" title="Date"><span class="n"><span class="pre">Date</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">from</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="classDate.html#_CPPv44Date" title="Date"><span class="n"><span class="pre">Date</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">to</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="enumTimeUnitclassPeriodclassDaysclassWeeksclassMonthsclassYears.html#_CPPv46Period" title="Period"><span class="n"><span class="pre">Period</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">freq</span></span>, <a class="reference internal" href="#_CPPv421BusinessDayConvention" title="BusinessDayConvention"><span class="n"><span class="pre">BusinessDayConvention</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">convention</span></span>, <a class="reference internal" href="#_CPPv418DateGenerationRule" title="DateGenerationRule"><span class="n"><span class="pre">DateGenerationRule</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">rule</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="classCalendar.html#_CPPv48Calendar" title="Calendar"><span class="n"><span class="pre">Calendar</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">cal</span></span>, <span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">include_from</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">false</span></span>, <span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">include_to</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">true</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv48ScheduleRK4DateRK4DateRK6Period21BusinessDayConvention18DateGenerationRuleRK8Calendarbb" title="永久链接至目标">¶</a><br /></dt>
+<dd><p><span class="target" id="schedule_8h_1Schedule"></span>按周期生成交易日。见 <a class="reference internal" href="enumTimeUnitclassPeriodclassDaysclassWeeksclassMonthsclassYears.html#classPeriod"><span class="std std-ref">Period</span></a> 和 <a class="reference internal" href="#schedule_8h_1BusinessDayConvention"><span class="std std-ref">BusinessDayConvention</span></a>。 </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv48ScheduleRK4DateRK6PeriodRK6Period21BusinessDayConvention18DateGenerationRuleRK8Calendarbb">
+<span id="_CPPv38ScheduleRK4DateRK6PeriodRK6Period21BusinessDayConvention18DateGenerationRuleRK8Calendarbb"></span><span id="_CPPv28ScheduleRK4DateRK6PeriodRK6Period21BusinessDayConvention18DateGenerationRuleRK8Calendarbb"></span><span id="Schedule__DateCR.PeriodCR.PeriodCR.BusinessDayConvention.DateGenerationRule.CalendarCR.b.b"></span><span class="target" id="schedule_8h_1a887c9e123e5884a7ef2bbd344c55fb3c"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="classDate.html#_CPPv44Date" title="Date"><span class="n"><span class="pre">Date</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Schedule</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="classDate.html#_CPPv44Date" title="Date"><span class="n"><span class="pre">Date</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">from</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="enumTimeUnitclassPeriodclassDaysclassWeeksclassMonthsclassYears.html#_CPPv46Period" title="Period"><span class="n"><span class="pre">Period</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">term</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="enumTimeUnitclassPeriodclassDaysclassWeeksclassMonthsclassYears.html#_CPPv46Period" title="Period"><span class="n"><span class="pre">Period</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">freq</span></span>, <a class="reference internal" href="#_CPPv421BusinessDayConvention" title="BusinessDayConvention"><span class="n"><span class="pre">BusinessDayConvention</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">convention</span></span>, <a class="reference internal" href="#_CPPv418DateGenerationRule" title="DateGenerationRule"><span class="n"><span class="pre">DateGenerationRule</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">rule</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="classCalendar.html#_CPPv48Calendar" title="Calendar"><span class="n"><span class="pre">Calendar</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">cal</span></span>, <span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">include_from</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">false</span></span>, <span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">include_to</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">true</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv48ScheduleRK4DateRK6PeriodRK6Period21BusinessDayConvention18DateGenerationRuleRK8Calendarbb" title="永久链接至目标">¶</a><br /></dt>
+<dd><p>按周期生成交易日。见 Period。 </p>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="namespaceAnalyticalEngine%3A%3AVanilla.html" class="btn btn-neutral float-right" title="香草期权" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="enumTimeUnitclassPeriodclassDaysclassWeeksclassMonthsclassYears.html" class="btn btn-neutral float-left" title="Period" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2022, YC.
+
+    </p>
+  </div>
+    
+    
+    
+    利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用了 
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    
+    由 <a href="https://readthedocs.org">Read the Docs</a>开发. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

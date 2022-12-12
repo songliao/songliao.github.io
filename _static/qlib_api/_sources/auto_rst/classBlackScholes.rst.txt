@@ -1,0 +1,5 @@
+BlackScholes模型
+============================
+
+.. doxygenclass:: BlackScholes
+    :members: BlackScholes

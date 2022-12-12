@@ -1,0 +1,527 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>亚式期权</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/fonts.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/translations.js"></script>
+        <script src="../_static/design-tabs.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> 蒙卡定价引擎开发
+          
+
+          
+            
+            <img src="../_static/Qlib_logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="在文档中搜索" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../project_introduction.html">项目简介</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../project_documentation.html">项目知识库</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../paper_link.html">项目论文</a></li>
+<li class="toctree-l1"><a class="reference external" href="_static/qlib_api/index.html#file://">代码API references</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">蒙卡定价引擎开发</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+<div class="git-ribbon">
+  <a href="http://github.com/SwissDataScienceCenter" rel="me">Join us on GitHub</a>
+</div>
+
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>亚式期权</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/qlib_doc/asian.rst.txt" rel="nofollow"> 查看页面源码</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1>亚式期权<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<p><a class="reference internal" href="../closed_formulas.html#asian"><span class="std std-ref">亚式期权</span></a> 根据平均方法的不同分为几何平均亚式期权与算数平均亚式期权，其中算数平均亚式期权更为常见；根据平均对象的不同，又可分为浮动行权价亚式期权与固定行权价亚式期权。</p>
+<div class="section" id="id2">
+<h2>固定行权价的亚式期权<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id3">
+<h3>连续观察<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h3>
+<a class="reference internal image-reference" href="../_images/continuous_asian_not_in.png"><img alt="../_images/continuous_asian_not_in.png" class="align-center" src="../_images/continuous_asian_not_in.png" style="width: 600px;" /></a>
+<a class="reference internal image-reference" href="../_images/continuous_asian_in_period.png"><img alt="../_images/continuous_asian_in_period.png" class="align-center" src="../_images/continuous_asian_in_period.png" style="width: 600px;" /></a>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">Pv(double</span> <span class="pre">spot,</span> <span class="pre">double</span> <span class="pre">r,</span> <span class="pre">double</span> <span class="pre">b,</span> <span class="pre">double</span> <span class="pre">volatility,</span> <span class="pre">double</span> <span class="pre">ttm,</span> <span class="pre">OptionType</span> <span class="pre">type,</span> <span class="pre">double</span> <span class="pre">strike,</span> <span class="pre">double</span> <span class="pre">sa,</span> <span class="pre">double</span> <span class="pre">ta,</span> <span class="pre">Method</span> <span class="pre">approx_method);</span></span></dt>
+<dd></dd></dl>
+
+<div class="custom docutils container">
+<dl>
+<dt><strong>Parameters:</strong></dt><dd><dl>
+<dt><strong>spot: double</strong></dt><dd><div class="line-block">
+<div class="line">标的价格。</div>
+</div>
+</dd>
+<dt><strong>r: double</strong></dt><dd><div class="line-block">
+<div class="line">无风险利率。</div>
+</div>
+</dd>
+<dt><strong>b: double</strong></dt><dd><div class="line-block">
+<div class="line">持仓成本。</div>
+</div>
+</dd>
+<dt><strong>volatility: double</strong></dt><dd><div class="line-block">
+<div class="line">波动率。</div>
+</div>
+</dd>
+<dt><strong>ttm: double</strong></dt><dd><div class="line-block">
+<div class="line">到期时间。</div>
+</div>
+</dd>
+<dt><strong>type: OptionType</strong></dt><dd><div class="line-block">
+<div class="line">期权类型, <strong>CALL</strong> 或 <strong>PUT</strong>。</div>
+</div>
+</dd>
+<dt><strong>strike: double</strong></dt><dd><div class="line-block">
+<div class="line">行权价格。</div>
+</div>
+</dd>
+<dt><strong>sa: double</strong></dt><dd><div class="line-block">
+<div class="line">目前平均价格。</div>
+</div>
+</dd>
+<dt><strong>ta: double</strong></dt><dd><div class="line-block">
+<div class="line">平均期限。</div>
+</div>
+</dd>
+<dt><strong>approx_method: Method</strong></dt><dd><div class="line-block">
+<div class="line">亚式估计类型，包括 <strong>TURNBULL_WAKEMAN</strong> <a class="footnote-reference brackets" href="#id14" id="id4">1</a>， <strong>LEVY</strong> <a class="footnote-reference brackets" href="#id15" id="id5">2</a>。</div>
+</div>
+</dd>
+</dl>
+</dd>
+<dt><strong>Returns: double</strong></dt><dd><div class="line-block">
+<div class="line">返回连续观察固定行权价的亚式期权的现值。</div>
+</div>
+</dd>
+</dl>
+</div>
+</div>
+<div class="section" id="example">
+<h3>Example<a class="headerlink" href="#example" title="永久链接至标题">¶</a></h3>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;gtest/gtest.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;qlib/analytical_engine/asian.h&quot;</span><span class="cp"></span>
+
+<span class="n">TEST</span><span class="p">(</span><span class="n">TestAnalytical</span><span class="p">,</span><span class="w"> </span><span class="n">ContinuousFixedAsian</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">spot</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">100</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.1</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.05</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">vol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.15</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">ttm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.75</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">strike</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">95</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">sa</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">100</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">ta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.75</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">pv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">AnalyticalEngine</span><span class="o">::</span><span class="n">Asian</span><span class="o">::</span><span class="n">Arithmetic</span><span class="o">::</span><span class="n">Pv</span><span class="p">(</span><span class="n">spot</span><span class="p">,</span><span class="w"> </span><span class="n">r</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="n">vol</span><span class="p">,</span><span class="w"> </span><span class="n">ttm</span><span class="p">,</span><span class="w"> </span><span class="n">OptionType</span><span class="o">::</span><span class="n">CALL</span><span class="p">,</span><span class="w"> </span><span class="n">strike</span><span class="p">,</span><span class="w"> </span><span class="n">sa</span><span class="p">,</span><span class="w"> </span><span class="n">ta</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                            </span><span class="n">AnalyticalEngine</span><span class="o">::</span><span class="n">Asian</span><span class="o">::</span><span class="n">Arithmetic</span><span class="o">::</span><span class="n">Method</span><span class="o">::</span><span class="n">TURNBULL_WAKEMAN</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">EXPECT_NEAR</span><span class="p">(</span><span class="n">pv</span><span class="p">,</span><span class="w"> </span><span class="mf">7.0544</span><span class="p">,</span><span class="w"> </span><span class="mf">1e-5</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Asian option Pv calculation error&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id6">
+<h3>离散观察<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h3>
+<a class="reference internal image-reference" href="../_images/discrete_asian_fig.png"><img alt="../_images/discrete_asian_fig.png" class="align-center" src="../_images/discrete_asian_fig.png" style="width: 600px;" /></a>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">Pv(double</span> <span class="pre">spot,</span> <span class="pre">double</span> <span class="pre">rf,</span> <span class="pre">double</span> <span class="pre">b,</span> <span class="pre">double</span> <span class="pre">volatility,</span> <span class="pre">double</span> <span class="pre">ttm,</span> <span class="pre">OptionType</span> <span class="pre">type,</span> <span class="pre">double</span> <span class="pre">strike,</span> <span class="pre">double</span> <span class="pre">sa,</span> <span class="pre">double</span> <span class="pre">tta,</span> <span class="pre">int</span> <span class="pre">m,</span> <span class="pre">int</span> <span class="pre">n);</span></span></dt>
+<dd></dd></dl>
+
+<div class="custom docutils container">
+<dl>
+<dt><strong>Parameters:</strong></dt><dd><dl>
+<dt><strong>spot: double</strong></dt><dd><div class="line-block">
+<div class="line">标的价格。</div>
+</div>
+</dd>
+<dt><strong>rf: double</strong></dt><dd><div class="line-block">
+<div class="line">无风险利率。</div>
+</div>
+</dd>
+<dt><strong>b: double</strong></dt><dd><div class="line-block">
+<div class="line">持仓成本。</div>
+</div>
+</dd>
+<dt><strong>volatility: double</strong></dt><dd><div class="line-block">
+<div class="line">波动率。</div>
+</div>
+</dd>
+<dt><strong>ttm: double</strong></dt><dd><div class="line-block">
+<div class="line">到期时间。</div>
+</div>
+</dd>
+<dt><strong>type: OptionType</strong></dt><dd><div class="line-block">
+<div class="line">期权类型, <strong>CALL</strong> 或 <strong>PUT</strong>。</div>
+</div>
+</dd>
+<dt><strong>strike: double</strong></dt><dd><div class="line-block">
+<div class="line">行权价格。</div>
+</div>
+</dd>
+<dt><strong>sa: double</strong></dt><dd><div class="line-block">
+<div class="line">目前平均价格。</div>
+</div>
+</dd>
+<dt><strong>tta: double</strong></dt><dd><div class="line-block">
+<div class="line">当前时间到下一个均值采样点（average observation point）的时间。</div>
+</div>
+</dd>
+<dt><strong>m: int</strong></dt><dd><div class="line-block">
+<div class="line">已经过去的观察日数量。</div>
+</div>
+</dd>
+<dt><strong>n: int</strong></dt><dd><div class="line-block">
+<div class="line">观察日的总数。</div>
+</div>
+</dd>
+</dl>
+</dd>
+<dt><strong>Returns: double</strong></dt><dd><div class="line-block">
+<div class="line">返回离散观察固定行权价的亚式期权的现值。</div>
+</div>
+</dd>
+</dl>
+</div>
+</div>
+<div class="section" id="id7">
+<h3>Example<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h3>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;gtest/gtest.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;qlib/analytical_engine/asian.h&quot;</span><span class="cp"></span>
+
+<span class="n">TEST</span><span class="p">(</span><span class="n">TestAnalytical</span><span class="p">,</span><span class="w"> </span><span class="n">DiscreteFixedAsian</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">spot</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">95</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.08</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.03</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">vol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.1</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">ttm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.5</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">strike</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">100</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">sa</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">100</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">tta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.00</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">m</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">27</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">pv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">AnalyticalEngine</span><span class="o">::</span><span class="n">Asian</span><span class="o">::</span><span class="n">Arithmetic</span><span class="o">::</span><span class="n">Pv</span><span class="p">(</span><span class="n">spot</span><span class="p">,</span><span class="w"> </span><span class="n">r</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="n">vol</span><span class="p">,</span><span class="w"> </span><span class="n">ttm</span><span class="p">,</span><span class="w"> </span><span class="n">OptionType</span><span class="o">::</span><span class="n">CALL</span><span class="p">,</span><span class="w"> </span><span class="n">strike</span><span class="p">,</span><span class="w"> </span><span class="n">sa</span><span class="p">,</span><span class="w"> </span><span class="n">tta</span><span class="p">,</span><span class="w"> </span><span class="n">m</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">EXPECT_NEAR</span><span class="p">(</span><span class="n">pv</span><span class="p">,</span><span class="w"> </span><span class="mf">0.2719</span><span class="p">,</span><span class="w"> </span><span class="mf">1e-5</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Asian option Pv calculation error&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id8">
+<h2>浮动行权价的亚式期权<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id9">
+<h3>连续观察<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h3>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">Pv(double</span> <span class="pre">spot,</span> <span class="pre">double</span> <span class="pre">rf,</span> <span class="pre">double</span> <span class="pre">b,</span> <span class="pre">double</span> <span class="pre">volatility,</span> <span class="pre">double</span> <span class="pre">ttm,</span> <span class="pre">OptionType</span> <span class="pre">type,</span> <span class="pre">double</span> <span class="pre">sa,</span> <span class="pre">double</span> <span class="pre">ta,</span> <span class="pre">Method</span> <span class="pre">approx_method);</span></span></dt>
+<dd></dd></dl>
+
+<div class="custom docutils container">
+<dl>
+<dt><strong>Parameters:</strong></dt><dd><dl>
+<dt><strong>spot: double</strong></dt><dd><div class="line-block">
+<div class="line">标的价格。</div>
+</div>
+</dd>
+<dt><strong>rf: double</strong></dt><dd><div class="line-block">
+<div class="line">无风险利率。</div>
+</div>
+</dd>
+<dt><strong>b: double</strong></dt><dd><div class="line-block">
+<div class="line">持仓成本。</div>
+</div>
+</dd>
+<dt><strong>volatility: double</strong></dt><dd><div class="line-block">
+<div class="line">波动率。</div>
+</div>
+</dd>
+<dt><strong>ttm: double</strong></dt><dd><div class="line-block">
+<div class="line">到期时间。</div>
+</div>
+</dd>
+<dt><strong>type: OptionType</strong></dt><dd><div class="line-block">
+<div class="line">期权类型, <strong>CALL</strong> 或 <strong>PUT</strong>。</div>
+</div>
+</dd>
+<dt><strong>sa: double</strong></dt><dd><div class="line-block">
+<div class="line">目前平均价格。</div>
+</div>
+</dd>
+<dt><strong>ta: double</strong></dt><dd><div class="line-block">
+<div class="line">平均期限。</div>
+</div>
+</dd>
+<dt><strong>approx_method: Method</strong></dt><dd><div class="line-block">
+<div class="line">亚式估计类型，包括 <strong>TURNBULL_WAKEMAN</strong> <a class="footnote-reference brackets" href="#id14" id="id10">1</a>， <strong>LEVY</strong> <a class="footnote-reference brackets" href="#id15" id="id11">2</a>。</div>
+</div>
+</dd>
+</dl>
+</dd>
+<dt><strong>Returns: double</strong></dt><dd><div class="line-block">
+<div class="line">返回连续观察浮动行权价的亚式期权的现值。</div>
+</div>
+</dd>
+</dl>
+</div>
+</div>
+<div class="section" id="id12">
+<h3>离散观察<a class="headerlink" href="#id12" title="永久链接至标题">¶</a></h3>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">Pv(double</span> <span class="pre">spot,</span> <span class="pre">double</span> <span class="pre">rf,</span> <span class="pre">double</span> <span class="pre">b,</span> <span class="pre">double</span> <span class="pre">volatility,</span> <span class="pre">double</span> <span class="pre">ttm,</span> <span class="pre">OptionType</span> <span class="pre">type,</span> <span class="pre">double</span> <span class="pre">sa,</span> <span class="pre">double</span> <span class="pre">tta,</span> <span class="pre">int</span> <span class="pre">m,</span> <span class="pre">int</span> <span class="pre">n);</span></span></dt>
+<dd></dd></dl>
+
+<div class="custom docutils container">
+<dl>
+<dt><strong>Parameters:</strong></dt><dd><dl>
+<dt><strong>spot: double</strong></dt><dd><div class="line-block">
+<div class="line">标的价格。</div>
+</div>
+</dd>
+<dt><strong>rf: double</strong></dt><dd><div class="line-block">
+<div class="line">无风险利率。</div>
+</div>
+</dd>
+<dt><strong>b: double</strong></dt><dd><div class="line-block">
+<div class="line">持仓成本。</div>
+</div>
+</dd>
+<dt><strong>volatility: double</strong></dt><dd><div class="line-block">
+<div class="line">波动率。</div>
+</div>
+</dd>
+<dt><strong>ttm: double</strong></dt><dd><div class="line-block">
+<div class="line">到期时间。</div>
+</div>
+</dd>
+<dt><strong>type: OptionType</strong></dt><dd><div class="line-block">
+<div class="line">期权类型, <strong>CALL</strong> 或 <strong>PUT</strong>。</div>
+</div>
+</dd>
+<dt><strong>sa: double</strong></dt><dd><div class="line-block">
+<div class="line">目前平均价格。</div>
+</div>
+</dd>
+<dt><strong>tta: double</strong></dt><dd><div class="line-block">
+<div class="line">当前时间到下一个均值采样点（average observation point）的时间。</div>
+</div>
+</dd>
+<dt><strong>m: int</strong></dt><dd><div class="line-block">
+<div class="line">已经过去的观察日数量。</div>
+</div>
+</dd>
+<dt><strong>n: int</strong></dt><dd><div class="line-block">
+<div class="line">观察日的总数。</div>
+</div>
+</dd>
+</dl>
+</dd>
+<dt><strong>Returns: double</strong></dt><dd><div class="line-block">
+<div class="line">返回离散观察浮动行权价的亚式期权的现值。</div>
+</div>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="section" id="id13">
+<h2>参考资料<a class="headerlink" href="#id13" title="永久链接至标题">¶</a></h2>
+<dl class="footnote brackets">
+<dt class="label" id="id14"><span class="brackets">1</span><span class="fn-backref">(<a href="#id4">1</a>,<a href="#id10">2</a>)</span></dt>
+<dd><p>TURNBULL, S. M., AND L. M. WAKEMAN (1991): “A Quick Algorithm for Pricing European Average Options,” Journal of Financial and Quantitative Analysis, 26,377-389.</p>
+</dd>
+<dt class="label" id="id15"><span class="brackets">2</span><span class="fn-backref">(<a href="#id5">1</a>,<a href="#id11">2</a>)</span></dt>
+<dd><p>LEVY, E. (1992): “Pricing European Average Rate Currency Options,” Journal of International Money and Finance, 11,474- 491.</p>
+</dd>
+</dl>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2022, Essence Security.
+
+    </p>
+  </div>
+    
+    
+    
+    利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用了 
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    
+    由 <a href="https://readthedocs.org">Read the Docs</a>开发. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,4 @@
+价差
+====
+
+.. doxygennamespace:: AnalyticalEngine::Spread

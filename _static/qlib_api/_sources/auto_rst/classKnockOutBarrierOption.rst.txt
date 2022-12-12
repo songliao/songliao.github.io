@@ -1,0 +1,4 @@
+单障碍敲出型期权
+================
+
+.. doxygenclass:: KnockOutBarrierOption

@@ -1,0 +1,689 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>广义期权的一般创建方式</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  <link rel="stylesheet" href="_static/fonts.css" type="text/css" />
+  <link rel="stylesheet" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/translations.js"></script>
+        <script src="_static/design-tabs.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="搜索" href="search.html" />
+    <link rel="next" title="广义期权的实际案例" href="barrier_example.html" />
+    <link rel="prev" title="CUDA Toolkit" href="cuda_intro.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> 蒙卡定价引擎开发
+          
+
+          
+            
+            <img src="_static/Qlib_logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="在文档中搜索" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="project_introduction.html">项目简介</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="project_documentation.html">项目知识库</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="project_introduction.html">项目简介</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fin_basic.html">金融工程基础知识</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fin_engineering.html">金融工程开发技术基础</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fin_engineer_upgrade.html">金融工程开发技术进阶</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">广义期权的一般创建方式</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">单障碍敲入期权</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id3">接口示例</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">单障碍敲出期权</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id5">接口示例</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">双障碍敲出期权</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id7">接口示例</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">敲入敲出型期权</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id9">接口示例</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="barrier_example.html">广义期权的实际案例</a></li>
+<li class="toctree-l2"><a class="reference internal" href="closed_formulas.html">常见奇异期权释义及其（近似）解析解实现</a></li>
+<li class="toctree-l2"><a class="reference internal" href="greeks.html">希腊字母</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exotic_options_on_two_asset.html">部分挂钩双标的奇异衍生品及其定价</a></li>
+<li class="toctree-l2"><a class="reference internal" href="auto_callables.html">定价引擎应用案例：自动赎回结构</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="paper_link.html">项目论文</a></li>
+<li class="toctree-l1"><a class="reference external" href="_static/qlib_api/index.html#file://">代码API references</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">蒙卡定价引擎开发</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+<div class="git-ribbon">
+  <a href="http://github.com/SwissDataScienceCenter" rel="me">Join us on GitHub</a>
+</div>
+
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="project_documentation.html">项目知识库</a> &raquo;</li>
+        
+      <li>广义期权的一般创建方式</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/option_definition.rst.txt" rel="nofollow"> 查看页面源码</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1>广义期权的一般创建方式<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<p>当前市场上有很多常见的障碍期权，比如 up out down in 、气囊结构、保本雪球等等，但是市面上绝大多数复杂的障碍期权都能够通过简单的障碍期权组合而成。为了方便定义这些复杂的障碍期权，将单障碍期权分为两种：单障碍敲入期权及单障碍敲出期权，将双障碍期权分为两种，双障碍敲出期权及敲入敲出型期权，并在下文中对这些期权的创建方式进行详细说明。</p>
+<div class="section" id="id2">
+<h2>单障碍敲入期权<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>敲入型期权是指期权触及敲入障碍后激活另一种期权，激活后的期权持有至到期。</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>定义要素</strong></p></td>
+<td><p><strong>说明</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>敲入方向</p></td>
+<td><p>向上敲入 <strong>UP_IN</strong> 或向下敲入 <strong>DOWN_IN</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p>敲入观察日</p></td>
+<td><p>任意定义，一般根据观察频率、初始日期、期限等生成</p></td>
+</tr>
+<tr class="row-even"><td><p>敲入障碍价格</p></td>
+<td><p>对应的每个敲入观察日有对应的敲入障碍价格</p></td>
+</tr>
+<tr class="row-odd"><td><p>敲入赔付</p></td>
+<td><p>单障碍期权敲入后激活的期权，指定 <a class="reference internal" href="qlib_doc/payoff.html"><span class="doc">Payoff</span></a> 类型</p></td>
+</tr>
+<tr class="row-even"><td><p>未敲入赔付</p></td>
+<td><p>指定 <a class="reference internal" href="qlib_doc/payoff.html"><span class="doc">Payoff</span></a> 类型</p></td>
+</tr>
+<tr class="row-odd"><td><p>日历</p></td>
+<td><p>指定 <a class="reference internal" href="qlib_doc/calendar.html"><span class="doc">日历</span></a></p></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="id3">
+<h3>接口示例<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>向下敲入看跌期权条款</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>开始日期</p></td>
+<td><p>2021年3月1日</p></td>
+</tr>
+<tr class="row-odd"><td><p>结束日期</p></td>
+<td><p>2021年9月1日</p></td>
+</tr>
+<tr class="row-even"><td><p>敲入方向</p></td>
+<td><p>向下敲入 <strong>DOWN_IN</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p>敲入观察频率</p></td>
+<td><p>按月观察</p></td>
+</tr>
+<tr class="row-even"><td><p>敲入障碍价格</p></td>
+<td><p>80.0</p></td>
+</tr>
+<tr class="row-odd"><td><p>敲入赔付</p></td>
+<td><p>PUT，参与率为100%，执行价为100</p></td>
+</tr>
+<tr class="row-even"><td><p>未敲入赔付</p></td>
+<td><p>一笔价值为5的现金</p></td>
+</tr>
+<tr class="row-odd"><td><p>日历</p></td>
+<td><p>A股交易日历</p></td>
+</tr>
+</tbody>
+</table>
+<p>该期权在单障碍敲入期权接口中的实现如下：</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;qlib/barrier_option.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;qlib/schedule.h&quot;</span><span class="cp"></span>
+<span class="cp">#define A_STOCK &quot;[path]/Calendars/China.txt&quot;</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">cal</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Calendar</span><span class="p">(</span><span class="n">A_STOCK</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">start_date</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Date</span><span class="p">(</span><span class="mi">2021</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">end_date</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Date</span><span class="p">(</span><span class="mi">2021</span><span class="p">,</span><span class="w"> </span><span class="mi">9</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">observation_dates</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Schedule</span><span class="p">(</span><span class="n">start_date</span><span class="p">,</span><span class="w"> </span><span class="n">end_date</span><span class="p">,</span><span class="w"> </span><span class="n">Period</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">TimeUnit</span><span class="o">::</span><span class="n">MONTH</span><span class="p">),</span><span class="w"></span>
+<span class="w">                                        </span><span class="n">BusinessDayConvention</span><span class="o">::</span><span class="n">FOLLOWING</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                        </span><span class="n">DateGenerationRule</span><span class="o">::</span><span class="n">FORWARD</span><span class="p">,</span><span class="w"> </span><span class="n">cal</span><span class="p">,</span><span class="w"> </span><span class="nb">true</span><span class="p">,</span><span class="w"> </span><span class="nb">false</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">barriers</span><span class="p">(</span><span class="n">observation_dates</span><span class="p">.</span><span class="n">size</span><span class="p">(),</span><span class="w"> </span><span class="mf">80.0</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">ki_payoff</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Vanilla</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="n">OptionType</span><span class="o">::</span><span class="n">PUT</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">nki_payoff</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Cash</span><span class="p">(</span><span class="mf">5.0</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">ki_opt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">KnockInBarrierOption</span><span class="p">(</span><span class="n">BarrierType</span><span class="o">::</span><span class="n">DOWN_IN</span><span class="p">,</span><span class="w"> </span><span class="n">observation_dates</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                        </span><span class="n">barriers</span><span class="p">,</span><span class="w"> </span><span class="n">ki_payoff</span><span class="p">,</span><span class="w"> </span><span class="n">nki_payoff</span><span class="p">,</span><span class="w"> </span><span class="n">cal</span><span class="p">);</span><span class="w"></span>
+
+
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id4">
+<h2>单障碍敲出期权<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<p>敲出型期权是指终止，触及敲出障碍则该期权到期，在实际金融市场中，敲出后一般有相应的赔付。</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>定义要素</strong></p></td>
+<td><p><strong>说明</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>敲出方向</p></td>
+<td><p>向上敲出 <strong>UP_OUT</strong> 或向下敲出 <strong>DOWN_OUT</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p>敲出观察日</p></td>
+<td><p>一般根据观察频率、初始日期、期限等生成</p></td>
+</tr>
+<tr class="row-even"><td><p>敲出障碍价格</p></td>
+<td><p>对应的每个敲出观察日有对应的敲出障碍价格</p></td>
+</tr>
+<tr class="row-odd"><td><p>敲出赔付</p></td>
+<td><p>敲出终止后的赔付，指定 <a class="reference internal" href="qlib_doc/payoff.html"><span class="doc">Payoff</span></a> 类型</p></td>
+</tr>
+<tr class="row-even"><td><p>到期赔付</p></td>
+<td><p>即未敲出的到期赔付，指定 <a class="reference internal" href="qlib_doc/payoff.html"><span class="doc">Payoff</span></a> 类型</p></td>
+</tr>
+<tr class="row-odd"><td><p>日历</p></td>
+<td><p>指定 <a class="reference internal" href="qlib_doc/calendar.html"><span class="doc">日历</span></a></p></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="id5">
+<h3>接口示例<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>向上敲出看涨期权测试条款</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>开始日期</p></td>
+<td><p>2021年3月1日</p></td>
+</tr>
+<tr class="row-odd"><td><p>结束日期</p></td>
+<td><p>2021年9月1日</p></td>
+</tr>
+<tr class="row-even"><td><p>敲入方向</p></td>
+<td><p>向上敲出 <strong>UP_OUT</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p>敲出观察频率</p></td>
+<td><p>按月观察</p></td>
+</tr>
+<tr class="row-even"><td><p>敲出障碍价格</p></td>
+<td><p>100.0</p></td>
+</tr>
+<tr class="row-odd"><td><p>敲出赔付</p></td>
+<td><p>一笔价值为5的现金</p></td>
+</tr>
+<tr class="row-even"><td><p>到期赔付</p></td>
+<td><p>CALL，参与率为100%，执行价为90</p></td>
+</tr>
+<tr class="row-odd"><td><p>日历</p></td>
+<td><p>A股交易日历</p></td>
+</tr>
+</tbody>
+</table>
+<p>该期权在单障碍敲出期权接口中的实现如下：</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;qlib/barrier_option.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;qlib/schedule.h&quot;</span><span class="cp"></span>
+<span class="cp">#define A_STOCK &quot;[path]/Calendars/China.txt&quot;</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">      </span><span class="k">auto</span><span class="w"> </span><span class="n">cal</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Calendar</span><span class="p">(</span><span class="n">A_STOCK</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">start_date</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Date</span><span class="p">(</span><span class="mi">2021</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">end_date</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Date</span><span class="p">(</span><span class="mi">2021</span><span class="p">,</span><span class="w"> </span><span class="mi">9</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">observation_dates</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Schedule</span><span class="p">(</span><span class="n">start_date</span><span class="p">,</span><span class="w"> </span><span class="n">end_date</span><span class="p">,</span><span class="w"> </span><span class="n">Period</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">TimeUnit</span><span class="o">::</span><span class="n">MONTH</span><span class="p">),</span><span class="w"></span>
+<span class="w">                                        </span><span class="n">BusinessDayConvention</span><span class="o">::</span><span class="n">FOLLOWING</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                        </span><span class="n">DateGenerationRule</span><span class="o">::</span><span class="n">FORWARD</span><span class="p">,</span><span class="w"> </span><span class="n">cal</span><span class="p">,</span><span class="w"> </span><span class="nb">true</span><span class="p">,</span><span class="w"> </span><span class="nb">false</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">barriers</span><span class="p">(</span><span class="n">observation_dates</span><span class="p">.</span><span class="n">size</span><span class="p">(),</span><span class="w"> </span><span class="mf">100.0</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Payoff</span><span class="o">&gt;</span><span class="w"> </span><span class="n">ko_payoffs</span><span class="p">(</span><span class="n">observation_dates</span><span class="p">.</span><span class="n">size</span><span class="p">(),</span><span class="w"> </span><span class="n">Cash</span><span class="p">(</span><span class="mf">5.0</span><span class="p">));</span><span class="w"></span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">maturity_payoff</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Vanilla</span><span class="p">(</span><span class="mi">90</span><span class="p">,</span><span class="w"> </span><span class="n">OptionType</span><span class="o">::</span><span class="n">CALL</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">ko_opt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">KnockOutBarrierOption</span><span class="p">(</span><span class="n">BarrierType</span><span class="o">::</span><span class="n">UP_OUT</span><span class="p">,</span><span class="w"> </span><span class="n">observation_dates</span><span class="p">,</span><span class="w"> </span><span class="n">barriers</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                         </span><span class="n">ko_payoffs</span><span class="p">,</span><span class="w"> </span><span class="n">maturity_payoff</span><span class="p">,</span><span class="w"> </span><span class="n">cal</span><span class="p">);</span><span class="w"></span>
+
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id6">
+<h2>双障碍敲出期权<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h2>
+<p>双障碍敲出期权是指有两个敲出障碍的期权，期权只要触及一方障碍则该期权到期，在实际金融市场中，敲出后一般有相应的赔付。</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>定义要素</strong></p></td>
+<td><p><strong>说明</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>向上敲出观察日</p></td>
+<td><p>任意定义，一般根据观察频率、初始日期、期限等生成</p></td>
+</tr>
+<tr class="row-odd"><td><p>向上敲出障碍价格</p></td>
+<td><p>对应的每个向上敲出观察日有对应的向上敲出障碍价格</p></td>
+</tr>
+<tr class="row-even"><td><p>向上敲出赔付</p></td>
+<td><p>向上敲出终止后的赔付，指定 <a class="reference internal" href="qlib_doc/payoff.html"><span class="doc">Payoff</span></a> 类型</p></td>
+</tr>
+<tr class="row-odd"><td><p>向下敲出观察日</p></td>
+<td><p>任意定义，一般根据观察频率、初始日期、期限等生成</p></td>
+</tr>
+<tr class="row-even"><td><p>向下敲出障碍价格</p></td>
+<td><p>对应的每个向下敲出观察日有对应的向下敲出障碍价格</p></td>
+</tr>
+<tr class="row-odd"><td><p>向下敲出赔付</p></td>
+<td><p>向下敲出终止后的赔付，指定 <a class="reference internal" href="qlib_doc/payoff.html"><span class="doc">Payoff</span></a> 类型</p></td>
+</tr>
+<tr class="row-even"><td><p>未敲出赔付</p></td>
+<td><p>指定 <a class="reference internal" href="qlib_doc/payoff.html"><span class="doc">Payoff</span></a> 类型</p></td>
+</tr>
+<tr class="row-odd"><td><p>日历</p></td>
+<td><p>指定 <a class="reference internal" href="qlib_doc/calendar.html"><span class="doc">日历</span></a></p></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="id7">
+<h3>接口示例<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>双障碍敲出期权测试条款</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>开始日期</p></td>
+<td><p>2018年1月4日</p></td>
+</tr>
+<tr class="row-odd"><td><p>结束日期</p></td>
+<td><p>2019年1月4日</p></td>
+</tr>
+<tr class="row-even"><td><p>向上敲出观察频率</p></td>
+<td><p>按月观察</p></td>
+</tr>
+<tr class="row-odd"><td><p>向上敲出障碍价格</p></td>
+<td><p>120.0</p></td>
+</tr>
+<tr class="row-even"><td><p>向上敲出障碍赔付</p></td>
+<td><p>一笔价值为5的现金</p></td>
+</tr>
+<tr class="row-odd"><td><p>向下敲出观察频率</p></td>
+<td><p>按日观察</p></td>
+</tr>
+<tr class="row-even"><td><p>向下敲出障碍价格</p></td>
+<td><p>80.0</p></td>
+</tr>
+<tr class="row-odd"><td><p>向下敲出障碍赔付</p></td>
+<td><p>一笔价值为5的现金</p></td>
+</tr>
+<tr class="row-even"><td><p>未敲出赔付</p></td>
+<td><p>CALL，参与率为100%，执行价为90</p></td>
+</tr>
+<tr class="row-odd"><td><p>日历</p></td>
+<td><p>A股交易日历</p></td>
+</tr>
+</tbody>
+</table>
+<p>该期权在单障碍敲出期权接口中的实现如下：</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;qlib/double_barrier_option.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;qlib/schedule.h&quot;</span><span class="cp"></span>
+<span class="cp">#define A_STOCK &quot;[path]/Calendars/China.txt&quot;</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">cal</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Calendar</span><span class="p">(</span><span class="n">A_STOCK</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">start_date</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Date</span><span class="p">(</span><span class="mi">2018</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">end_date</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Date</span><span class="p">(</span><span class="mi">2019</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// 设置向上敲出事件</span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">up_dates</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Schedule</span><span class="p">(</span><span class="n">start_date</span><span class="p">,</span><span class="w"> </span><span class="n">end_date</span><span class="p">,</span><span class="w"> </span><span class="n">Period</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">TimeUnit</span><span class="o">::</span><span class="n">MONTH</span><span class="p">),</span><span class="w"></span>
+<span class="w">                              </span><span class="n">BusinessDayConvention</span><span class="o">::</span><span class="n">FOLLOWING</span><span class="p">,</span><span class="w"></span>
+<span class="w">                              </span><span class="n">DateGenerationRule</span><span class="o">::</span><span class="n">FORWARD</span><span class="p">,</span><span class="w"> </span><span class="n">cal</span><span class="p">,</span><span class="w"> </span><span class="nb">true</span><span class="p">,</span><span class="w"> </span><span class="nb">false</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">up_barriers</span><span class="p">(</span><span class="n">up_dates</span><span class="p">.</span><span class="n">size</span><span class="p">(),</span><span class="w"> </span><span class="mf">120.0</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Payoff</span><span class="o">&gt;</span><span class="w"> </span><span class="n">up_payoffs</span><span class="p">(</span><span class="n">up_dates</span><span class="p">.</span><span class="n">size</span><span class="p">(),</span><span class="w"> </span><span class="n">Cash</span><span class="p">(</span><span class="mi">5</span><span class="p">));</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// 设置向下敲出事件</span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">down_dates</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Schedule</span><span class="p">(</span><span class="n">start_date</span><span class="p">,</span><span class="w"> </span><span class="n">end_date</span><span class="p">,</span><span class="w"> </span><span class="n">Period</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">TimeUnit</span><span class="o">::</span><span class="n">DAY</span><span class="p">),</span><span class="w"></span>
+<span class="w">                              </span><span class="n">BusinessDayConvention</span><span class="o">::</span><span class="n">FOLLOWING</span><span class="p">,</span><span class="w"></span>
+<span class="w">                              </span><span class="n">DateGenerationRule</span><span class="o">::</span><span class="n">FORWARD</span><span class="p">,</span><span class="w"> </span><span class="n">cal</span><span class="p">,</span><span class="w"> </span><span class="nb">true</span><span class="p">,</span><span class="w"> </span><span class="nb">false</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">down_barriers</span><span class="p">(</span><span class="n">down_dates</span><span class="p">.</span><span class="n">size</span><span class="p">(),</span><span class="w"> </span><span class="mf">80.0</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Payoff</span><span class="o">&gt;</span><span class="w"> </span><span class="n">down_payoffs</span><span class="p">(</span><span class="n">down_dates</span><span class="p">.</span><span class="n">size</span><span class="p">(),</span><span class="w"> </span><span class="n">Cash</span><span class="p">(</span><span class="mi">5</span><span class="p">));</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// 未敲出赔付</span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">unhit_payoff</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Vanilla</span><span class="p">(</span><span class="mi">90</span><span class="p">,</span><span class="w"> </span><span class="n">OptionType</span><span class="o">::</span><span class="n">CALL</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">double_ko_opt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DoubleKnockOutBarrierOption</span><span class="p">(</span><span class="n">up_dates</span><span class="p">,</span><span class="w"> </span><span class="n">up_barriers</span><span class="p">,</span><span class="w"> </span><span class="n">up_payoffs</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                                     </span><span class="n">down_dates</span><span class="p">,</span><span class="w"> </span><span class="n">down_barriers</span><span class="p">,</span><span class="w"> </span><span class="n">down_payoffs</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                                     </span><span class="n">unhit_payoff</span><span class="p">,</span><span class="w"> </span><span class="n">cal</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id8">
+<h2>敲入敲出型期权<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h2>
+<p>敲入敲出型期权是指双障碍的一方为敲入型障碍，另一方为敲出型障碍，期权触及敲入障碍一方后激活另一种期权，激活后的期权持有至到期，期权触及敲出障碍一方后则该期权到期，在实际金融市场中，敲出后一般有相应的赔付， <a class="reference internal" href="barrier_example.html#snowball-def"><span class="std std-ref">雪球期权</span></a> 为该类型的常见期权。</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>定义要素</strong></p></td>
+<td><p><strong>说明</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>障碍类型</p></td>
+<td><p>向上敲出向下敲入 <strong>UP_OUT_DOWN_IN</strong> 或 向下敲出向上敲入 <strong>UP_IN_DOWN_OUT</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p>敲出日期</p></td>
+<td><p>任意定义，一般根据观察频率、初始日期、期限等生成</p></td>
+</tr>
+<tr class="row-even"><td><p>敲出障碍价格</p></td>
+<td><p>对应的每个敲出观察日有对应的敲出障碍价格</p></td>
+</tr>
+<tr class="row-odd"><td><p>敲出赔付</p></td>
+<td><p>敲出终止后的赔付，指定 <a class="reference internal" href="qlib_doc/payoff.html"><span class="doc">Payoff</span></a> 类型</p></td>
+</tr>
+<tr class="row-even"><td><p>敲入日期</p></td>
+<td><p>任意定义，一般根据观察频率、初始日期、期限等生成</p></td>
+</tr>
+<tr class="row-odd"><td><p>敲入障碍价格</p></td>
+<td><p>对应的每个敲入观察日有对应的敲入障碍价格</p></td>
+</tr>
+<tr class="row-even"><td><p>敲入赔付</p></td>
+<td><p>敲入后激活的期权，指定 <a class="reference internal" href="qlib_doc/payoff.html"><span class="doc">Payoff</span></a> 类型</p></td>
+</tr>
+<tr class="row-odd"><td><p>未敲出未敲入赔付</p></td>
+<td><p>指定 <a class="reference internal" href="qlib_doc/payoff.html"><span class="doc">Payoff</span></a> 类型</p></td>
+</tr>
+<tr class="row-even"><td><p>日历</p></td>
+<td><p>指定 <a class="reference internal" href="qlib_doc/calendar.html"><span class="doc">日历</span></a></p></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="id9">
+<h3>接口示例<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>敲入敲出型期权测试条款</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>障碍类型</p></td>
+<td><p>向上敲出向下敲入 <strong>UP_OUT_DOWN_IN</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p>开始日期</p></td>
+<td><p>2018年1月4日</p></td>
+</tr>
+<tr class="row-even"><td><p>结束日期</p></td>
+<td><p>2019年1月4日</p></td>
+</tr>
+<tr class="row-odd"><td><p>敲出观察频率</p></td>
+<td><p>按月观察</p></td>
+</tr>
+<tr class="row-even"><td><p>敲出障碍价格</p></td>
+<td><p>100.0</p></td>
+</tr>
+<tr class="row-odd"><td><p>敲出障碍赔付</p></td>
+<td><p>一笔价值为5的现金</p></td>
+</tr>
+<tr class="row-even"><td><p>敲入观察频率</p></td>
+<td><p>按日观察</p></td>
+</tr>
+<tr class="row-odd"><td><p>向下敲出障碍价格</p></td>
+<td><p>80.0</p></td>
+</tr>
+<tr class="row-even"><td><p>敲入障碍赔付</p></td>
+<td><p>-PUT，参与率为100%，执行价为100</p></td>
+</tr>
+<tr class="row-odd"><td><p>未敲出赔付</p></td>
+<td><p>CALL，参与率为100%，执行价为90</p></td>
+</tr>
+<tr class="row-even"><td><p>日历</p></td>
+<td><p>A股交易日历</p></td>
+</tr>
+</tbody>
+</table>
+<p>该期权在单障碍敲出期权接口中的实现如下：</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;qlib/double_barrier_option.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;qlib/schedule.h&quot;</span><span class="cp"></span>
+<span class="cp">#define A_STOCK &quot;[path]/Calendars/China.txt&quot;</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">cal</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Calendar</span><span class="p">(</span><span class="n">A_STOCK</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">start_date</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Date</span><span class="p">(</span><span class="mi">2018</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">end_date</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Date</span><span class="p">(</span><span class="mi">2019</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// 敲出事件</span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">out_dates</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Schedule</span><span class="p">(</span><span class="n">start_date</span><span class="p">,</span><span class="w"> </span><span class="n">end_date</span><span class="p">,</span><span class="w"> </span><span class="n">Period</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">TimeUnit</span><span class="o">::</span><span class="n">MONTH</span><span class="p">),</span><span class="w"></span>
+<span class="w">                              </span><span class="n">BusinessDayConvention</span><span class="o">::</span><span class="n">FOLLOWING</span><span class="p">,</span><span class="w"></span>
+<span class="w">                              </span><span class="n">DateGenerationRule</span><span class="o">::</span><span class="n">FORWARD</span><span class="p">,</span><span class="w"> </span><span class="n">cal</span><span class="p">,</span><span class="w"> </span><span class="nb">true</span><span class="p">,</span><span class="w"> </span><span class="nb">false</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">out_barriers</span><span class="p">(</span><span class="n">out_dates</span><span class="p">.</span><span class="n">size</span><span class="p">(),</span><span class="w"> </span><span class="mf">100.0</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Payoff</span><span class="o">&gt;</span><span class="w"> </span><span class="n">out_payoffs</span><span class="p">(</span><span class="n">out_dates</span><span class="p">.</span><span class="n">size</span><span class="p">(),</span><span class="w"> </span><span class="n">Cash</span><span class="p">(</span><span class="mi">5</span><span class="p">));</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// 敲入事件</span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">in_dates</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Schedule</span><span class="p">(</span><span class="n">start_date</span><span class="p">,</span><span class="w"> </span><span class="n">end_date</span><span class="p">,</span><span class="w"> </span><span class="n">Period</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">TimeUnit</span><span class="o">::</span><span class="n">DAY</span><span class="p">),</span><span class="w"></span>
+<span class="w">                             </span><span class="n">BusinessDayConvention</span><span class="o">::</span><span class="n">FOLLOWING</span><span class="p">,</span><span class="w"></span>
+<span class="w">                             </span><span class="n">DateGenerationRule</span><span class="o">::</span><span class="n">FORWARD</span><span class="p">,</span><span class="w"> </span><span class="n">cal</span><span class="p">,</span><span class="w"> </span><span class="nb">true</span><span class="p">,</span><span class="w"> </span><span class="nb">false</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="w"> </span><span class="n">in_barriers</span><span class="p">(</span><span class="n">in_dates</span><span class="p">.</span><span class="n">size</span><span class="p">(),</span><span class="w"> </span><span class="mf">80.0</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">in_payoff</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">Vanilla</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="n">OptionType</span><span class="o">::</span><span class="n">PUT</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// 未敲出赔付</span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">unhit_payoff</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Vanilla</span><span class="p">(</span><span class="mi">90</span><span class="p">,</span><span class="w"> </span><span class="n">OptionType</span><span class="o">::</span><span class="n">CALL</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">in_out_opt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">InOutBarrierOption</span><span class="p">(</span><span class="n">BarrierType</span><span class="o">::</span><span class="n">UP_OUT_DOWN_IN</span><span class="p">,</span><span class="w"> </span><span class="n">out_dates</span><span class="p">,</span><span class="w"> </span><span class="n">out_barriers</span><span class="p">,</span><span class="w"> </span><span class="n">out_payoffs</span><span class="p">,</span><span class="w"></span>
+<span class="w">                                            </span><span class="n">in_dates</span><span class="p">,</span><span class="w"> </span><span class="n">in_barriers</span><span class="p">,</span><span class="w"> </span><span class="n">in_payoff</span><span class="p">,</span><span class="w"> </span><span class="n">unhit_payoff</span><span class="p">,</span><span class="w"> </span><span class="n">cal</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="barrier_example.html" class="btn btn-neutral float-right" title="广义期权的实际案例" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="cuda_intro.html" class="btn btn-neutral float-left" title="CUDA Toolkit" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2022, Essence Security.
+
+    </p>
+  </div>
+    
+    
+    
+    利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用了 
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    
+    由 <a href="https://readthedocs.org">Read the Docs</a>开发. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

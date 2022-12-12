@@ -1,0 +1,4 @@
+香草期权
+========
+
+.. doxygennamespace:: AnalyticalEngine::Vanilla

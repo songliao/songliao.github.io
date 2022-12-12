@@ -1,0 +1,299 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>衍生品定价库：qlib</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  <link rel="stylesheet" href="_static/fonts.css" type="text/css" />
+  <link rel="stylesheet" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/translations.js"></script>
+        <script src="_static/design-tabs.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="搜索" href="search.html" />
+    <link rel="next" title="OneMKL安装说明" href="onemkl_installation.html" />
+    <link rel="prev" title="CMake快速入门：用CMake构建C++项目" href="cmake_tutorial.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> 蒙卡定价引擎开发
+          
+
+          
+            
+            <img src="_static/Qlib_logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="在文档中搜索" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="project_introduction.html">项目简介</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="project_documentation.html">项目知识库</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="project_introduction.html">项目简介</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fin_basic.html">金融工程基础知识</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="fin_engineering.html">金融工程开发技术基础</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="environment_setup.html">开发环境设置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cmake_tutorial.html">CMake快速入门：用CMake构建C++项目</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">衍生品定价库：qlib</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">qlib概述</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">在线项目地址</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">qlib代码风格</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="onemkl_installation.html">OneMKL安装说明</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cuda_installation.html">CUDA安装说明</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fin_engineer_upgrade.html">金融工程开发技术进阶</a></li>
+<li class="toctree-l2"><a class="reference internal" href="option_definition.html">广义期权的一般创建方式</a></li>
+<li class="toctree-l2"><a class="reference internal" href="barrier_example.html">广义期权的实际案例</a></li>
+<li class="toctree-l2"><a class="reference internal" href="closed_formulas.html">常见奇异期权释义及其（近似）解析解实现</a></li>
+<li class="toctree-l2"><a class="reference internal" href="greeks.html">希腊字母</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exotic_options_on_two_asset.html">部分挂钩双标的奇异衍生品及其定价</a></li>
+<li class="toctree-l2"><a class="reference internal" href="auto_callables.html">定价引擎应用案例：自动赎回结构</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="paper_link.html">项目论文</a></li>
+<li class="toctree-l1"><a class="reference external" href="_static/qlib_api/index.html#file://">代码API references</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">蒙卡定价引擎开发</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+<div class="git-ribbon">
+  <a href="http://github.com/SwissDataScienceCenter" rel="me">Join us on GitHub</a>
+</div>
+
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="project_documentation.html">项目知识库</a> &raquo;</li>
+        
+          <li><a href="fin_engineering.html">金融工程开发技术基础</a> &raquo;</li>
+        
+      <li>衍生品定价库：qlib</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/about_qlib.rst.txt" rel="nofollow"> 查看页面源码</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="qlib">
+<h1>衍生品定价库：qlib<a class="headerlink" href="#qlib" title="永久链接至标题">¶</a></h1>
+<div class="section" id="id1">
+<h2>qlib概述<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<p>qlib 是衍生品的定价库，当前目标专注于解决权益类奇异衍生品的定价，将随着本项目的推进逐步完善，至少包含以下三方面的内容，</p>
+<ol class="arabic simple">
+<li><p>部分期权的解析解以及近似解析解</p></li>
+<li><p>针对奇异期权的蒙特卡洛模拟定价引擎</p></li>
+<li><p>蒙特卡洛模拟定价引擎的GPU版本</p></li>
+</ol>
+</div>
+<div class="section" id="id2">
+<h2>在线项目地址<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>github: <a class="reference external" href="https://github.com/ESFinLab/qlib">https://github.com/ESFinLab/qlib</a></p>
+<p>请联系项目负责人，以获取项目源代码的相关权限。</p>
+</div>
+<div class="section" id="id3">
+<h2>qlib代码风格<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id4">
+<h3>命名规则<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>Header Guard Style</p></td>
+<td><p>${PROJECT NAME}_${FILE NAME}_${EXT}</p></td>
+</tr>
+<tr class="row-even"><td><p>Macro, Enumerator</p></td>
+<td><p>SCREAMING_SNAKE_CASE</p></td>
+</tr>
+<tr class="row-odd"><td><p>Namespace, Class, Enum, Typedef, Function</p></td>
+<td><p>PascalCase</p></td>
+</tr>
+<tr class="row-even"><td><p>Parameter， File</p></td>
+<td><p>snake_case</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id5">
+<h3>括号、缩进、空格等其他风格<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
+<p>主要参考 <a class="reference external" href="https://google.github.io/styleguide/cppguide.html/">Google C++代码风格指引</a></p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="onemkl_installation.html" class="btn btn-neutral float-right" title="OneMKL安装说明" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="cmake_tutorial.html" class="btn btn-neutral float-left" title="CMake快速入门：用CMake构建C++项目" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; 版权所有 2022, Essence Security.
+
+    </p>
+  </div>
+    
+    
+    
+    利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用了 
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    
+    由 <a href="https://readthedocs.org">Read the Docs</a>开发. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

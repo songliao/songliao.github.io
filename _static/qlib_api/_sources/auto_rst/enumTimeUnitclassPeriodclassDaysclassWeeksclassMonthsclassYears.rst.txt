@@ -1,0 +1,9 @@
+Period
+============
+
+.. doxygenenum:: TimeUnit
+.. doxygenclass:: Period
+.. doxygenclass:: Days
+.. doxygenclass:: Weeks
+.. doxygenclass:: Months
+.. doxygenclass:: Years

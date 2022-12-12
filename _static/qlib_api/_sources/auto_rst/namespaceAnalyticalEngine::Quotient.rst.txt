@@ -1,0 +1,4 @@
+比值期权
+========
+
+.. doxygennamespace:: AnalyticalEngine::Quotient

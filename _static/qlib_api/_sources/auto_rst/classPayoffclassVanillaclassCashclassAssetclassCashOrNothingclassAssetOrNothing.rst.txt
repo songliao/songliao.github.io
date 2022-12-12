@@ -1,0 +1,9 @@
+Payoff类
+==============
+
+.. doxygenclass:: Payoff
+.. doxygenclass:: Vanilla
+.. doxygenclass:: Cash
+.. doxygenclass:: Asset
+.. doxygenclass:: CashOrNothing
+.. doxygenclass:: AssetOrNothing

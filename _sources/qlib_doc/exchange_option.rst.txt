@@ -1,0 +1,69 @@
+===========================
+互换期权
+===========================
+
+互换期权时以一种资产换另一种期权的一种衍生品，其赋予持有人在到期时将资产 :math:`S_2` 换成 :math:`S_1` 的权利。
+
+.. list-table::
+
+  * - 期权名称
+    - 收益描述
+  * - 互换期权
+    - :math:`\text{MAX}(Q_1*S_1 - Q_2*S_2,0)`
+
+.. function:: Pv(double spot1, double spot2, double rho, double r, double b1, double b2, double vol1, double vol2, double ttm, double quantity1, double quantity2);
+
+.. container:: custom
+
+    **Parameters:**
+        **spot1: double**
+            | 资产1的价格。
+        **spot2: double**
+            | 资产2的价格。
+        **rho: double**
+            | 两个挂钩标的之间的相关性。 
+        **r: double**
+            | 无风险利率。
+        **b1: double**
+            | 资产1的持仓成本。
+        **b2: double**
+            | 资产2的持仓成本。
+        **vol1: double**
+            | 资产1的波动率。
+        **vol2: double**
+            | 资产2的波动率。
+        **ttm: double**
+            | 到期时间。 
+        **quantity1: double**
+            | 资产1的数量。
+        **quantity2: double**
+            | 资产2的数量。
+
+    **Returns: double**
+            | 返回互换期权的现值。
+
+Example
+^^^^^^^^^^^^^^^^^
+
+.. code-block:: c++
+
+    #include <gtest/gtest.h>
+    #include "qlib/analytical_engine/exchange_option.h"
+
+    TEST(TestAnalytical, Exchange){
+        double spot1 = 22;
+        double spot2 = 20;
+        double rho = -0.5;
+        double r = 0.1;
+        double b1 = 0.04;
+        double b2 = 0.06;
+        double vol1 = 0.2;
+        double vol2 = 0.15;
+        double t = 0.1;
+        double quantity1 = 1;
+        double quantity2 = 1;
+
+        auto pv = AnalyticalEngine::Exchange::Pv(spot1, spot2, rho, r, b1, b2, vol1, vol2, t, quantity1, quantity2);
+
+        EXPECT_NEAR(2.1251, pv, 1e-4) << "Asian option Pv calculation error";
+    }

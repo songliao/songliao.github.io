@@ -1,0 +1,112 @@
+===========================
+最优最劣期权
+===========================
+
+.. list-table::
+
+  * - 期权名称
+    - 收益描述
+  * - 最优期权
+    - | 看涨 :math:`\text{MAX}(\text{MAX}(S_1 - S_2) - X, 0)`
+      | 看跌 :math:`\text{MAX}(X - \text{MAX}(S_1 - S_2), 0)` 
+  * - 最劣期权
+    - | 看涨 :math:`\text{MAX}(\text{MIN}(S_1 - S_2) - X, 0)`
+      | 看跌 :math:`\text{MAX}(X - \text{MIN}(S_1 - S_2), 0)` 
+
+
+最优期权
+-----------------------
+
+.. function::  Pv(double spot1, double spot2, double rho, double r, double b1, double b2, double vol1, double vol2, double ttm, OptionType type, double strike);
+.. container:: custom
+
+    **Parameters:**
+        **spot1: double**
+            | 资产1的价格。
+        **spot2: double**
+            | 资产2的价格。
+        **rho: double**
+            | 两个挂钩标的之间的相关性。 
+        **r: double**
+            | 无风险利率。
+        **b1: double**
+            | 资产1的持仓成本。
+        **b2: double**
+            | 资产2的持仓成本。
+        **vol1: double**
+            | 资产1的波动率。
+        **vol2: double**
+            | 资产2的波动率。
+        **ttm: double**
+            | 到期时间。 
+        **type: OptionType**
+            | 期权类型, **CALL** 或 **PUT**。
+        **strike: double**
+            | 行权价格。
+
+    **Returns: double**
+            | 返回最优期权的现值。
+
+    
+Example
+^^^^^^^^^^^^^^^^^^^
+
+.. code-block:: c++
+
+    #include <gtest/gtest.h>
+    #include "qlib/analytical_engine/option_on_maximum.h"
+
+    namespace MAX = AnalyticalEngine::OptionOnMaximum;
+
+    TEST(TestAnalytical, OptionOnMaximum){
+        //page 212
+        double spot1 = 100;
+        double spot2 = 105;
+        double strike = 98;
+        double t = 0.5;
+        double r = 0.05;
+        double b1 = -0.01;
+        double b2 = -0.04;
+        double vol1 = 0.11;
+        double vol2 = 0.16;
+        double rho = 0.63;
+
+        double pv = MAX::Pv(spot1, spot2, rho, r, b1, b2, vol1, vol2, t, OptionType::CALL, strike);
+        double pv_put = MAX::Pv(spot1, spot2, rho, r, b1, b2, vol1, vol2, t, OptionType::PUT, strike);
+        EXPECT_NEAR(8.0700, pv, 1e-4);
+        EXPECT_NEAR(1.2181, pv_put, 1e-4);
+    }
+
+
+最劣期权
+-----------------------
+
+.. function::  Pv(double spot1, double spot2, double rho, double r, double b1, double b2, double vol1, double vol2, double ttm, OptionType type, double strike);
+.. container:: custom
+
+    **Parameters:**
+        **spot1: double**
+            | 资产1的价格。
+        **spot2: double**
+            | 资产2的价格。
+        **rho: double**
+            | 两个挂钩标的之间的相关性。 
+        **r: double**
+            | 无风险利率。
+        **b1: double**
+            | 资产1的持仓成本。
+        **b2: double**
+            | 资产2的持仓成本。
+        **vol1: double**
+            | 资产1的波动率。
+        **vol2: double**
+            | 资产2的波动率。
+        **ttm: double**
+            | 到期时间。 
+        **type: OptionType**
+            | 期权类型, **CALL** 或 **PUT**。
+        **strike: double**
+            | 行权价格。
+
+    **Returns: double**
+            | 返回最劣期权的现值。

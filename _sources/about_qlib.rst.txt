@@ -1,0 +1,46 @@
+======================================
+衍生品定价库：qlib
+======================================
+
+qlib概述
+==============
+
+qlib 是衍生品的定价库，当前目标专注于解决权益类奇异衍生品的定价，将随着本项目的推进逐步完善，至少包含以下三方面的内容，
+
+#. 部分期权的解析解以及近似解析解
+#. 针对奇异期权的蒙特卡洛模拟定价引擎
+#. 蒙特卡洛模拟定价引擎的GPU版本
+
+在线项目地址
+============
+
+github: https://github.com/ESFinLab/qlib
+
+请联系项目负责人，以获取项目源代码的相关权限。
+
+
+qlib代码风格
+=============
+
+命名规则
+---------
+
+.. list-table:: 
+    :widths: 50 50
+
+    * - Header Guard Style
+      - ${PROJECT NAME}_${FILE NAME}_${EXT}
+    * - Macro, Enumerator
+      - SCREAMING_SNAKE_CASE
+    * - Namespace, Class, Enum, Typedef, Function
+      - PascalCase
+    * - Parameter， File
+      - snake_case
+
+括号、缩进、空格等其他风格
+-------------------------------
+
+主要参考 `Google C++代码风格指引 <https://google.github.io/styleguide/cppguide.html/>`_
+  
+
+
