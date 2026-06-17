@@ -1,4 +1,4 @@
 User-agent: *
 Disallow:
 
-Sitemap: https://songliao.github.io/al-folio/sitemap.xml
+Sitemap: https://songliao.github.io/sitemap.xml
